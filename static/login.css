@@ -3,7 +3,10 @@
 	font-family: 'Inter', 'Avenir', 'Helvetica', 'Calibri', sans-serif;
 	line-height: 1.5;
 	font-weight: 400;
+    color: var(--text-colour);
     
+    --text-colour: #503038;
+    --accent-text-colour: #9F6070;
     --background-colour: #F2F2F2;
     --panel-bg-colour: #FFFFFF;
 }
@@ -12,9 +15,10 @@ html, body {
     height: 100%;
     width: 100%;
 	margin: 0;
-    padding: 2rem 4rem;
+    padding: 1vw 4vw;
     gap: 2rem;
 	display: flex;
+    align-items: center;
     flex-direction: column;
     background-color: var(--background-colour);
 }
@@ -26,8 +30,12 @@ html, body {
 nav {
     display: inline-flex;
     align-items: center;
+    flex-flow: wrap;
     justify-content: space-between;
-    width: 100%;
+    width: clamp(384px, 100%, 1600px);
+    height: 4rem;
+    overflow: hidden;
+    gap: 2rem;
 }
 
 nav > * {
@@ -38,49 +46,186 @@ nav > * {
     background-color: var(--panel-bg-colour);
 }
 
-#logo > img {
+nav img {
     height: 2rem;
     object-fit: contain;
     object-position: center;
 }
 
-#links {
+nav ul {
     padding: 1rem 3rem;
     list-style-type: none;
     display: flex;
     gap: 2rem;
 }
 
-main, section {
+nav ul a {
+    color: inherit;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+nav ul a:hover {
+    color: var(--accent-text-colour);
+}
+
+main {
     display: inherit;
     height: 100%;
     width: 100%;
-}
-
-section {
     border-radius: 1.5rem;
     padding: 2rem;
+    width: clamp(384px, 100%, 1600px);
     background-color: var(--panel-bg-colour);
     flex-direction: column;
 }
 
-section > * {
+main > * {
     flex: 1;
 }
 
-section > figure {
+main > figure {
     margin: 0;
     position: relative;
     border-radius: 1rem;
 }
 
-section > figure img {
+main > figure img {
     height: 100%;
     width: 100%;
     position: absolute;
     border-radius: inherit;
+    object-fit: cover;
 }
 
-section > article img {
-    height: 8rem;
+main > figure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main > figure blockquote {
+    margin: 0;
+    border-radius: inherit;
+    width: fit-content;
+    padding: 4rem 8rem;
+    background-color: color-mix(in srgb, var(--panel-bg-colour) 25%, transparent);
+    backdrop-filter: blur(3px);
+}
+
+main > figure blockquote:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(to right, #F7D4DA, transparent);
+  -webkit-mask: 
+     linear-gradient(#fff 0 0) content-box, 
+     linear-gradient(#fff 0 0);
+          mask: 
+     linear-gradient(#fff 0 0) content-box, 
+     linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
+
+main > figure blockquote > p {
+    display: block;
+    color: #FFFFFF;
+    text-align: center;
+    margin: 0;
+}
+
+main > figure blockquote > p:before {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    content: '“';
+    font-size: 4.3rem;
+    text-align: center;
+    line-height: 0;
+}
+
+main > figure blockquote > p > span {
+    font-size: 0.75rem;
+}
+
+main > article {
+    position: relative;
+    font-size: 1.75rem;
+}
+
+main > article img {
+    position: absolute;
+    right: 0;
+    margin-top: 2rem;
+    margin-right: 1rem;
+    height: 5rem;
+}
+
+main > article h1 {
+    margin: 6rem 2rem 4rem;
+    font-size: 1em;
+}
+
+main > article form {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+main > article form > :is(label, input) {
+    font-weight: bold;
+    font-size: 0.625em;
+}
+
+main > article form > input {
+    height: 3rem;
+    width: min(100%, 22.5rem);
+    outline: 0;
+    margin: 0.25rem 0 1rem;
+    padding: 1rem 1.5rem;
+    position: relative;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent-text-colour) 25%, transparent);
+    color: var(--accent-text-colour);
+}
+
+main > article form > label:after {
+    position: absolute;
+    content: '*';
+    color: var(--accent-text-colour);
+}
+
+main > article button {
+    font-size: 0.625em;
+    cursor: pointer;
+    color: white;
+    display: block;
+    margin: 2rem auto;
+    padding: 1rem 0;
+    width: 100%;
+    border-radius: 999px;
+    border-style: none;
+    font-weight: bold;
+    background-position-x: 100%;
+    background-position-y: 0%;
+    background-size: 400% 200%;
+    background-image: linear-gradient(to top right, #A0A0A0, #606060, #80002E, #FF005D);
+    transition: 1s;
+}
+
+main > article button:disabled {
+    cursor: default;
+    background-position-x: 0%;
+    background-position-y: 100%;
+}
+
+@media screen and ( orientation: landscape ) {
+    main {
+        flex-direction: row;
+    }
 }
