@@ -1,5 +1,5 @@
 :root {
-	font-size: clamp(11px, 1.5vh, 24px);
+	font-size: clamp(8px, 1.5vh, 24px);
 	font-family: 'Inter', 'Avenir', 'Helvetica', 'Calibri', sans-serif;
 	line-height: 1.5;
 	font-weight: 400;
@@ -108,7 +108,7 @@ main > figure blockquote {
     margin: 0;
     border-radius: inherit;
     width: fit-content;
-    padding: 4rem 8rem;
+    padding: 4rem;
     background-color: color-mix(in srgb, var(--panel-bg-colour) 25%, transparent);
     backdrop-filter: blur(3px);
 }
@@ -136,6 +136,8 @@ main > figure blockquote > p {
     color: #FFFFFF;
     text-align: center;
     margin: 0;
+    position: relative;
+    top: 0.5rem;
 }
 
 main > figure blockquote > p:before {
