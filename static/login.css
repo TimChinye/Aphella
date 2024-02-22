@@ -1,0 +1,86 @@
+:root {
+	font-size: clamp(11px, 1.5vh, 24px);
+	font-family: 'Inter', 'Avenir', 'Helvetica', 'Calibri', sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+    
+    --background-colour: #F2F2F2;
+    --panel-bg-colour: #FFFFFF;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+	margin: 0;
+    padding: 2rem 4rem;
+    gap: 2rem;
+	display: flex;
+    flex-direction: column;
+    background-color: var(--background-colour);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+nav > * {
+    display: inherit;
+    margin: 0;
+    padding: 0.75rem 1rem;
+    border-radius: 1.5rem;
+    background-color: var(--panel-bg-colour);
+}
+
+#logo > img {
+    height: 2rem;
+    object-fit: contain;
+    object-position: center;
+}
+
+#links {
+    padding: 1rem 3rem;
+    list-style-type: none;
+    display: flex;
+    gap: 2rem;
+}
+
+main, section {
+    display: inherit;
+    height: 100%;
+    width: 100%;
+}
+
+section {
+    border-radius: 1.5rem;
+    padding: 2rem;
+    background-color: var(--panel-bg-colour);
+    flex-direction: column;
+}
+
+section > * {
+    flex: 1;
+}
+
+section > figure {
+    margin: 0;
+    position: relative;
+    border-radius: 1rem;
+}
+
+section > figure img {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    border-radius: inherit;
+}
+
+section > article img {
+    height: 8rem;
+}
