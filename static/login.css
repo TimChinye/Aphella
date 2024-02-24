@@ -61,12 +61,31 @@ nav ul {
 
 nav ul a {
     color: inherit;
+    overflow: visible;
     font-weight: bold;
     text-decoration: none;
+
+    -webkit-transition: 0.25s ease-in-out;
+    -moz-transition: 0.25s ease-in-out;
+    -ms-transition: 0.25s ease-in-out;
+    -o-transition: 0.25s ease-in-out;
+    transition: 0.25s ease-in-out;
+
+    -webkit-text-shadow: 0 30px 0px transparent;
+    -moz-text-shadow: 0 30px 0px transparent;
+    -ms-text-shadow: 0 30px 0px transparent;
+    -o-text-shadow: 0 30px 0px transparent;
+    text-shadow: 0 30px 0px transparent;
 }
 
 nav ul a:hover {
     color: var(--accent-text-colour);
+
+    -webkit-text-shadow: 0 0px 0px var(--accent-text-colour);
+    -moz-text-shadow: 0 0px 0px var(--accent-text-colour);
+    -ms-text-shadow: 0 0px 0px var(--accent-text-colour);
+    -o-text-shadow: 0 0px 0px var(--accent-text-colour);
+    text-shadow: 0 0px 0px var(--accent-text-colour);
 }
 
 main {
@@ -78,6 +97,12 @@ main {
     width: clamp(384px, 100%, 1600px);
     background-color: var(--panel-bg-colour);
     flex-direction: column;
+}
+
+@media screen and ( orientation: landscape ) {
+    main {
+        flex-direction: row;
+    }
 }
 
 main > * {
@@ -160,15 +185,16 @@ main > article {
 }
 
 main > article img {
-    position: absolute;
-    right: 0;
-    margin-top: 2rem;
+    margin-top: 1rem;
     margin-right: 1rem;
     height: 5rem;
+    width: 100%;
+    object-fit: contain;
+    object-position: right;
 }
 
 main > article h1 {
-    margin: 6rem 2rem 4rem;
+    margin: 0 3vw;
     font-size: 1em;
 }
 
@@ -182,18 +208,28 @@ main > article form {
 main > article form > :is(label, input) {
     font-weight: bold;
     font-size: 0.625em;
+    margin-bottom: 0.25rem;
 }
 
 main > article form > input {
     height: 3rem;
     width: min(100%, 22.5rem);
     outline: 0;
-    margin: 0.25rem 0 1rem;
+    margin-bottom: 1rem;
     padding: 1rem 1.5rem;
     position: relative;
     border-radius: 999px;
     border: 1px solid color-mix(in srgb, var(--accent-text-colour) 25%, transparent);
     color: var(--accent-text-colour);
+    transition: box-shadow 0.25s;
+}
+
+main > article form > input:hover {
+    box-shadow: 0 0 3px var(--accent-text-colour);
+}
+
+main > article form > input:focus {
+    border: 1px solid var(--accent-text-colour);
 }
 
 main > article form > label:after {
@@ -202,12 +238,27 @@ main > article form > label:after {
     color: var(--accent-text-colour);
 }
 
+main > article form > label[hidden] + input {
+    display: none;
+}
+
+main > article h1,
+main > article form > label:nth-of-type(even) + input {
+    margin-bottom: 3rem;
+}
+
+main > article form > span {
+    color: #9F6070;
+    font-size: 0.75rem;
+    text-align: center;
+}
+
 main > article button {
     font-size: 0.625em;
     cursor: pointer;
     color: white;
     display: block;
-    margin: 2rem auto;
+    margin: 0 auto;
     padding: 1rem 0;
     width: 100%;
     border-radius: 999px;
@@ -217,7 +268,7 @@ main > article button {
     background-position-y: 0%;
     background-size: 400% 200%;
     background-image: linear-gradient(to top right, #A0A0A0, #606060, #80002E, #FF005D);
-    transition: 1s;
+    transition: box-shadow 0.25s, background-position 1s;
 }
 
 main > article button:disabled {
@@ -226,8 +277,6 @@ main > article button:disabled {
     background-position-y: 100%;
 }
 
-@media screen and ( orientation: landscape ) {
-    main {
-        flex-direction: row;
-    }
+main > article button:not(:disabled):hover {
+    box-shadow: 0 0 5px #80002E;
 }
