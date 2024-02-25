@@ -1,7 +1,7 @@
 const express = require('express');
 const { resolve } = require('path');
 
-const port = 3010;
+const port = process.env.PORT || 3010;
 const app = express();
 
 app.use(express.static('static'));
