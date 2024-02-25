@@ -1,14 +1,8 @@
 const express = require('express');
 const { resolve } = require('path');
-const { Pool } = require('pg');
 
-const postgres = new Pool({
-  connectionString:
-    'postgres://ehnkalbh:fEH4i_6aiiDNIurKPcZP0OGhqlDv1RT5@surus.db.elephantsql.com/ehnkalbh',
-});
-
-const app = express();
 const port = 3010;
+const app = express();
 
 app.use(express.static('static'));
 
@@ -19,3 +13,5 @@ app.get('/', async (req, res) => {
 app.listen(port, () => {
   console.log(`Listening on port :${port}`);
 });
+
+module.exports = app;
