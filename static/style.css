@@ -1,0 +1,42 @@
+:root {
+	font-size: clamp(8px, 1.5vh, 24px);
+	font-family: 'Inter', 'Avenir', 'Helvetica', 'Calibri', sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+    color: var(--text-colour);
+    
+    --text-colour: #503038;
+    --accent-text-colour: #9F6070;
+    --background-colour: #F2F2F2;
+    --panel-bg-colour: #FFFFFF;
+    --primary-colour: #FF005D;
+    --secondary-colour: #C40148;
+    --trinary-colour: #80002E;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+	margin: 0;
+	display: flex;
+    background-color: var(--background-colour);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+input {
+    outline: 0;
+    border: 1px solid transparent;
+    color: var(--accent-text-colour);
+    transition: box-shadow 0.25s;
+}
+
+input:hover {
+    box-shadow: 0 0 3px var(--accent-text-colour);
+}
+
+input:focus {
+    border: 1px solid var(--accent-text-colour);
+}

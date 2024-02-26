@@ -1,0 +1,115 @@
+html, body {
+    flex-direction: row;
+}
+
+aside {
+    width: 15vw;
+    background: var(--panel-bg-colour);
+    display: inherit;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+aside figure {
+    margin-top: 2rem;
+}
+
+aside figure img {
+    width: 100%;
+}
+
+aside footer {
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+main {
+    display: inherit;
+    flex: 1;
+    justify-content: center;
+    overflow: auto;
+}
+
+main > div {
+    display: inherit;
+    flex-direction: column;
+    gap: 24px;
+    padding: 40px;
+    width: clamp(384px, 100%, 1600px);
+}
+
+main nav {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+main nav input[type="search"] {
+    padding: 0.75rem;
+    padding-left: calc(0.75rem + 2ex + 1ch);
+    background: url(https://img.icons8.com/ios/96/search--v1.png) 0.75rem 0.75rem no-repeat scroll;
+    background-color: revert;
+    background-size: 2ex;
+    border-radius: 999px;
+}
+
+main #account {
+    background: var(--panel-bg-colour);
+    width: 196px;
+}
+
+main header {
+    display: inherit;
+    align-items: center;
+    justify-content: space-between;
+}
+
+main header button {
+    border: none;
+    padding: 1rem 1.5rem;
+    padding-left: calc(1.5rem + 2.5ex + 1ch);
+    background: url(https://img.icons8.com/fluency-systems-filled/96/FFFFFF/plus-math.png) 1.5rem 1rem no-repeat scroll;
+    background-size: 2.5ex;
+    background-color: var(--primary-colour);
+    border-radius: 1rem;
+    color: #FFFFFF;
+    cursor: pointer;
+    line-height: 130%;
+}
+
+main header button:first-child {
+    background-color: var(--secondary-colour);
+    margin-right: 1rem;
+}
+
+main section {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 8rem);
+    grid-gap: 2rem;
+    margin: 0 auto;
+}
+
+main article {
+    min-height: 8rem;
+    height: 100%;
+    width: 100%;
+    background: var(--panel-bg-colour);
+}
+
+main article#appointments-info {
+    grid-column: span 2;
+    grid-row: span 6;
+}
+
+main article#appointments-stats {
+    grid-column: span 3;
+    grid-row: span 3;
+}
+
+main article#latest-patient-info {
+    grid-column: span 3;
+    grid-row: span 2;
+}
