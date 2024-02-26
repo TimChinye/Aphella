@@ -49,13 +49,28 @@ function login() {
         user.code = formElem.querySelector('#code').value.replace(/\s+/g, '');
 
         fetch('/submit-login', {
-            method: 'POST', 
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user),
         })
-        .then(response => response.json())
-        .catch((error) => console.error('Error:', error));
-    };
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response data:', data);
+        
+                if (data.success) {
+                    // Redirect to dashboard
+                    window.location.href = '/dashboard';
+                } else {
+                    console.error('Login failed:', data.error);
+                    // Handle other scenarios (e.g., show an error message)
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle network errors or other exceptions
+            });
+        
+    }; 
 };
 
 function requestCode() {
