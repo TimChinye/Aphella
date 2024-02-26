@@ -5,46 +5,63 @@ const user = {
     code: ''
 }
 
+const formElem = document.getElementsByTagName('FORM')[0];
+const btnElem = formElem.getElementsByTagName('BUTTON')[0];
+const requestCodeElem = document.getElementById('requestCode');
 
-const form = document.getElementsByTagName('FORM')[0];
-const btn = form.getElementsByTagName('BUTTON')[0];
-btn.addEventListener('click', login);
-form.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') login();
+const email = formElem.querySelector('label[for="email"]');
+const password = formElem.querySelector('label[for="password"]');
+const phone = formElem.querySelector('label[for="phone"]');
+const code = formElem.querySelector('label[for="code"]');
+
+requestCodeElem.addEventListener('click', requestCode);
+btnElem.addEventListener('click', login);
+formElem.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        if (!phone.hasAttribute("hidden") && code.hasAttribute("hidden")) requestCode();
+        else login();
+    }
 });
 
 function login() {
-    const email = form.querySelector('label[for="email"]');
-    const password = form.querySelector('label[for="password"]');
-    const phone = form.querySelector('label[for="phone"]');
-    const code = form.querySelector('label[for="code"]');
+    if (btnElem.hasAttribute("disabled")) return;
 
+    document.getElementById('feedback').innerHTML = '';
     if (!email.hasAttribute("hidden") && !password.hasAttribute("hidden")) {
-        const emailInput = form.querySelector('#email').value;
-        const passwordInput = form.querySelector('#password').value;
-
+        const emailInput = formElem.querySelector('#email').value;
         if (emailInput.match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/g)?.length == 1) {
             user.email = emailInput;
-    
+
+            const passwordInput = formElem.querySelector('#password').value;
             if (passwordInput.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g)?.length == 1) {
                 user.password = passwordInput;
     
                 email.setAttribute("hidden", "");
                 password.setAttribute("hidden", "");
                 phone.removeAttribute("hidden");
-                requestCode.removeAttribute("hidden");
-                // code.removeAttribute("hidden");
-            } else form.getElementsByTagName('SPAN')[0].innerHTML = "The password is invalid.";
-        } else {
-            form.getElementsByTagName('SPAN')[0].innerHTML = "The email is invalid.";
-        }
+
+                phone.focus();
+                btnElem.innerHTML = "Authenticate";
+                btnElem.setAttribute("disabled", "");
+            } else document.getElementById('feedback').innerHTML = "The password is invalid.";
+        } else document.getElementById('feedback').innerHTML = "The email is invalid.";
     } else if (!phone.hasAttribute("hidden") && !code.hasAttribute("hidden")) {
-        const phoneInput = form.querySelector('#phone').value;
-        const codeInput = form.querySelector('#code').value;
+        user.code = formElem.querySelector('#code').value.replace(/\s+/g, '');
 
-        user.phone = phoneInput;
-        user.code = codeInput;
-
-        form.getElementsByTagName('SPAN')[0].innerHTML = "Check:";
-    }
+        fetch('/submit-login', {
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user),
+        })
+        .then(response => response.json())
+        .catch((error) => console.error('Error:', error));
+    };
 };
+
+function requestCode() {
+    user.phone = formElem.querySelector('#phone').value;
+
+    code.removeAttribute("hidden");
+    code.focus();
+    document.getElementById('feedback').innerHTML = "A text message was sent, please check your phone.";
+}
