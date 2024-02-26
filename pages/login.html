@@ -34,10 +34,10 @@
 					<label for="password">Password</label>
 					<input type="password" id="password" name="password" required title="At least:&#10;- Eight characters&#10;- One uppercase letter&#10;- One lowercase letter&#10;- One number&#10;- One special character">
 					<label for="phone" hidden>Phone Number</label>
-					<input type="tel" id="phone" name="phone" required title="&#10;- Numbers only&#10;- No country codes (+###)" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+					<span><input type="tel" id="phone" name="phone" required title="&#10;- Numbers only&#10;- No country codes (+###)" oninput="this.value = this.value.replace(/[^0-9]/g, '')"><p id="requestCode">Send</p></span>
 					<label for="code" hidden>Code</label>
 					<input type="text" id="code" name="code" required title="&#10;- Numbers only&#10;- Maximum 6 characters" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value.length > 3) this.value = this.value.slice(0, 3) + ' ' + this.value.slice(3)" maxlength="7">
-					<span></span>
+					<p id="feedback"></p>
 					<button type="button" disabled>Next</button>
 				</form>
 			</article>
@@ -45,14 +45,14 @@
 
 		<script type="text/javascript" src="./login.js"></script>
 		<script>
-			const inputs = Array.from(form.getElementsByTagName('INPUT'));
+			const inputs = Array.from(formElem.getElementsByTagName('INPUT'));
 			inputs.forEach((input) => {
 				input.addEventListener('input', () => {
-					form.getElementsByTagName('BUTTON')[0].disabled = !(inputs.slice(0, 2).every((input) => input.value !== '') || inputs.slice(2, 4).every((input) => input.value !== ''));
+					formElem.getElementsByTagName('BUTTON')[0].disabled = !(inputs.slice(0, 2).every((input) => input.value !== '') || inputs.slice(2, 4).every((input) => input.value !== ''));
 				});
 
 				input.addEventListener('focus', () => {
-					form.getElementsByTagName('SPAN')[0].innerHTML = '';
+					document.getElementById('feedback').innerHTML = '';
 				});
 			});
 		</script>

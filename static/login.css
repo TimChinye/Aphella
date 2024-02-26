@@ -205,13 +205,13 @@ main > article form {
     margin: 0 auto;
 }
 
-main > article form > :is(label, input) {
+main > article form :is(label, input) {
     font-weight: bold;
     font-size: 0.625em;
     margin-bottom: 0.25rem;
 }
 
-main > article form > input {
+main > article form input {
     height: 3rem;
     width: min(100%, 22.5rem);
     outline: 0;
@@ -224,11 +224,11 @@ main > article form > input {
     transition: box-shadow 0.25s;
 }
 
-main > article form > input:hover {
+main > article form input:hover {
     box-shadow: 0 0 3px var(--accent-text-colour);
 }
 
-main > article form > input:focus {
+main > article form input:focus {
     border: 1px solid var(--accent-text-colour);
 }
 
@@ -238,16 +238,15 @@ main > article form > label:after {
     color: var(--accent-text-colour);
 }
 
-main > article form > label[hidden] + input {
+main > article form > label[hidden] + :is(input, span:has(input)) {
     display: none;
 }
 
-main > article h1,
-main > article form > label:nth-of-type(even) + input {
+main > article h1 {
     margin-bottom: 3rem;
 }
 
-main > article form > span {
+main > article form p {
     color: #9F6070;
     font-size: 0.75rem;
     text-align: center;
@@ -279,4 +278,16 @@ main > article button:disabled {
 
 main > article button:not(:disabled):hover {
     box-shadow: 0 0 5px #80002E;
+}
+
+main > article form span {
+    display: inline-flex;
+    align-items: center;
+}
+
+main > article form p#requestCode {
+    position: relative;
+    top: -0.5rem;
+    padding: 0 1rem;
+    cursor: pointer;
 }
