@@ -10,6 +10,10 @@ app.get('/', async (req, res) => {
   res.sendFile(resolve(__dirname, 'pages/login.html'));
 });
 
+app.get('/dashboard', async (req, res) => {
+  res.sendFile(resolve(__dirname, 'pages/dashboard.html'));
+});
+
 app.listen(port, () => {
   console.log(`Listening on port :${port}`);
 });

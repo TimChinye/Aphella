@@ -1,30 +1,8 @@
-:root {
-	font-size: clamp(8px, 1.5vh, 24px);
-	font-family: 'Inter', 'Avenir', 'Helvetica', 'Calibri', sans-serif;
-	line-height: 1.5;
-	font-weight: 400;
-    color: var(--text-colour);
-    
-    --text-colour: #503038;
-    --accent-text-colour: #9F6070;
-    --background-colour: #F2F2F2;
-    --panel-bg-colour: #FFFFFF;
-}
-
 html, body {
-    height: 100%;
-    width: 100%;
-	margin: 0;
     padding: 1vw 4vw;
     gap: 2rem;
-	display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: var(--background-colour);
-}
-
-* {
-	box-sizing: border-box;
 }
 
 nav {
@@ -214,22 +192,11 @@ main > article form > :is(label, input) {
 main > article form > input {
     height: 3rem;
     width: min(100%, 22.5rem);
-    outline: 0;
     margin-bottom: 1rem;
     padding: 1rem 1.5rem;
     position: relative;
     border-radius: 999px;
     border: 1px solid color-mix(in srgb, var(--accent-text-colour) 25%, transparent);
-    color: var(--accent-text-colour);
-    transition: box-shadow 0.25s;
-}
-
-main > article form > input:hover {
-    box-shadow: 0 0 3px var(--accent-text-colour);
-}
-
-main > article form > input:focus {
-    border: 1px solid var(--accent-text-colour);
 }
 
 main > article form > label:after {
