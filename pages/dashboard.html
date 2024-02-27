@@ -9,39 +9,74 @@
   </head>   
   <body>
     <aside>
-        <section>
+        <div>
             <figure>
 				<a href="/"><img src="https://cdn.discordapp.com/attachments/209232737184251904/1210315842932179046/image.png?ex=65ea1d77&is=65d7a877&hm=8f1d0b3427ca495f47c85654212ec6e910101e12830ac848d02fe60d66abfe0b&"></a>
+                <hr>
+                <ul>
+                    <li class="active"><a href="/dashboard">Dashboard<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/dashboard-layout.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/dashboard-layout.png"/></a></li>
+                    <li><a href="/chat">Chat<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/dashboard-layout.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/dashboard-layout.png"/></a></li>
+                    <li><a href="/appointments">Appointments<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/dashboard-layout.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/dashboard-layout.png"/></a></li>
+                    <li><a href="/payments">Payments<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/dashboard-layout.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/dashboard-layout.png"/></a></li>
+                    <li><a href="/settings">Settings<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/dashboard-layout.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/dashboard-layout.png"/></a></li>
+                    <li><a href="/logout">Log Out<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/dashboard-layout.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/dashboard-layout.png"/></a></li>
+                </ul>
 			</figure>
-        </section>
+        </div>
         <footer>
             <p>Designed & Developed by <a href="https://timchinye.com/">Tim Chinye</a>. Icons by <a href="https://icons8.com/">Icons8</a></p>
         </footer>
     </aside>
     <main>
-        <div>
+        <section>
             <nav>
                 <search>
                     <input type="search" placeholder="Search..." />
                 </search>
-                <div id="account"></div>
+                <div id="account">
+                    <img src="https://img.icons8.com/fluency-systems-filled/48/CCCCCC/appointment-reminders.png"/>
+                    <span></span>
+                    <div><img id="profile-pic" src="https://cdn.discordapp.com/attachments/209232737184251904/1212116624304377936/image.png?ex=65f0aa93&is=65de3593&hm=42d0df951337373b636b5b789f6ba7be20fb831fd4a93ff0c97c215b8fad9156&"/></div>
+                    <div>
+                        <h4 id="name">Siri Mariann</h4>
+                        <h6 id="role">Nurse</h6>
+                    </div>
+                </div>
             </nav>
             <header>
                 <h1>Dashboard</h1>
-                <div style="display: flex;">
+                <div style="display: flex; gap: 1rem;">
                     <button>Make an Appointment</button>
                     <button>Make a Request</button>
                 </div>
             </header>
-            <section>
-                <article id="patients-today"></article>
-                <article id="patients-total"></article>
-                <article id="incomplete-requests"></article>
+            <div>
+                <article id="patients-today">
+                    <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/guest-male.png" style="filter: brightness(0.95);"/>
+                    <div>
+                        <h4>Patients Today</h4>
+                        <h2>8</h2>
+                    </div>
+                </article>
+                <article id="patients-total">
+                    <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/conference-call.png" style="filter: brightness(1.00);"/>
+                    <div>
+                        <h4>Total Patients</h4>
+                        <h2>364</h2>
+                    </div>
+                </article>
+                <article id="incomplete-requests">
+                    <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/ask-question.png" style="filter: brightness(1.05);"/>
+                    <div>
+                        <h4>Requests</h4>
+                        <h2>20</h2>
+                    </div>
+                </article>
                 <article id="appointments-info"></article>
                 <article id="appointments-stats"></article>
                 <article id="latest-patient-info"></article>
-            </section>
-        </div>
+            </div>
+        </section>
     </main>
   </body>
 </html>
