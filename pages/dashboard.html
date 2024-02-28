@@ -54,22 +54,22 @@
                 <article id="patients-today">
                     <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/guest-male.png" style="filter: brightness(0.95);"/>
                     <div>
-                        <h4>Patients Today</h4>
-                        <h2>8</h2>
+                        <h5>Patients Today</h5>
+                        <h3>8</h3>
                     </div>
                 </article>
                 <article id="patients-total">
                     <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/conference-call.png" style="filter: brightness(1.00);"/>
                     <div>
-                        <h4>Total Patients</h4>
-                        <h2>364</h2>
+                        <h5>Total Patients</h5>
+                        <h3>364</h3>
                     </div>
                 </article>
                 <article id="incomplete-requests">
                     <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/ask-question.png" style="filter: brightness(1.05);"/>
                     <div>
-                        <h4>Requests</h4>
-                        <h2>20</h2>
+                        <h5>Requests</h5>
+                        <h3>20</h3>
                     </div>
                 </article>
                 <article id="appointments-info"></article>
@@ -80,3 +80,112 @@
     </main>
   </body>
 </html>
+
+<!--
+const config = {
+  type: 'line',
+  data: data,
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+        x: {
+            display: true,
+            title: {
+                display: true,
+                text: 'Date'
+            }
+        },
+        y: {
+            display: true,
+            title: {
+                display: true,
+                text: '# of Appointments'
+            }
+        }
+    }
+  },
+};
+
+const DATA_COUNT = 7;
+const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
+
+const labels = ['18 Oct', '19 Oct', '20 Oct', '21 Oct', '22 Oct', '23 Oct', '24 Oct'];
+const data = {
+  labels: labels,
+  datasets: [
+    {
+        label: '# of Appointments',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: [3, 17, 6, 20, 2, 22, 7],
+        pointRadius: 5,
+        pointBorderColor: 'white',
+        pointBorderWidth: 3,
+        lineTension: 0.4,
+        fill: false
+    }
+  ]
+};
+
+const actions = [
+  {
+    name: 'Randomize',
+    handler(chart) {
+      chart.data.datasets.forEach(dataset => {
+        dataset.data = Utils.numbers({count: chart.data.labels.length, min: -100, max: 100});
+      });
+      chart.update();
+    }
+  },
+  {
+    name: 'Add Dataset',
+    handler(chart) {
+      const data = chart.data;
+      const dsColor = Utils.namedColor(chart.data.datasets.length);
+      const newDataset = {
+        label: 'Dataset ' + (data.datasets.length + 1),
+        backgroundColor: Utils.transparentize(dsColor, 0.5),
+        borderColor: dsColor,
+        data: Utils.numbers({count: data.labels.length, min: -100, max: 100}),
+      };
+      chart.data.datasets.push(newDataset);
+      chart.update();
+    }
+  },
+  {
+    name: 'Add Data',
+    handler(chart) {
+      const data = chart.data;
+      if (data.datasets.length > 0) {
+        data.labels = Utils.months({count: data.labels.length + 1});
+
+        for (let index = 0; index < data.datasets.length; ++index) {
+          data.datasets[index].data.push(Utils.rand(-100, 100));
+        }
+
+        chart.update();
+      }
+    }
+  },
+  {
+    name: 'Remove Dataset',
+    handler(chart) {
+      chart.data.datasets.pop();
+      chart.update();
+    }
+  },
+  {
+    name: 'Remove Data',
+    handler(chart) {
+      chart.data.labels.splice(-1, 1); // remove the label first
+
+      chart.data.datasets.forEach(dataset => {
+        dataset.data.pop();
+      });
+
+      chart.update();
+    }
+  }
+];
+-->>

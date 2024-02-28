@@ -3,7 +3,7 @@ html, body {
 }
 
 aside {
-    width: 15vw;
+    width: clamp(20rem, 20vw, 400px);
     background: var(--panel-bg-colour);
     display: inherit;
     flex-direction: column;
@@ -206,17 +206,18 @@ main > section > div:after {
 
 main article {
     display: flex;
-    padding: 2.5rem;
+    padding: 2rem;
     min-height: 8rem;
     height: 100%;
     width: 100%;
     border-radius: 1rem;
+    align-items: center;
     background: var(--panel-bg-colour);
     gap: 1rem;
 }
 
 main article > img {
-    height: 100%;
+    height: 75%;
     padding: 0.5rem;
     border-radius: 0.5rem;
     background: color-mix(in srgb, var(--primary-colour) 15%, white);
@@ -230,19 +231,16 @@ main #account div:last-of-type {
     position: relative;
 }
 
-main article > div > h2 {
-    position: absolute;
+main article > div > h3 {
     margin: 0;
-    bottom: -0.25rem;
+    margin-top: -0.5rem;
     color: var(--secondary-colour);
     white-space: nowrap;
 }
 
-main article > div > h4 {
-    position: absolute;
+main article > div > h5 {
     margin: 0;
     color: color-mix(in srgb, var(--primary-colour) 75%, white);
-    top: 0;
     white-space: nowrap;
 }
 
