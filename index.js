@@ -1,3 +1,33 @@
+const postgres = require('postgres');
+
+let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = {
+    PGHOST: 'ep-weathered-smoke-a2m2p9c3.eu-central-1.aws.neon.tech',
+    PGDATABASE: 'aphella_db',
+    PGUSER: 'timchinye123',
+    PGPASSWORD: 'NwJyA8O0ZSdG',
+    ENDPOINT_ID: 'ep-weathered-smoke-a2m2p9c3'
+};
+
+const sql = postgres({
+  host: PGHOST,
+  database: PGDATABASE,
+  username: PGUSER,
+  password: PGPASSWORD,
+  port: 5432,
+  ssl: 'require',
+  connection: {
+    options: `project=${ENDPOINT_ID}`,
+  },
+});
+
+async function getPgVersion() {
+  const result = await sql`select version()`;
+  console.log(result);
+}
+getPgVersion();
+console.log("test");
+
+/*
 const express = require('express');
 const { resolve } = require('path');
 
@@ -49,3 +79,4 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
     console.log(`Listening on port :${port}`);
 });
+*/
