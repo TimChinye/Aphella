@@ -1,12 +1,6 @@
 const postgres = require('postgres');
 
-let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = {
-    PGHOST: 'ep-weathered-smoke-a2m2p9c3.eu-central-1.aws.neon.tech',
-    PGDATABASE: 'aphella_db',
-    PGUSER: 'timchinye123',
-    PGPASSWORD: 'NwJyA8O0ZSdG',
-    ENDPOINT_ID: 'ep-weathered-smoke-a2m2p9c3'
-};
+let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
 
 const sql = postgres({
   host: PGHOST,
