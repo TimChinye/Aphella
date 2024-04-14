@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hello Express!</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <base href='/staff/'> <script>document.head.innerHTML = "<base href='/staff/'>" + document.head.innerHTML;</script>
+    <link rel="stylesheet" href="./styles/appointments.css" />
+    <link rel="stylesheet" href="../global.css" />
+  </head>   
+  <body>
+    <aside>
+        <div>
+            <figure>
+				        <a href="/"><img src="https://i.imgur.com/09DrxWb.png"></a>
+                <hr>
+                <ul>
+                    <li><a href="/dashboard">Dashboard<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/dashboard-layout.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/dashboard-layout.png"/></a></li>
+                    <li><a href="/chat">Chat<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/messaging-.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/messaging-.png"/></a></li>
+                    <li class="active"><a href="/appointments">Appointments<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/thursday.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/thursday.png"/></a></li>
+                    <li><a href="/payments">Payments<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/bank-card-front-side.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/bank-card-front-side.png"/></a></li>
+                    <li><a href="/settings">Settings<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/settings--v1.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/settings--v1.png"/></a></li>
+                    <li><a href="/logout">Log Out<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/exit--v1.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/exit--v1.png"/></a></li>
+                </ul>
+			</figure>
+        </div>
+        <footer>
+            <p>Designed & Developed by <a href="https://timchinye.com/">Tim Chinye</a>.<br>Icons by <a href="https://icons8.com/">Icons8</a></p>
+        </footer>
+    </aside>
+    <main>
+      <section>
+        <div id="wrapper">
+          <nav>
+            <search>
+                <input type="search" placeholder="Search..." />
+            </search>
+            <div id="account">
+                <img src="https://img.icons8.com/fluency-systems-filled/48/CCCCCC/appointment-reminders.png"/>
+                <span></span>
+                <div><img id="profile-pic" src="https://i.imgur.com/vPFN11V.png"/></div>
+                <div>
+                    <h4 id="name">Siri Mariann</h4>
+                    <h6 id="role">Nurse</h6>
+                </div>
+            </div>
+          </nav>
+          <header>
+              <h1>Appointments</h1>
+          </header>
+          <div>
+            <div id="calendar-header">
+              <button>Schedule Appointment</button>
+              <div id="display-month">
+                <button id="prev-month">&lt;</button>
+                <h2>February</h2>
+                <button id="next-month">&gt;</button>
+              </div>
+              <div id="calendar-time-period">
+                <input type="radio" id="daily" name="time-period">
+                <label for="daily">Daily</label>
+
+                <input type="radio" id="weekly" name="time-period">
+                <label for="weekly">Weekly</label>
+
+                <input type="radio" id="monthly" name="time-period" checked>
+                <label for="monthly">Monthly</label>
+              </div>
+            </div>
+            <div id="calendar-body">
+              <div id="calendar-dotw">
+                <p>Monday</p>
+                <p>Tuesday</p>
+                <p>Wednesday</p>
+                <p>Thursday</p>
+                <p>Friday</p>
+                <p>Saturday</p>
+                <p>Sunday</p>
+              </div>
+              <div id="calendar-dotm">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script type="text/javascript" src="./scripts/appointments.js"></script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Hello Express!</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+
+    <base href="/everyone/" >
+		<link rel="stylesheet" href="./styles/login.css" />
+		<link rel="stylesheet" href="../global.css" />
+	</head>
+	<body>
+		<nav>
+			<figure>
+				<a href="/"><img src="https://i.imgur.com/09DrxWb.png"></a>
+			</figure>
+			
+			<ul>
+				<li><a href="/about">About</a></li>
+				<li><a href="/partners">Partners Hospitals</a></li>
+				<li><a href="/contact">Contact Us</a></li>
+			</ul>
+		</nav>
+		<main>
+			<figure>
+				<img src="https://townsquare.media/site/75/files/2023/10/attachment-pexels-thirdman-7659868.jpg?w=1200&h=0&zc=1&s=0&a=t&q=89">
+				<blockquote>
+					<p>Not all angels have wings,<br>some have stethoscopes.<br><span>- Unkown Author</span></p>
+				</blockquote>
+			</figure>
+			<article>
+				<a href="https://www.circlehealthgroup.co.uk/"><img src="https://nccc.co.uk/wp-content/uploads/2020/01/Circle-Health-Group-1.png"></a>
+				<h1>Let's get you logged in...</h1>
+				<form id="loginDetails">
+					<label for="email">Email Address</label>
+					<input type="email" id="email" name="email" required title="Input a valid email address">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" required title="At least:&#10;- Eight characters&#10;- One uppercase letter&#10;- One lowercase letter&#10;- One number&#10;- One special character">
+					<label for="phone" hidden>Phone Number</label>
+					<span><input type="tel" id="phone" name="phone" required title="&#10;- Numbers only&#10;- No country codes (+###)" oninput="this.value = this.value.replace(/[^0-9]/g, ''); disabledButtonDetector();"><p id="requestCode">Send</p></span>
+					<label for="code" hidden>Code</label>
+					<input type="text" id="code" name="code" required title="&#10;- Numbers only&#10;- Maximum 6 characters" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value.length > 3) { this.value = this.value.slice(0, 3) + ' ' + this.value.slice(3) }; disabledButtonDetector();" maxlength="7">
+					<p id="feedback"></p>
+					<button type="button" disabled>Next</button>
+				</form>
+			</article>
+		</main>
+
+		<script type="text/javascript" src="./scripts/login.js"></script>
+		<script>
+			const inputs = Array.from(formElem.getElementsByTagName('INPUT'));
+			const disabledButtonDetector = () => formElem.getElementsByTagName('BUTTON')[0].disabled = !(inputs.slice(0, 2).every((input) => input.value !== '') || inputs.slice(2, 4).every((input) => input.value !== ''));
+
+			inputs.forEach((input) => {
+				input.addEventListener('input', disabledButtonDetector);
+
+				input.addEventListener('focus', () => {
+					document.getElementById('feedback').innerHTML = '';
+				});
+			});
+		</script>
+	</body>
+</html>
