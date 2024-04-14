@@ -24,6 +24,7 @@ const codeInput = formElem.querySelector("#code");
 
 requestCodeElem.addEventListener("click", askForCode);
 btnElem.addEventListener("click", login);
+
 formElem.addEventListener("keypress", (e) => {
   if (e.key !== "Enter") return;
 
@@ -33,8 +34,8 @@ formElem.addEventListener("keypress", (e) => {
 
 function login() {
   if (btnElem.hasAttribute("disabled")) return;
+  document.getElementById("feedback").innerHTML = "&nbsp;";
 
-  document.getElementById("feedback").innerHTML = "";
   if (!email.hasAttribute("hidden") && !password.hasAttribute("hidden")) {
     validateEmail();
   } else if (!phone.hasAttribute("hidden") && !code.hasAttribute("hidden")) {
@@ -95,6 +96,8 @@ function askForPhoneNumber() {
 }
 
 function askForCode() {
+  document.getElementById("feedback").innerHTML = "&nbsp;";
+
   if (phoneInput.value.trim() == user.phonenumber.trim()) {
     generatedCode = Math.floor(100000 + Math.random() * 900000) + '';
     document.getElementById("feedback").innerHTML = "A text message was sent, please check your phone.";

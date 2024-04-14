@@ -1,5 +1,4 @@
-console.log(process.env.PGUSER);
-
+require('dotenv').config();
 const express = require("express");
 const { resolve } = require("path");
 const { login } = require("./db.js");

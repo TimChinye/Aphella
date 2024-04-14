@@ -19,10 +19,14 @@ module.exports = {
 		email = email.toLowerCase();
     	password = password;
 
-		if (email.endsWith("@aphella.com"))
-			user = (await sql`SELECT * FROM staff WHERE emailaddress = ${email}`)[0];
-		else user = (await sql`SELECT * FROM patient WHERE emailaddress = ${email}`)[0];
+		const type = email.endsWith("@aphella.com") ? 'staff' : 'patient';
+		user = (await sql`SELECT * FROM ${sql(type)} WHERE emailaddress = ${email}`)[0];
+
+		if (user) {
+			if (user.jobId == 'secretary') user.type = 'admin';
+			else user.type = email.endsWith("@aphella.com") ? 'staff' : 'patient';
+		}
 
 		return { user, userInDatabase: !!user };
 	},
-};
+}

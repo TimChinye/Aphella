@@ -40,7 +40,7 @@
 					<span><input type="tel" id="phone" name="phone" required title="&#10;- Numbers only&#10;- No country codes (+###)" oninput="this.value = this.value.replace(/[^0-9]/g, ''); disabledButtonDetector();"><p id="requestCode">Send</p></span>
 					<label for="code" hidden>Code</label>
 					<input type="text" id="code" name="code" required title="&#10;- Numbers only&#10;- Maximum 6 characters" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value.length > 3) { this.value = this.value.slice(0, 3) + ' ' + this.value.slice(3) }; disabledButtonDetector();" maxlength="7">
-					<p id="feedback"></p>
+					<p id="feedback">&nbsp;</p>
 					<button type="button" disabled>Next</button>
 				</form>
 			</article>
@@ -55,7 +55,7 @@
 				input.addEventListener('input', disabledButtonDetector);
 
 				input.addEventListener('focus', () => {
-					document.getElementById('feedback').innerHTML = '';
+					document.getElementById('feedback').innerHTML = "&nbsp;";
 				});
 			});
 		</script>
