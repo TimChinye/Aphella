@@ -182,6 +182,7 @@ main {
         }
 
         img {
+          aspect-ratio: 1 / 1;
           height: inherit;
           border-radius: inherit;
         }

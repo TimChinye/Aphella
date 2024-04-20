@@ -1,7 +1,14 @@
-fetch('/dashboard-content').then(res => res.json()).then(data => {
-  // if (!data.body.user) window.location.href = "/login";
-  console.log(data);
-});
+(async () => {
+  let user = await fetch('/grab/user').then(res => res.json());
+  let job = await fetch('/grab/user/job').then(res => res.json());
+  let appointments = await fetch('/grab/appointments/' + user.staffid).then(res => res.json());
+  
+  console.log(job);
+
+  document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
+  document.getElementById('role').textContent = job.title;
+  document.getElementById('profile-pic').src = user.profilepicturepath.split('http://').join('https://');
+})();
 
 const appointmentStatsElem = document.getElementById('appointments-stats').getElementsByTagName('canvas')[0];
 const config = {

@@ -145,19 +145,27 @@ main {
   > article {
     position: relative;
     font-size: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    img {
-      margin-top: 1rem;
-      margin-right: 1rem;
-      height: 5rem;
-      width: 100%;
-      object-fit: contain;
-      object-position: right;
+    > a {
+      width: min(100%, 19rem);
+      display: inherit;
+      margin-right: -2.5rem;
+      justify-content: flex-end;
+
+      > img {
+        height: 5rem;
+        object-fit: contain;
+      }
     }
 
     h1 {
-      margin: 0 3vw;
-      font-size: 1em;
+      font-size: 0.75em;
+      width: min(100%, 19rem);
+      margin-bottom: 3rem;
+      margin-left: -2.5rem;
     }
 
     form {
@@ -165,6 +173,24 @@ main {
       flex-direction: column;
       width: fit-content;
       margin: 0 auto;
+
+      p {
+        color: #9F6070;
+        font-size: 0.75rem;
+        text-align: center;
+
+        &#requestCode {
+          position: relative;
+          top: -0.5rem;
+          cursor: pointer;
+        }
+      }
+
+      span {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+      }
 
       :is(label, input) {
         font-weight: bold;
@@ -195,16 +221,6 @@ main {
       }
     }
 
-    h1 {
-      margin-bottom: 3rem;
-    }
-
-    form p {
-      color: #9F6070;
-      font-size: 0.75rem;
-      text-align: center;
-    }
-
     button {
       font-size: 0.625em;
       cursor: pointer;
@@ -230,20 +246,6 @@ main {
 
       &:not(:disabled):hover {
         box-shadow: 0 0 5px #80002E;
-      }
-    }
-
-    form {
-      span {
-        display: inline-flex;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      p#requestCode {
-        position: relative;
-        top: -0.5rem;
-        cursor: pointer;
       }
     }
   }

@@ -1,3 +1,10 @@
+(async () => {
+    let user = await fetch('/grab/user').then(res => res.json());
+    let appointments = await fetch('/grab/appointments/' + user.staffid).then(res => res.json());
+    
+    console.log(appointments);
+})();
+
 let currentMonth, currentYear;
 updateCalendar();
 
