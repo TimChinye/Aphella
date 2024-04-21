@@ -14,6 +14,18 @@ const sql = postgres({
 	},
 });
 
+let getPrescriptionsByAppointmentId = async (id) => {
+	return await sql`SELECT * FROM prescription WHERE appointmentid = ${id};`;
+};
+
+let getVitals = async (id) => {
+	return (await sql`SELECT * FROM vitals WHERE patientid = ${id};`)[0];
+};
+
+let getMedicalHistory = async (id) => {
+	return (await sql`SELECT * FROM medicalhistory WHERE patientid = ${id};`)[0];
+};
+
 module.exports = {
 	loginUser: async (email, password) => {
 		email = email.toLowerCase();
@@ -24,7 +36,7 @@ module.exports = {
 
 		return { user, userInDatabase: !!user };
 	},
-	getStaffById: async (id) => {
+	getStaff: async (id) => {
 		const user = (await sql`SELECT * FROM staff WHERE staffid = ${id}`)[0];
 
 		if (user) {
@@ -36,7 +48,7 @@ module.exports = {
 
 		return user;
 	},
-	getPatientById: async (id) => {
+	getPatient: async (id) => {
 		const user = (await sql`SELECT * FROM patient WHERE patientid = ${id}`)[0];
 
 		if (user) {
@@ -46,10 +58,31 @@ module.exports = {
 
 		return user;
 	},
-	getUserJob: async (id) => {
+	getJob: async (id) => {
 		return (await sql`SELECT * FROM job WHERE jobid = ${id};`)[0];
 	},
-	getAppointments: async (id) => {
-		return (await sql`SELECT appt.appointmentid, appt.type, appt.location, appt.dateofvisit, appt.diagnosis, appt.notes, appt.patientid, link.staffid FROM appointment AS appt JOIN appointmentstafflink AS link ON appt.appointmentid = link.appointmentid WHERE link.staffid = ${id};`)[0];
-	}
+	getAppointmentsByStaffId: async (id) => {
+		let appointments = await sql`SELECT appt.appointmentid, appt.type, appt.location, appt.dateofvisit, appt.diagnosis, appt.notes, appt.patientid, link.staffid FROM appointment AS appt JOIN appointmentstafflink AS link ON appt.appointmentid = link.appointmentid WHERE link.staffid = ${id};`;
+
+		appointments = await Promise.all(appointments.map(async (appointment) => {
+			appointment.prescriptions = await getPrescriptionsByAppointmentId(appointment.appointmentid);
+			return appointment;
+		}));
+
+		return appointments;
+	},
+	getPatientsByDoctor: async function (id) {
+		let patients = await sql`SELECT * FROM patient WHERE maindoctor = ${id};`;
+
+		patients = await Promise.all(patients.map(async (patient) => {
+			patient.medicalHistory = await getMedicalHistory(patient.patientid);
+			patient.vitals = await getVitals(patient.patientid);
+			return patient;
+		}));
+
+		return patients;
+	},
+	getPrescriptionsByAppointmentId,
+	getMedicalHistory,
+	getVitals
 }

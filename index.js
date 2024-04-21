@@ -28,7 +28,7 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { resolve } = require("path");
-const { loginUser, getStaffById, getPatientById, getUserJob, getAppointments } = require("./db.js");
+const { loginUser, getStaff, getPatient, getJob, getAppointmentsByStaffId, getPatientsByDoctor } = require("./db.js");
 
 const port = process.env.PORT || process.argv[3] || 3010;
 const app = express();
@@ -64,14 +64,21 @@ app.get("/grab/user", async (req, res) => {
 
 app.get("/grab/user/job", async (req, res) => {
   if (req.user.jobid) {
-    let job = await getUserJob(req.user.jobid);
+    let job = await getJob(req.user.jobid);
     res.status(200).json(job);
-  } else res.status(404).json({ message: 'User does not have a job.' })
+  } else res.status(404).json({ message: 'User is not a staff member.' });
 });
 
-app.get("/grab/appointments/:id", async (req, res) => {
-  let appointments = await getAppointments(req.user.patientid ?? req.user.staffid);
+app.get("/grab/user/appointments", async (req, res) => {
+  let appointments = await getAppointmentsByStaffId(req.user.patientid ?? req.user.staffid);
   res.status(200).json(appointments);
+});
+
+app.get("/grab/user/patients", async (req, res) => {
+  if (req.user.staffid) {
+    let patients = await getPatientsByDoctor(req.user.staffid);
+    res.status(200).json(patients);
+  } else res.status(404).json({ message: 'User is not a staff member.' });
 });
 
 /* Uility Functions */
@@ -106,8 +113,8 @@ passport.deserializeUser(async ({ emailaddress, id}, done) => {
   try {
     let user;
 
-    if (emailaddress.endsWith("@aphella.com")) user = await getStaffById(id);
-    else user = await getPatientById(id);
+    if (emailaddress.endsWith("@aphella.com")) user = await getStaff(id);
+    else user = await getPatient(id);
 
     if (user) return done(null, user);
     else return done(null, false);

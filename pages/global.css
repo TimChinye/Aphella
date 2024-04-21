@@ -236,3 +236,40 @@ main {
     }
   }
 }
+
+:has(#loadingOverlay) {
+  position: relative;
+  
+  > figure {
+    position: absolute;
+    height: 100dvh;
+    width: 100%;
+    background: var(--background-colour);
+    margin: 0;
+    z-index: 1;
+  
+    > div {
+      position: absolute;
+      margin: auto;
+      top: 0; bottom: 0; left: 0; right: 0;
+      width: 6.250em; height: 6.250em;
+      animation: rotate 2.4s linear infinite;
+  
+      .dot {
+        position: absolute;
+        margin: auto;
+        width: 2.4em; height: 2.4em;
+        border-radius: 100%;
+        transition: all 1s ease;
+    
+        &.union { opacity: 0; top: 0; bottom: 0; left: 0; right: 0; background: #FFFFFF; animation: flash 2.4s linear infinite; }
+        &:nth-child(2) { top: 0; bottom: 0; left: 0; background: #FF005d; animation: dotsY 2.4s linear infinite; }
+        &:nth-child(3) { left: 0; right: 0; top: 0; background: #FF0033; animation: dotsX 2.4s linear infinite; }
+        &:nth-child(4) { top: 0; bottom: 0; right: 0; background: #FF0088; animation: dotsY 2.4s linear infinite; }
+        &:nth-child(5) { left: 0; right: 0; bottom: 0; background: #FF00b2; animation: dotsX 2.4s linear infinite; }
+      }
+    }
+  
+    div.stop-animation { animation: none !important; }
+  }
+}

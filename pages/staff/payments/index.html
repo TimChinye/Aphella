@@ -5,11 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
 
-		<base href='/staff/dashboard/'>
+		<base href='/staff/payments/'>
 
-		<link rel="stylesheet" href="./styles.css" />
+		<link rel="stylesheet" href="../../keyframes.css" />
 		<link rel="stylesheet" href="../../global.css" />
-  </head>   
+		<link rel="stylesheet" href="./styles.css" />
+  </head>
   <body>
     <aside>
         <div>
@@ -31,6 +32,16 @@
         </footer>
     </aside>
     <main>
+      <figure id="loadingOverlay">
+        <div>
+          <div class="dot union"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </figure>
+
         <section>
           <div id="wrapper">
             <nav>
@@ -48,7 +59,7 @@
                 </div>
             </nav>
             <header>
-                <h1>Dashboard</h1>
+                <h1>Payments</h1>
                 <div style="display: flex; gap: 1rem;">
                     <button>Make an Appointment</button>
                     <button>Make a Request</button>
@@ -58,10 +69,8 @@
         </section>
     </main>
 
+    <script type="text/javascript" src="../../main.js"></script>
     <script type="text/javascript" src="./script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-    <script>
-      new Chart(appointmentStatsElem, config);
-    </script>
+    
   </body>
 </html>

@@ -1,9 +1,10 @@
 (async () => {
   let user = await fetch('/grab/user').then(res => res.json());
   let job = await fetch('/grab/user/job').then(res => res.json());
-  let appointments = await fetch('/grab/appointments/' + user.staffid).then(res => res.json());
-  
-  console.log(job);
+  let appointments = await fetch('/grab/user/appointments').then(res => res.json());
+  let patients = await fetch('/grab/user/patients').then(res => res.json());
+
+  hideLoadingOverlay();
 
   document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
   document.getElementById('role').textContent = job.title;

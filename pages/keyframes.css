@@ -1,0 +1,22 @@
+
+@keyframes rotate {
+    0% { transform: rotate( 0 ); }
+    10% { width: 6.250em; height: 6.250em; }
+    66% { width: 2.4em; height: 2.4em; }
+    100% { transform: rotate(360deg); width: 6.250em; height: 6.250em; }
+}
+
+@keyframes dotsY {
+    66% { opacity: .1; width: 2.4em; }
+    77% { opacity: 1; width: 0; }
+}
+@keyframes dotsX {
+    66% { opacity: .1; height: 2.4em;}
+    77% { opacity: 1; height: 0; }
+}
+
+@keyframes flash {
+    33% { opacity: 0; border-radius: 0%; }
+    55% { opacity: .6; border-radius: 100%; }
+    66% { opacity: 0; }
+}

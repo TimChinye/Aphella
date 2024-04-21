@@ -7,8 +7,9 @@
 
 		<base href='/staff/dashboard/'>
 
-		<link rel="stylesheet" href="./styles.css" />
+		<link rel="stylesheet" href="../../keyframes.css" />
 		<link rel="stylesheet" href="../../global.css" />
+		<link rel="stylesheet" href="./styles.css" />
   </head>   
   <body>
     <aside>
@@ -31,217 +32,228 @@
         </footer>
     </aside>
     <main>
-        <section>
-          <div id="wrapper">
-            <nav>
-                <search>
-                    <input type="search" placeholder="Search..." />
-                </search>
-                <div id="account">
-                    <img src="https://img.icons8.com/fluency-systems-filled/48/CCCCCC/appointment-reminders.png"/>
-                    <span></span>
-                    <div><img id="profile-pic" src="https://i.imgur.com/vPFN11V.png"/></div>
-                    <div>
-                        <h4 id="name">Siri Mariann</h4>
-                        <h6 id="role">Nurse</h6>
+      <figure id="loadingOverlay">
+        <div>
+          <div class="dot union"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </figure>
+
+      <section>
+        <div id="wrapper">
+          <nav>
+              <search>
+                  <input type="search" placeholder="Search..." />
+              </search>
+              <div id="account">
+                  <img src="https://img.icons8.com/fluency-systems-filled/48/CCCCCC/appointment-reminders.png"/>
+                  <span></span>
+                  <div><img id="profile-pic" src="https://i.imgur.com/vPFN11V.png"/></div>
+                  <div>
+                      <h4 id="name">Siri Mariann</h4>
+                      <h6 id="role">Nurse</h6>
+                  </div>
+              </div>
+          </nav>
+          <header>
+              <h1>Dashboard</h1>
+              <div style="display: flex; gap: 1rem;">
+                  <button>Make an Appointment</button>
+                  <button>Make a Request</button>
+              </div>
+          </header>
+          <div>
+              <article id="patients-today">
+                  <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/guest-male.png" style="filter: brightness(0.95);"/>
+                  <div>
+                      <h5>Patients Today</h5>
+                      <h3>8</h3>
+                  </div>
+              </article>
+              <article id="patients-total">
+                  <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/conference-call.png" style="filter: brightness(1.05);"/>
+                  <div>
+                      <h5>Total Patients</h5>
+                      <h3>364</h3>
+                  </div>
+              </article>
+              <article id="incomplete-requests">
+                  <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/ask-question.png" style="filter: brightness(1.00);"/>
+                  <div>
+                      <h5>Requests</h5>
+                      <h3>20</h3>
+                  </div>
+              </article>
+              <article id="appointments-info">
+                <div id="calendar">
+                  <div id="calendar-header">
+                    <h1>February 2023</h1><!-- Month -->
+                    <div id="calendar-navigation">
+                      <button id="prev-month">&lt;</button>
+                      <button id="next-month">&gt;</button>
                     </div>
+                  </div>
+                  <div id="calendar-days">
+                    <div class="selected-day">
+                      <p>Mon</p>
+                      <strong>25</strong>
+                    </div>
+                    <div>
+                      <p>Tue</p>
+                      <strong>26</strong>
+                    </div>
+                    <div>
+                      <p>Wed</p>
+                      <strong>27</strong>
+                    </div>
+                    <div>
+                      <p>Thu</p>
+                      <strong>28</strong>
+                    </div>
+                    <div>
+                      <p>Fri</p>
+                      <strong>29</strong>
+                    </div>
+                    <div>
+                      <p>Sat</p>
+                      <strong>30</strong>
+                    </div>
+                    <div>
+                      <p>Sun</p>
+                      <strong>31</strong>
+                    </div>
+                  </div>
                 </div>
-            </nav>
-            <header>
-                <h1>Dashboard</h1>
-                <div style="display: flex; gap: 1rem;">
-                    <button>Make an Appointment</button>
-                    <button>Make a Request</button>
+                <div id="appointments">
+                  <h4>Upcoming Appointments</h4>
+                  <div class="day-group">
+                    <h6>Today, 25 Oct</h6>
+                    <div class="appointment">
+                      <span>12:00</span>
+                      <div>
+                        <img src="https://i.imgur.com/vPFN11V.png">
+                        <div>
+                          <h6>Mike Robin</h6>
+                          <p>Consultation</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="appointment">
+                      <span>12:00</span>
+                      <div>
+                        <img src="https://i.imgur.com/vPFN11V.png">
+                        <div>
+                          <h6>Mike Robin</h6>
+                          <p>Consultation</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="day-group">
+                    <h6>Today, 25 Oct</h6>
+                    <div class="appointment">
+                      <span>12:00</span>
+                      <div>
+                        <img src="https://i.imgur.com/vPFN11V.png">
+                        <div>
+                          <h6>Mike Robin</h6>
+                          <p>Consultation</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="appointment">
+                      <span>12:00</span>
+                      <div>
+                        <img src="https://i.imgur.com/vPFN11V.png">
+                        <div>
+                          <h6>Mike Robin</h6>
+                          <p>Consultation</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="day-group">
+                    <h6>Today, 25 Oct</h6>
+                    <div class="appointment">
+                      <span>12:00</span>
+                      <div>
+                        <img src="https://i.imgur.com/vPFN11V.png">
+                        <div>
+                          <h6>Mike Robin</h6>
+                          <p>Consultation</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="appointment">
+                      <span>12:00</span>
+                      <div>
+                        <img src="https://i.imgur.com/vPFN11V.png">
+                        <div>
+                          <h6>Mike Robin</h6>
+                          <p>Consultation</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </header>
-            <div>
-                <article id="patients-today">
-                    <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/guest-male.png" style="filter: brightness(0.95);"/>
+              </article>
+              <article id="appointments-stats">
+                <h1>Appointments Statistics</h1>
+                <div id="appts-stats-filter">
+                  <div>
+                    <h4>February 2024</h4>
                     <div>
-                        <h5>Patients Today</h5>
-                        <h3>8</h3>
-                    </div>
-                </article>
-                <article id="patients-total">
-                    <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/conference-call.png" style="filter: brightness(1.05);"/>
-                    <div>
-                        <h5>Total Patients</h5>
-                        <h3>364</h3>
-                    </div>
-                </article>
-                <article id="incomplete-requests">
-                    <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/ask-question.png" style="filter: brightness(1.00);"/>
-                    <div>
-                        <h5>Requests</h5>
-                        <h3>20</h3>
-                    </div>
-                </article>
-                <article id="appointments-info">
-                  <div id="calendar">
-                    <div id="calendar-header">
-                      <h1>February 2023</h1><!-- Month -->
-                      <div id="calendar-navigation">
-                        <button id="prev-month">&lt;</button>
-                        <button id="next-month">&gt;</button>
-                      </div>
-                    </div>
-                    <div id="calendar-days">
-                      <div class="selected-day">
-                        <p>Mon</p>
-                        <strong>25</strong>
-                      </div>
-                      <div>
-                        <p>Tue</p>
-                        <strong>26</strong>
-                      </div>
-                      <div>
-                        <p>Wed</p>
-                        <strong>27</strong>
-                      </div>
-                      <div>
-                        <p>Thu</p>
-                        <strong>28</strong>
-                      </div>
-                      <div>
-                        <p>Fri</p>
-                        <strong>29</strong>
-                      </div>
-                      <div>
-                        <p>Sat</p>
-                        <strong>30</strong>
-                      </div>
-                      <div>
-                        <p>Sun</p>
-                        <strong>31</strong>
-                      </div>
+                      <button>&lt;</button>
+                      <button>&gt;</button>
                     </div>
                   </div>
-                  <div id="appointments">
-                    <h4>Upcoming Appointments</h4>
-                    <div class="day-group">
-                      <h6>Today, 25 Oct</h6>
-                      <div class="appointment">
-                        <span>12:00</span>
-                        <div>
-                          <img src="https://i.imgur.com/vPFN11V.png">
-                          <div>
-                            <h6>Mike Robin</h6>
-                            <p>Consultation</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="appointment">
-                        <span>12:00</span>
-                        <div>
-                          <img src="https://i.imgur.com/vPFN11V.png">
-                          <div>
-                            <h6>Mike Robin</h6>
-                            <p>Consultation</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="day-group">
-                      <h6>Today, 25 Oct</h6>
-                      <div class="appointment">
-                        <span>12:00</span>
-                        <div>
-                          <img src="https://i.imgur.com/vPFN11V.png">
-                          <div>
-                            <h6>Mike Robin</h6>
-                            <p>Consultation</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="appointment">
-                        <span>12:00</span>
-                        <div>
-                          <img src="https://i.imgur.com/vPFN11V.png">
-                          <div>
-                            <h6>Mike Robin</h6>
-                            <p>Consultation</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="day-group">
-                      <h6>Today, 25 Oct</h6>
-                      <div class="appointment">
-                        <span>12:00</span>
-                        <div>
-                          <img src="https://i.imgur.com/vPFN11V.png">
-                          <div>
-                            <h6>Mike Robin</h6>
-                            <p>Consultation</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="appointment">
-                        <span>12:00</span>
-                        <div>
-                          <img src="https://i.imgur.com/vPFN11V.png">
-                          <div>
-                            <h6>Mike Robin</h6>
-                            <p>Consultation</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-                <article id="appointments-stats">
-                  <h1>Appointments Statistics</h1>
-                  <div id="appts-stats-filter">
-                    <div>
-                      <h4>February 2024</h4>
-                      <div>
-                        <button>&lt;</button>
-                        <button>&gt;</button>
-                      </div>
-                    </div>
-                    <select name="frequency">
-                      <option value="hourly">Hourly</option>
-                      <option value="daily" selected>Daily</option>
-                      <option value="weekly">Weekly</option>
-                      <option value="monthly">Monthly</option>
-                    </select>
-                  </div>
-                  <figure><canvas></canvas></figure>
-                </article>
-                <article id="latest-patient-info">
-                  <h1>Latest Patients</h1>
-                  <table>
-                    <tr>
-                      <th>ID</th>
-                      <th>Date</th>
-                      <th>Name</th>
-                      <th>Chronic Conditions</th>
-                    </tr>
-                    <tr>
-                      <td>312</td>
-                      <td>Kiki Allman</td>
-                      <td>Corbin Oakley</td>
-                      <td>High Cholesterol</td>
-                    </tr>
-                    <tr>
-                      <td>312</td>
-                      <td>Kiki Allman</td>
-                      <td>Corbin Oakley</td>
-                      <td>High Cholesterol</td>
-                    </tr>
-                    <tr>
-                      <td>312</td>
-                      <td>Kiki Allman</td>
-                      <td>Corbin Oakley</td>
-                      <td>High Cholesterol</td>
-                    </tr>
-                  </table>
-                </article>
-            </div>
+                  <select name="frequency">
+                    <option value="hourly">Hourly</option>
+                    <option value="daily" selected>Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                  </select>
+                </div>
+                <figure><canvas></canvas></figure>
+              </article>
+              <article id="latest-patient-info">
+                <h1>Latest Patients</h1>
+                <table>
+                  <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Chronic Conditions</th>
+                  </tr>
+                  <tr>
+                    <td>312</td>
+                    <td>Kiki Allman</td>
+                    <td>Corbin Oakley</td>
+                    <td>High Cholesterol</td>
+                  </tr>
+                  <tr>
+                    <td>312</td>
+                    <td>Kiki Allman</td>
+                    <td>Corbin Oakley</td>
+                    <td>High Cholesterol</td>
+                  </tr>
+                  <tr>
+                    <td>312</td>
+                    <td>Kiki Allman</td>
+                    <td>Corbin Oakley</td>
+                    <td>High Cholesterol</td>
+                  </tr>
+                </table>
+              </article>
           </div>
-        </section>
+        </div>
+      </section>
     </main>
 
+    <script type="text/javascript" src="../../main.js"></script>
     <script type="text/javascript" src="./script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
     <script>

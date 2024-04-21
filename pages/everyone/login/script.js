@@ -1,3 +1,5 @@
+if (new URLSearchParams(window.location.search).has('dev')) forceLogin('lurleen.yearne@aphella.com');
+
 let firstname = null, generatedCode = null;
 
 const blankLoginCredentials = {
