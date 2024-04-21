@@ -129,6 +129,10 @@ main {
   display: inherit;
   flex: 1;
   overflow: auto;
+  --scrollbar-width: 12px;
+  --scrollbar-thumb-colour: linear-gradient(var(--primary-colour), var(--trinary-colour));
+  --scrollbar-thumb-solid-colour: var(--primary-colour);
+  --scrollbar-track-colour: var(--panel-bg-colour);
 
   nav {
     width: 100%;
@@ -235,9 +239,47 @@ main {
       margin: 0 auto;
     }
   }
+
+  @supports (scrollbar-color: auto) {
+    & {
+      scrollbar-color: var(--scrollbar-thumb-colour) var(--scrollbar-track-colour);
+      scrollbar-width: var(--scrollbar-width);
+    }
+
+    @supports not (background: linear-gradient(#000, #FFF)) {
+      & {
+        scrollbar-color: var(--scrollbar-thumb-solid-colour) var(--scrollbar-track-colour);
+      }
+    }
+  }
+  
+  @supports selector(::-webkit-scrollbar) {
+    &::-webkit-scrollbar {
+      height: var(--scrollbar-width);
+      width: var(--scrollbar-width);
+      background-color: var(--scrollbar-track-colour);
+    }
+      
+    &::-webkit-scrollbar-thumb {
+      background-image: var(--scrollbar-thumb-colour);
+      border-radius: 999px;
+      background-clip: padding-box;
+      border: calc(var(--scrollbar-width) / 4) solid transparent;
+    }
+
+    &::-webkit-scrollbar-corner {
+      background-color: var(--scrollbar-track-colour);
+    }
+
+    @supports not (background: linear-gradient(#000, #FFF)) {
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--scrollbar-thumb-solid-colour);
+      }
+    }
+  }
 }
 
-:has(#loadingOverlay) {
+:has(> #loadingOverlay) {
   position: relative;
   
   > figure {
@@ -271,5 +313,9 @@ main {
     }
   
     div.stop-animation { animation: none !important; }
+  }
+
+  > figure:not([hidden]) + * {
+    overflow: hidden;
   }
 }

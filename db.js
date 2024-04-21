@@ -62,7 +62,7 @@ module.exports = {
 		return (await sql`SELECT * FROM job WHERE jobid = ${id};`)[0];
 	},
 	getAppointmentsByStaffId: async (id) => {
-		let appointments = await sql`SELECT appt.appointmentid, appt.type, appt.location, appt.dateofvisit, appt.diagnosis, appt.notes, appt.patientid, link.staffid FROM appointment AS appt JOIN appointmentstafflink AS link ON appt.appointmentid = link.appointmentid WHERE link.staffid = ${id};`;
+		let appointments = await sql`SELECT * FROM appointment AS appt JOIN appointmentstafflink AS link ON appt.appointmentid = link.appointmentid WHERE link.staffid = ${id};`;
 
 		appointments = await Promise.all(appointments.map(async (appointment) => {
 			appointment.prescriptions = await getPrescriptionsByAppointmentId(appointment.appointmentid);

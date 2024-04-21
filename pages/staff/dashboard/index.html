@@ -51,10 +51,10 @@
               <div id="account">
                   <img src="https://img.icons8.com/fluency-systems-filled/48/CCCCCC/appointment-reminders.png"/>
                   <span></span>
-                  <div><img id="profile-pic" src="https://i.imgur.com/vPFN11V.png"/></div>
+                  <div><img id="profile-pic"></div>
                   <div>
-                      <h4 id="name">Siri Mariann</h4>
-                      <h6 id="role">Nurse</h6>
+                      <h4 id="name"></h4>
+                      <h6 id="role"></h6>
                   </div>
               </div>
           </nav>
@@ -73,10 +73,10 @@
                       <h3>8</h3>
                   </div>
               </article>
-              <article id="patients-total">
+              <article id="regular-patients-total">
                   <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/conference-call.png" style="filter: brightness(1.05);"/>
                   <div>
-                      <h5>Total Patients</h5>
+                      <h5>Total Regular Patients</h5>
                       <h3>364</h3>
                   </div>
               </article>
@@ -253,11 +253,8 @@
       </section>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
     <script type="text/javascript" src="../../main.js"></script>
     <script type="text/javascript" src="./script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-    <script>
-      new Chart(appointmentStatsElem, config);
-    </script>
   </body>
 </html>

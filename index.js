@@ -70,7 +70,9 @@ app.get("/grab/user/job", async (req, res) => {
 });
 
 app.get("/grab/user/appointments", async (req, res) => {
-  let appointments = await getAppointmentsByStaffId(req.user.patientid ?? req.user.staffid);
+  let appointments = req.user.type == 'patient' 
+  ? await getAppointmentsByPatientId(req.user.patientid) 
+  : await getAppointmentsByStaffId(req.user.staffid);
   res.status(200).json(appointments);
 });
 

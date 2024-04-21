@@ -1,40 +1,25 @@
-(async () => {
-  let user = await fetch('/grab/user').then(res => res.json());
-  let job = await fetch('/grab/user/job').then(res => res.json());
-  let appointments = await fetch('/grab/user/appointments').then(res => res.json());
-  let patients = await fetch('/grab/user/patients').then(res => res.json());
-
-  hideLoadingOverlay();
-
-  document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
-  document.getElementById('role').textContent = job.title;
-  document.getElementById('profile-pic').src = user.profilepicturepath.split('http://').join('https://');
-})();
-
 const appointmentStatsElem = document.getElementById('appointments-stats').getElementsByTagName('canvas')[0];
-const config = {
+let chart = new Chart(appointmentStatsElem, {
   type: 'line',
   data: {
     labels: ['18 Oct', '19 Oct', '20 Oct', '21 Oct', '22 Oct', '23 Oct', '24 Oct'],
-    datasets: [
-      {
-        data: [3, 17, 6, 20, 2, 22, 7],
-        borderCapStyle: 'round',
-        borderColor: '#C40148',
-        
-        pointBackgroundColor: 'transparent',
-        pointBorderColor: '#FFFFFF',
-        pointBorderWidth: 0,
-        pointRadius: 5,
-        
-        pointHoverBackgroundColor: '#FF005D',
-        pointHoverBorderColor: '#FFFFFF',
-        pointHoverBorderWidth: 3,
-        
-        lineTension: 0.4,
-        fill: false
-      }
-    ]
+    datasets: [{
+      data: [3, 17, 6, 20, 2, 22, 7],
+      borderCapStyle: 'round',
+      borderColor: '#C40148',
+      
+      pointBackgroundColor: 'transparent',
+      pointBorderColor: '#FFFFFF',
+      pointBorderWidth: 0,
+      pointRadius: 5,
+      
+      pointHoverBackgroundColor: '#FF005D',
+      pointHoverBorderColor: '#FFFFFF',
+      pointHoverBorderWidth: 3,
+      
+      lineTension: 0.4,
+      fill: false
+    }]
   },
   options: {
     responsive: true,
@@ -142,4 +127,34 @@ const config = {
       }
     }
   }
-};
+});
+
+(async () => {
+  let user = await fetch('/grab/user').then(res => res.json());
+  let job = await fetch('/grab/user/job').then(res => res.json());
+  let appointments = await fetch('/grab/user/appointments').then(res => res.json());
+  let patients = await fetch('/grab/user/patients').then(res => res.json());
+
+  hideLoadingOverlay();
+
+  document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
+  document.getElementById('role').textContent = job.title;
+  document.getElementById('profile-pic').src = user.profilepicturepath;
+
+  document.getElementById('patients-today').getElementsByTagName('h3')[0].textContent = appointments.filter((appt) => new Date(appt.dateofvisit).setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0)).length;
+  document.getElementById('regular-patients-total').getElementsByTagName('h3')[0].textContent = patients.filter((pat) => pat.maindoctor == user.staffid).length;
+  document.getElementById('incomplete-requests').getElementsByTagName('h3')[0].textContent = '0';
+
+  let dailyAppointments = {};
+  appointments.forEach((appt) => {
+    let dateKey = new Date(appt.dateofvisit);
+    dateKey = dateKey.setHours(0, 0, 0, 0);
+    if (dailyAppointments[dateKey]) {
+      dailyAppointments[dateKey].push(appt);
+    } else {
+      dailyAppointments[dateKey] = [appt]; // Initialize with an array containing the appt
+    }
+  });
+  console.log(dailyAppointments);
+  
+})();

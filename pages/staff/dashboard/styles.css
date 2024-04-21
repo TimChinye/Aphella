@@ -136,7 +136,7 @@ main {
 
       > div {
         flex: 1;
-        padding: 1rem 0;
+        padding: 1rem 1ex;
         border-radius: 0.5rem;
         display: inherit;
         flex-direction: column;

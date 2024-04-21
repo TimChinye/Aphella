@@ -5,6 +5,8 @@
     
     hideLoadingOverlay();
 
+    console.log(appointments);
+
     document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
     document.getElementById('role').textContent = job.title;
     document.getElementById('profile-pic').src = user.profilepicturepath.split('http://').join('https://');
