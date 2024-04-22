@@ -2,9 +2,10 @@ const appointmentStatsElem = document.getElementById('appointments-stats').getEl
 let chart = new Chart(appointmentStatsElem, {
   type: 'line',
   data: {
-    labels: ['18 Oct', '19 Oct', '20 Oct', '21 Oct', '22 Oct', '23 Oct', '24 Oct'],
+    labels: [],
     datasets: [{
-      data: [3, 17, 6, 20, 2, 22, 7],
+      data: [],
+      
       borderCapStyle: 'round',
       borderColor: '#C40148',
       
