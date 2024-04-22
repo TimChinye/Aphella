@@ -129,8 +129,8 @@ main {
   display: inherit;
   flex: 1;
   overflow: auto;
-  --scrollbar-width: 12px;
-  --scrollbar-thumb-colour: linear-gradient(var(--primary-colour), var(--trinary-colour));
+  --scrollbar-width: 8px;
+  --scrollbar-thumb-colour: var(--primary-colour), var(--trinary-colour);
   --scrollbar-track-colour: var(--panel-bg-colour);
 
   nav {
@@ -241,7 +241,7 @@ main {
 
   @supports (scrollbar-color: auto) {
     & {
-      scrollbar-color: var(--scrollbar-thumb-colour) var(--scrollbar-track-colour);
+      scrollbar-color: linear-gradient(var(--scrollbar-thumb-colour)) var(--scrollbar-track-colour);
       scrollbar-width: var(--scrollbar-width);
     }
   }
@@ -254,10 +254,14 @@ main {
     }
       
     &::-webkit-scrollbar-thumb {
-      background-image: var(--scrollbar-thumb-colour);
+      background-image: linear-gradient(var(--scrollbar-thumb-colour));
       border-radius: 999px;
       background-clip: padding-box;
       border: calc(var(--scrollbar-width) / 4) solid transparent;
+    }
+      
+    &::-webkit-scrollbar-thumb:horizontal {
+      background-image: linear-gradient(90deg, var(--scrollbar-thumb-colour));
     }
 
     &::-webkit-scrollbar-corner {

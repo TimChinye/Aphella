@@ -17,7 +17,7 @@ let chart = new Chart(appointmentStatsElem, {
       pointHoverBorderColor: '#FFFFFF',
       pointHoverBorderWidth: 3,
       
-      lineTension: 0.4,
+      lineTension: 0.3,
       fill: false
     }]
   },
@@ -129,11 +129,15 @@ let chart = new Chart(appointmentStatsElem, {
   }
 });
 
+const fetchJson = url => fetch(url).then(res => res.json());
+
 (async () => {
-  let user = await fetch('/grab/user').then(res => res.json());
-  let job = await fetch('/grab/user/job').then(res => res.json());
-  let appointments = await fetch('/grab/user/appointments').then(res => res.json());
-  let patients = await fetch('/grab/user/patients').then(res => res.json());
+  const [user, job, appointments, patients] = await Promise.all([
+    fetchJson('/grab/user'),
+    fetchJson('/grab/user/job'),
+    fetchJson('/grab/user/appointments'),
+    fetchJson('/grab/user/patients')
+  ]);
 
   hideLoadingOverlay();
 
@@ -141,20 +145,60 @@ let chart = new Chart(appointmentStatsElem, {
   document.getElementById('role').textContent = job.title;
   document.getElementById('profile-pic').src = user.profilepicturepath;
 
-  document.getElementById('patients-today').getElementsByTagName('h3')[0].textContent = appointments.filter((appt) => new Date(appt.dateofvisit).setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0)).length;
-  document.getElementById('regular-patients-total').getElementsByTagName('h3')[0].textContent = patients.filter((pat) => pat.maindoctor == user.staffid).length;
-  document.getElementById('incomplete-requests').getElementsByTagName('h3')[0].textContent = '0';
+  const today = new Date();
+  const countAppointmentsToday = appointments.filter(appt => new Date(appt.dateofvisit).setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)).length;
+  const countRegularPatients = patients.filter(pat => pat.maindoctor === user.staffid).length;
 
-  let dailyAppointments = {};
-  appointments.forEach((appt) => {
-    let dateKey = new Date(appt.dateofvisit);
-    dateKey = dateKey.setHours(0, 0, 0, 0);
-    if (dailyAppointments[dateKey]) {
-      dailyAppointments[dateKey].push(appt);
-    } else {
-      dailyAppointments[dateKey] = [appt]; // Initialize with an array containing the appt
-    }
-  });
-  console.log(dailyAppointments);
+  document.querySelector('#patients-today h3').textContent = countAppointmentsToday;
+  document.querySelector('#regular-patients-total h3').textContent = countRegularPatients;
+  document.querySelector('#incomplete-requests h3').textContent = '0';
+
+  const dailyAppointments = appointments.reduce((acc, appt) => {
+    const date = new Date(appt.dateofvisit);
+    const dateKey = date.setHours(0, 0, 0, 0);
+    acc[dateKey] = [...(acc[dateKey] || []), appt];
+    return acc;
+  }, {});
   
+  const formattedDailyAppts = Object.entries(dailyAppointments)
+  .sort(([a], [b]) => a - b)
+  .map(([timestamp, dAppt]) => [Number(timestamp), [new Date(Number(timestamp)).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' }), dAppt.length]]);
+
+  // Get the range for the current week
+  const currentWeek = today;
+  currentWeek.setDate(currentWeek.getDate() - 3); // Set the current date as the centre
+
+  let weekOfAppts = getWeekOfAppointments(currentWeek, formattedDailyAppts);
+
+  // Initially set the chart to the current week
+  updateChartDate(weekOfAppts, chart);
+  
+  // Update chart to other weeks
+  Array.from(document.querySelectorAll('#appts-stats-filter button')).forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      let interval = 7;
+      currentWeek.setDate(currentWeek.getDate() + (i ? interval : -interval));
+
+      weekOfAppts = getWeekOfAppointments(currentWeek, formattedDailyAppts);
+      updateChartDate(weekOfAppts);
+    });
+  });
 })();
+
+// Function to update the chart data
+function updateChartDate(weekOfAppts) {
+  chart.data.labels = weekOfAppts.map(([timestamp]) => new Date(Number(timestamp)).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' }));
+  chart.data.datasets[0].data = weekOfAppts.map(([, [, appointments]]) => appointments);
+  chart.update();
+
+  let displayMonth = document.querySelector('#appts-stats-filter h4');
+
+  let curMonth = new Date(Number(weekOfAppts[3][0])).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+  if (displayMonth.textContent != curMonth) displayMonth.textContent = curMonth;
+}
+
+function getWeekOfAppointments(currentWeek, allAppointments) {
+  const newWeek = new Date(currentWeek); // Clones the date such that any alterations in this function don't affect the "currentWeek"
+  const weekTimestamps = [newWeek.getTime(), ...Array.from({length: 6}, (_, i) => (newWeek.setDate(newWeek.getDate() + 1)))]; // Get week's worth of timestamps
+  return weekTimestamps.map(timestamp => allAppointments.find(([apptTimestamp]) => apptTimestamp == timestamp) || [timestamp, [new Date(Number(timestamp)).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' }), 0]]); // Append appointments to each day
+}

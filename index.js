@@ -63,24 +63,36 @@ app.get("/grab/user", async (req, res) => {
 });
 
 app.get("/grab/user/job", async (req, res) => {
-  if (req.user.jobid) {
-    let job = await getJob(req.user.jobid);
-    res.status(200).json(job);
-  } else res.status(404).json({ message: 'User is not a staff member.' });
+  if (req.user) {
+    if (req.user.jobid) {
+      let job = await getJob(req.user.jobid);
+      res.status(200).json(job);
+    } else res.status(404).json({ message: 'User is not a staff member.' });
+  } else {
+    res.redirect('/login');
+  }
 });
 
 app.get("/grab/user/appointments", async (req, res) => {
-  let appointments = req.user.type == 'patient' 
-  ? await getAppointmentsByPatientId(req.user.patientid) 
-  : await getAppointmentsByStaffId(req.user.staffid);
-  res.status(200).json(appointments);
+  if (req.user) {
+    let appointments = req.user.type == 'patient' 
+    ? await getAppointmentsByPatientId(req.user.patientid) 
+    : await getAppointmentsByStaffId(req.user.staffid);
+    res.status(200).json(appointments);
+  } else {
+    res.redirect('/login');
+  }
 });
 
 app.get("/grab/user/patients", async (req, res) => {
-  if (req.user.staffid) {
-    let patients = await getPatientsByDoctor(req.user.staffid);
-    res.status(200).json(patients);
-  } else res.status(404).json({ message: 'User is not a staff member.' });
+  if (req.user) {
+    if (req.user.staffid) {
+      let patients = await getPatientsByDoctor(req.user.staffid);
+      res.status(200).json(patients);
+    } else res.status(404).json({ message: 'User is not a staff member.' });
+  } else {
+    res.redirect('/login');
+  }
 });
 
 /* Uility Functions */
