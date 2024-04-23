@@ -142,64 +142,216 @@ const fetchJson = url => fetch(url).then(res => res.json());
 
   hideLoadingOverlay();
 
+  /* Fill the basic info */
+
   document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
   document.getElementById('role').textContent = job.title;
   document.getElementById('profile-pic').src = user.profilepicturepath;
 
-  const today = new Date();
-  const countAppointmentsToday = appointments.filter(appt => new Date(appt.dateofvisit).setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)).length;
+  const countAppointmentsToday = appointments.filter(appt => new Date(appt.dateofvisit).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)).length;
   const countRegularPatients = patients.filter(pat => pat.maindoctor === user.staffid).length;
 
   document.querySelector('#patients-today h3').textContent = countAppointmentsToday;
   document.querySelector('#regular-patients-total h3').textContent = countRegularPatients;
   document.querySelector('#incomplete-requests h3').textContent = '0';
 
-  const dailyAppointments = appointments.reduce((acc, appt) => {
-    const date = new Date(appt.dateofvisit);
-    const dateKey = date.setHours(0, 0, 0, 0);
-    acc[dateKey] = [...(acc[dateKey] || []), appt];
-    return acc;
-  }, {});
-  
-  const formattedDailyAppts = Object.entries(dailyAppointments)
-  .sort(([a], [b]) => a - b)
-  .map(([timestamp, dAppt]) => [Number(timestamp), [new Date(Number(timestamp)).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' }), dAppt.length]]);
+  /* Appointment Statistics */
 
-  // Get the range for the current week
-  const currentWeek = today;
-  currentWeek.setDate(currentWeek.getDate() - 3); // Set the current date as the centre
+  // Set initial date to display
+  let currentDate = new Date(getPeriodStart());
 
-  let weekOfAppts = getWeekOfAppointments(currentWeek, formattedDailyAppts);
+  // Groups appointments by date
+  let formattedAppts = groupAppointments(appointments);
+
+  // The grouped appointments to be displayed
+  let currentAppts = getPeriodOfAppointments(currentDate, formattedAppts);
 
   // Initially set the chart to the current week
-  updateChartDate(weekOfAppts, chart);
+  updateChartDate(currentAppts, chart);
   
   // Update chart to other weeks
   Array.from(document.querySelectorAll('#appts-stats-filter button')).forEach((btn, i) => {
     btn.addEventListener('click', () => {
-      let interval = 7;
-      currentWeek.setDate(currentWeek.getDate() + (i ? interval : -interval));
+      // console.log(currentDate);
+      switch (document.querySelector('#appts-stats-filter select').value) {
+        case 'hourly':
+          currentDate.setHours(currentDate.getHours() + (i ? 24 : -24));
+          break;
+        case 'daily':
+          currentDate.setDate(currentDate.getDate() + (i ? 7 : -7));
+          break;
+        case 'weekly':
+          for (let iteration = 0; iteration < 5; iteration++) {
+            // Get the day of the week (0 is Sunday, 1 is Monday, etc.)
+            let currentDay = currentDate.getDay();
 
-      weekOfAppts = getWeekOfAppointments(currentWeek, formattedDailyAppts);
-      updateChartDate(weekOfAppts);
+            if (currentDay == 1) { // it's a monday go back a week
+              let previousDate = new Date(currentDate);
+              currentDate.setDate(currentDate.getDate() + (i ? 7 : -7));
+
+              if (previousDate.getDate() != 1 && currentDate.getMonth() !== previousDate.getMonth()) {
+                currentDate.setMonth(currentDate.getMonth() + (i ? 0 : 1));
+                currentDate.setDate(1);
+              }
+            } else { // it's not a monday so go back to nearest monday
+              currentDate.setDate(i ? currentDate.getDate() + ((8 - currentDate.getDay()) % 7 || 7) : currentDate.getDate() - ((currentDate.getDay() + 6) % 7));
+            }
+          }
+          break;
+        case 'monthly':
+          currentDate.setMonth(currentDate.getMonth() + (i ? 4 : -4));
+          break;
+      }
+
+      /* There's an issue with the code above */
+      
+      // console.log(currentDate);
+      currentAppts = getPeriodOfAppointments(currentDate, formattedAppts);
+      updateChartDate(currentAppts);
     });
+  });
+
+  document.querySelector('#appts-stats-filter select').addEventListener('change', () => {
+    formattedAppts = groupAppointments(appointments);
+
+    currentDate = new Date(getPeriodStart());
+    currentAppts = getPeriodOfAppointments(currentDate, formattedAppts);
+    updateChartDate(currentAppts);
   });
 })();
 
 // Function to update the chart data
 function updateChartDate(weekOfAppts) {
-  chart.data.labels = weekOfAppts.map(([timestamp]) => new Date(Number(timestamp)).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' }));
+  chart.data.labels = weekOfAppts.map(([, [label]]) => label);
   chart.data.datasets[0].data = weekOfAppts.map(([, [, appointments]]) => appointments);
   chart.update();
 
-  let displayMonth = document.querySelector('#appts-stats-filter h4');
+  let displayDate = document.querySelector('#appts-stats-filter h4');
 
-  let curMonth = new Date(Number(weekOfAppts[3][0])).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
-  if (displayMonth.textContent != curMonth) displayMonth.textContent = curMonth;
+  let curDisplay = new Date(Number(weekOfAppts[Math.floor(weekOfAppts.length / 2)][0]));
+
+  switch (document.querySelector('#appts-stats-filter select').value) {
+    case 'hourly':
+      curDisplay = curDisplay.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      break;
+    case 'daily':
+      curDisplay = curDisplay.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+      break;
+    case 'weekly':
+      curDisplay = curDisplay.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+      break;
+    case 'monthly':
+      curDisplay = curDisplay.toLocaleDateString('en-US', { year: 'numeric' });
+      break;
+  }
+
+  if (displayDate.textContent != curDisplay) displayDate.textContent = curDisplay;
 }
 
-function getWeekOfAppointments(currentWeek, allAppointments) {
-  const newWeek = new Date(currentWeek); // Clones the date such that any alterations in this function don't affect the "currentWeek"
-  const weekTimestamps = [newWeek.getTime(), ...Array.from({length: 6}, (_, i) => (newWeek.setDate(newWeek.getDate() + 1)))]; // Get week's worth of timestamps
-  return weekTimestamps.map(timestamp => allAppointments.find(([apptTimestamp]) => apptTimestamp == timestamp) || [timestamp, [new Date(Number(timestamp)).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' }), 0]]); // Append appointments to each day
+function getPeriodStart(providedDate = new Date()) {
+  let date = new Date(resetDate(providedDate));
+  switch (document.querySelector('#appts-stats-filter select').value) {
+    case 'hourly':
+      return date.setHours(0, 0, 0, 0); // Current Day
+    case 'daily':
+      return date.setDate(date.getDate() - 3); // Set's current day to be the middle
+    case 'weekly':
+      return date.setDate(date.getDate() - 2 * 7); // Set's current week to be the middle
+    case 'monthly':
+      return date.setMonth(date.getMonth() - 3);  // Set's current month to be in the middle
+  }
+}
+
+// Sets the date back to the start of the chosen period
+function resetDate(date) {
+  switch (document.querySelector('#appts-stats-filter select').value) {
+    case 'hourly':
+      return date.setMinutes(0, 0, 0); // Current Day & Hour
+    case 'daily':
+      return date.setHours(0, 0, 0, 0); // Current Day
+    case 'weekly':
+      date.setHours(0, 0, 0, 0);
+      let currentDate = new Date(date);
+      date.setDate(date.getDate() - date.getDay() + 1) // First day of the week
+      return (date.getMonth() == currentDate.getMonth()) ? date.getTime() : currentDate.setDate(1);
+    case 'monthly':
+      date.setHours(0, 0, 0, 0);
+      return date.setDate(1); // First day of Current Month
+  }
+}
+
+function formatDate(date) {
+  switch (document.querySelector('#appts-stats-filter select').value) {
+    case 'hourly':
+      return date.toLocaleTimeString('en-GB', { hour: '2-digit', minute:'2-digit' }) // test
+    case 'daily':
+      return date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' }) // test
+    case 'weekly':
+      const firstMonday = (7 - date.getDay()) % 7;
+      const weekOfMonth = Math.ceil((date.getDate() + firstMonday) / 7);
+      const month = date.toLocaleDateString('en-GB', { month: 'short' });
+      return `Wk ${weekOfMonth}, ${month}`;
+    case 'monthly':
+      date.setHours(0, 0, 0, 0);
+      return date.toLocaleDateString('en-GB', { month: 'short' }) // test
+  }
+};
+
+function groupAppointments(appointments) {
+  const periodicAppointments = appointments.reduce((acc, appt) => {
+    const date = new Date(appt.dateofvisit);
+
+    let dateKey = resetDate(date);
+    acc[dateKey] = [...(acc[dateKey] || []), appt];
+
+    return acc;
+  }, {});
+  
+  return Object.entries(periodicAppointments)
+  .sort(([a], [b]) => a - b)
+  .map(([timestamp, dAppt]) => {
+    timestamp = Number(timestamp);
+    return [timestamp, [formatDate(new Date(timestamp)), dAppt.length]];
+  });
+}
+
+function getPeriodOfAppointments(currentPeriodStart, allAppointments) {
+  const newPeriodStart = new Date(currentPeriodStart); // Clones the date such that original date isn't affected
+  let periodTimestamps;
+  
+  switch(document.querySelector('#appts-stats-filter select').value) {
+    case 'hourly':
+      periodTimestamps = [newPeriodStart.getTime() + '', ...Array.from({length: 23}, (_, i) => (newPeriodStart.setHours(newPeriodStart.getHours() + 1)) + '')]; // Get a day's worth of timestamps
+      break;
+      case 'daily':
+        periodTimestamps = [newPeriodStart.getTime() + '', ...Array.from({length: 6}, (_, i) => (newPeriodStart.setDate(newPeriodStart.getDate() + 1)) + '')]; // Get a week's worth of timestamps
+        break;
+    case 'weekly':
+      periodTimestamps = [];
+
+      for (let iteration = 0; iteration < 5; iteration++) {
+        periodTimestamps.push(newPeriodStart.getTime() + '');
+
+        // Get the day of the week (0 is Sunday, 1 is Monday, etc.)
+        let currentDay = newPeriodStart.getDay();
+
+        if (currentDay == 1) { // it's a monday go back a week
+          let previousDate = new Date(newPeriodStart);
+          newPeriodStart.setDate(newPeriodStart.getDate() + 7);
+
+          if (previousDate.getDate() != 1 && newPeriodStart.getMonth() !== previousDate.getMonth()) {
+            newPeriodStart.setMonth(newPeriodStart.getMonth() + 0);
+            newPeriodStart.setDate(1);
+          }
+        } else { // it's not a monday so go back to next monday
+          newPeriodStart.setDate(newPeriodStart.getDate() + ((8 - newPeriodStart.getDay()) % 7 || 7));
+        }
+      }
+      break;
+    case 'monthly':
+      periodTimestamps = [newPeriodStart.getTime() + '', ...Array.from({length: 3}, (_, i) => (newPeriodStart.setMonth(newPeriodStart.getMonth() + 1)) + '')]; // Get 4 months' worth of timestamps
+      break;
+  }
+
+  return periodTimestamps.map(timestamp => allAppointments.find(([apptTimestamp]) => apptTimestamp == timestamp) || [Number(timestamp), [formatDate(new Date(Number(timestamp))), 0]]); // Append appointments to each period
 }
