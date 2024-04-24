@@ -115,7 +115,8 @@ passport.use(new LocalStrategy({
       if (userInDatabase) return done(null, user);
       else return done(null, false, { message: "User not found" });
   } catch (error) {
-      return done(error, false, { message: "Internal server error" });
+    console.log(error);
+    return done(error, false, { message: "Internal server error" });
   }
 }));
 
@@ -133,6 +134,7 @@ passport.deserializeUser(async ({ emailaddress, id}, done) => {
     if (user) return done(null, user);
     else return done(null, false);
   } catch (error) {
+    console.log(error);
     done(error);
   }
 });

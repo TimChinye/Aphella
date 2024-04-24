@@ -1,5 +1,6 @@
 function hideLoadingOverlay() {
   let loadingOverlay = document.getElementById('loadingOverlay');
+  if (!loadingOverlay) return;
   let dots = loadingOverlay.firstElementChild;
   [dots, ...dots.children].forEach((dot) => {
     dot.addEventListener('animationiteration', (e) => {

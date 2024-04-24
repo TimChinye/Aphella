@@ -12,6 +12,7 @@ const sql = postgres({
 	connection: {
 		options: `project=${ENDPOINT_ID}`,
 	},
+	onnotice: false
 });
 
 let getPrescriptionsByAppointmentId = async (id) => {

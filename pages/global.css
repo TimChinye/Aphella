@@ -43,14 +43,17 @@ input {
 }
 
 aside {
+  position: relative;
   width: clamp(40ex, 20vw, 400px);
   background: var(--panel-bg-colour);
   display: inherit;
   flex-direction: column;
   justify-content: space-between;
-  --border-radius:2rem;
+  --border-radius: 2rem;
   border-top-right-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
+  box-shadow: 3px 0px 25px -25px black;
+  z-index: 1;
 
   figure {
     display: flex;
