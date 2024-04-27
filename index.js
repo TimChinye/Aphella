@@ -22,13 +22,40 @@ CRUD operations, ability to add users, add appointments, etc.
 Due: 25/04/2024
 */
 
+/*
+
+To do list:
+- Show total number of requests (/ store all data in req.user / req.session)
+
+Then:
+- Appointments
+- Make an appointment
+- Make a request
+
+Then:
+- Patient account
+- Admin account
+
+Then:
+- Home page
+- Parnters
+- Contact Us
+
+Then:
+- Settings
+- Communicate / Chat page
+- Payments
+
+Due: 27/04/2024
+*/
+
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { resolve } = require("path");
-const { loginUser, getStaff, getPatient, getJob, getAppointmentsByStaffId, getPatientsByDoctor } = require("./db.js");
+const { loginUser, getStaff, getPatient, getJob, getAppointmentsByStaffId, getPatientsByDoctor, getRequestsReceivedByStaffId, getLastXRequestsReceivedByStaffId } = require("./db.js");
 
 const port = process.env.PORT || process.argv[3] || 3010;
 const app = express();
@@ -76,9 +103,31 @@ app.get("/grab/user/job", async (req, res) => {
 app.get("/grab/user/appointments", async (req, res) => {
   if (req.user) {
     let appointments = req.user.type == 'patient' 
-    ? await getAppointmentsByPatientId(req.user.patientid) 
-    : await getAppointmentsByStaffId(req.user.staffid);
+    ? await getAppointmentsByPatientId(req.user.patientid) // not a thing
+    : await getAppointmentsByStaffId(req.user.staffid); // change to "UserId", handle id type in db.js
     res.status(200).json(appointments);
+  } else {
+    res.redirect('/login');
+  }
+});
+
+app.get("/grab/user/requests-received", async (req, res) => {
+  if (req.user) {
+    if (req.user.staffid) {
+      let requests = await getRequestsReceivedByStaffId(req.user.staffid);
+      res.status(200).json(requests);
+    } else res.status(404).json({ message: 'User is not a staff member.' });
+  } else {
+    res.redirect('/login');
+  }
+});
+
+app.get("/grab/user/last-requests-received/:amount", async (req, res) => {
+  if (req.user) {
+    if (req.user.staffid) {
+      let requests = await getLastXRequestsReceivedByStaffId(req.user.staffid, req.params.amount);
+      res.status(200).json(requests);
+    } else res.status(404).json({ message: 'User is not a staff member.' });
   } else {
     res.redirect('/login');
   }
@@ -88,6 +137,28 @@ app.get("/grab/user/patients", async (req, res) => {
   if (req.user) {
     if (req.user.staffid) {
       let patients = await getPatientsByDoctor(req.user.staffid);
+      res.status(200).json(patients);
+    } else res.status(404).json({ message: 'User is not a staff member.' });
+  } else {
+    res.redirect('/login');
+  }
+});
+
+app.get("/grab/staff/:id", async (req, res) => {
+  if (req.user) {
+    if (req.user.staffid) {
+      let staff = await getStaff(req.params.id);
+      res.status(200).json(staff);
+    } else res.status(404).json({ message: 'User is not a staff member.' });
+  } else {
+    res.redirect('/login');
+  }
+});
+
+app.get("/grab/patients/:id", async (req, res) => {
+  if (req.user) {
+    if (req.user.staffid) {
+      let patients = await getPatient(req.params.id);
       res.status(200).json(patients);
     } else res.status(404).json({ message: 'User is not a staff member.' });
   } else {
@@ -115,8 +186,7 @@ passport.use(new LocalStrategy({
       if (userInDatabase) return done(null, user);
       else return done(null, false, { message: "User not found" });
   } catch (error) {
-    console.log(error);
-    return done(error, false, { message: "Internal server error" });
+      return done(error, false, { message: "Internal server error" });
   }
 }));
 
@@ -134,7 +204,6 @@ passport.deserializeUser(async ({ emailaddress, id}, done) => {
     if (user) return done(null, user);
     else return done(null, false);
   } catch (error) {
-    console.log(error);
     done(error);
   }
 });

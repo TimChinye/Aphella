@@ -12,10 +12,11 @@
 		<link rel="stylesheet" href="./styles.css" />
   </head>   
   <body>
+    <script type="text/javascript" src="../../main.js"></script>
     <aside>
         <div>
             <figure>
-				        <a href="/"><img src="https://i.imgur.com/09DrxWb.png"></a>
+				        <a href="/"><img src="../../assets/Aphella Logo.png"></a>
                 <hr>
                 <ul>
                   <li class="active"><a href="/dashboard">Dashboard<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/dashboard-layout.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/dashboard-layout.png"/></a></li>
@@ -32,7 +33,7 @@
         </footer>
     </aside>
     <main>
-      <figure id="loadingOverlay">
+      <figure id="loadingOverlay" onanimationstart="updateLoadingStatus(event)" onanimationiteration="updateLoadingStatus(event)">
         <div>
           <div class="dot union"></div>
           <div class="dot"></div>
@@ -65,7 +66,7 @@
                   <button>Make a Request</button>
               </div>
           </header>
-          <div>
+          <div id="layout-grid">
               <article id="patients-today">
                   <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/guest-male.png" style="filter: brightness(0.95);"/>
                   <div>
@@ -90,7 +91,7 @@
               <article id="appointments-info">
                 <div id="calendar">
                   <div id="calendar-header">
-                    <h1>January 1970</h1>
+                    <h1>{MMM} {YYYY}</h1>
                     <div id="calendar-navigation">
                       <button>&lt;</button>
                       <button>&gt;</button>
@@ -128,75 +129,34 @@
                   </div>
                 </div>
                 <div id="appointments">
-                  <h4>Upcoming Appointments</h4>
-                  <div class="day-group">
-                    <h6>Today, 25 Oct</h6>
-                    <div class="appointment">
-                      <span>12:00</span>
-                      <div>
-                        <img src="https://i.imgur.com/vPFN11V.png">
-                        <div>
-                          <h6>Mike Robin</h6>
-                          <p>Consultation</p>
-                        </div>
-                      </div>
+                  <figure id="loadingOverlay" onanimationstart="updateLoadingStatus(event)" onanimationiteration="updateLoadingStatus(event)">
+                    <div>
+                      <div class="dot union"></div>
+                      <div class="dot"></div>
+                      <div class="dot"></div>
+                      <div class="dot"></div>
+                      <div class="dot"></div>
                     </div>
-                    <div class="appointment">
-                      <span>12:00</span>
-                      <div>
-                        <img src="https://i.imgur.com/vPFN11V.png">
-                        <div>
-                          <h6>Mike Robin</h6>
-                          <p>Consultation</p>
-                        </div>
+                  </figure>
+                  <div id="appointments-content">
+                    <h4>Appointments</h4>
+                    <template id="day-group-template">
+                      <div class="day-group">
+                        <h6>{Relative}, {DD} {MMM}</h6>
+                        <template id="appointment-template">
+                          <div class="appointment">
+                            <span>{hh}:{mm}</span>
+                            <div>
+                              <img src="https://wallpapers.com/images/hd/generic-male-avatar-profile-2fudx37oj7ug3d8l.jpg">
+                              <div>
+                                <h6>{FName} {LName}</h6>
+                                <p>{Appointment Type}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </template>
                       </div>
-                    </div>
-                  </div>
-                  <div class="day-group">
-                    <h6>Today, 25 Oct</h6>
-                    <div class="appointment">
-                      <span>12:00</span>
-                      <div>
-                        <img src="https://i.imgur.com/vPFN11V.png">
-                        <div>
-                          <h6>Mike Robin</h6>
-                          <p>Consultation</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="appointment">
-                      <span>12:00</span>
-                      <div>
-                        <img src="https://i.imgur.com/vPFN11V.png">
-                        <div>
-                          <h6>Mike Robin</h6>
-                          <p>Consultation</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="day-group">
-                    <h6>Today, 25 Oct</h6>
-                    <div class="appointment">
-                      <span>12:00</span>
-                      <div>
-                        <img src="https://i.imgur.com/vPFN11V.png">
-                        <div>
-                          <h6>Mike Robin</h6>
-                          <p>Consultation</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="appointment">
-                      <span>12:00</span>
-                      <div>
-                        <img src="https://i.imgur.com/vPFN11V.png">
-                        <div>
-                          <h6>Mike Robin</h6>
-                          <p>Consultation</p>
-                        </div>
-                      </div>
-                    </div>
+                    </template>
                   </div>
                 </div>
               </article>
@@ -204,7 +164,7 @@
                 <h1>Appointments Statistics</h1>
                 <div id="appts-stats-filter">
                   <div>
-                    <h4>January 1970</h4>
+                    <h4>{MMMM} {YYYY}</h4>
                     <div>
                       <button>&lt;</button>
                       <button>&gt;</button>
@@ -220,32 +180,36 @@
                 <figure><canvas></canvas></figure>
               </article>
               <article id="latest-patient-info">
-                <h1>Latest Patients</h1>
+                <h1>Latest Requests</h1>
                 <table>
-                  <tr>
-                    <th>ID</th>
-                    <th>Date</th>
-                    <th>Name</th>
-                    <th>Chronic Conditions</th>
-                  </tr>
-                  <tr>
-                    <td>312</td>
-                    <td>Kiki Allman</td>
-                    <td>Corbin Oakley</td>
-                    <td>High Cholesterol</td>
-                  </tr>
-                  <tr>
-                    <td>312</td>
-                    <td>Kiki Allman</td>
-                    <td>Corbin Oakley</td>
-                    <td>High Cholesterol</td>
-                  </tr>
-                  <tr>
-                    <td>312</td>
-                    <td>Kiki Allman</td>
-                    <td>Corbin Oakley</td>
-                    <td>High Cholesterol</td>
-                  </tr>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Date</th>
+                      <th>From</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>###</td>
+                      <td>{DD MMMM YYYY}</td>
+                      <td>{FName} {LName}</td>
+                      <td>{Details}</td>
+                    </tr>
+                    <tr>
+                      <td>###</td>
+                      <td>{DD MMMM YYYY}</td>
+                      <td>{FName} {LName}</td>
+                      <td>{Details}</td>
+                    </tr>
+                    <tr>
+                      <td>###</td>
+                      <td>{DD MMMM YYYY}</td>
+                      <td>{FName} {LName}</td>
+                      <td>{Details}</td>
+                    </tr>
+                  </tbody>
                 </table>
               </article>
           </div>
@@ -388,7 +352,7 @@
       });
     </script>
 
-    <script type="text/javascript" src="../../main.js"></script>
+    <!-- <script type="text/javascript" src="../../main.js"></script> -->
     <script type="text/javascript" src="./script.js"></script>
   </body>
 </html>

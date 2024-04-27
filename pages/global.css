@@ -1,3 +1,5 @@
+[hidden] { display: none !important; }
+
 :root {
   font-size: clamp(8px, 1.5vh, 24px);
   font-family: 'Inter', 'Avenir', 'Helvetica', 'Calibri', sans-serif;
@@ -132,7 +134,7 @@ main {
   display: inherit;
   flex: 1;
   overflow: auto;
-  --scrollbar-width: 8px;
+  --scrollbar-width: 0.75rem;
   --scrollbar-thumb-colour: var(--primary-colour), var(--trinary-colour);
   --scrollbar-track-colour: var(--panel-bg-colour);
 
@@ -222,6 +224,7 @@ main {
   > section {
     display: inherit;
     align-items: flex-start;
+    justify-content: center;
     flex-direction: row;
     margin: 0 auto;
     --main-padding:3.2rem;
@@ -243,31 +246,31 @@ main {
   }
 
   @supports (scrollbar-color: auto) {
-    & {
+    :is(&, *) {
       scrollbar-color: linear-gradient(var(--scrollbar-thumb-colour)) var(--scrollbar-track-colour);
       scrollbar-width: var(--scrollbar-width);
     }
   }
   
   @supports selector(::-webkit-scrollbar) {
-    &::-webkit-scrollbar {
+    :is(&, *)::-webkit-scrollbar {
       height: var(--scrollbar-width);
       width: var(--scrollbar-width);
       background-color: var(--scrollbar-track-colour);
     }
       
-    &::-webkit-scrollbar-thumb {
+    :is(&, *)::-webkit-scrollbar-thumb {
       background-image: linear-gradient(var(--scrollbar-thumb-colour));
       border-radius: 999px;
       background-clip: padding-box;
       border: calc(var(--scrollbar-width) / 4) solid transparent;
     }
       
-    &::-webkit-scrollbar-thumb:horizontal {
+    :is(&, *)::-webkit-scrollbar-thumb:horizontal {
       background-image: linear-gradient(90deg, var(--scrollbar-thumb-colour));
     }
 
-    &::-webkit-scrollbar-corner {
+    :is(&, *)::-webkit-scrollbar-corner {
       background-color: var(--scrollbar-track-colour);
     }
   }
@@ -275,14 +278,17 @@ main {
 
 :has(> #loadingOverlay) {
   position: relative;
-  
-  > figure {
-    position: absolute;
+
+  #loadingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--background-colour);
     height: 100dvh;
     width: 100%;
-    background: var(--background-colour);
     margin: 0;
-    z-index: 1;
+    z-index: 2;
+    transition: opacity 0.5s ease-out;
   
     > div {
       position: absolute;
@@ -290,6 +296,7 @@ main {
       top: 0; bottom: 0; left: 0; right: 0;
       width: 6.250em; height: 6.250em;
       animation: rotate 2.4s linear infinite;
+      transition: opacity 0.5s ease-out;
   
       .dot {
         position: absolute;
@@ -306,10 +313,6 @@ main {
       }
     }
   
-    div.stop-animation { animation: none !important; }
-  }
-
-  > figure:not([hidden]) + * {
-    overflow: hidden;
+    &.stop-animation, &.stop-animation * { animation: none !important; }
   }
 }

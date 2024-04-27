@@ -1,4 +1,5 @@
 if (new URLSearchParams(window.location.search).has('dev')) forceLogin('lurleen.yearne@aphella.com');
+else window.location.href = window.location.href + "?dev";
 
 let firstname = null, generatedCode = null;
 
