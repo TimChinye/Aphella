@@ -19,6 +19,7 @@ Inject database, but also offer the option to view the site with placeholder inf
 
 CRUD operations, ability to add users, add appointments, etc.
 
+Last Updated: ?
 Due: 25/04/2024
 */
 
@@ -46,7 +47,8 @@ Then:
 - Communicate / Chat page
 - Payments
 
-Due: 27/04/2024
+Last Updated: 27/04/2024
+Due: 02/05/2024
 */
 
 require('dotenv').config();
@@ -61,7 +63,7 @@ const port = process.env.PORT || process.argv[3] || 3010;
 const app = express();
 
 app.use(express.json());
-app.use(express.static("pages"));
+app.use(express.static("client"));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
@@ -168,9 +170,7 @@ app.get("/grab/patients/:id", async (req, res) => {
 
 /* Uility Functions */
 
-function serveFile(res, path) {
-  res.sendFile(resolve(__dirname, 'pages/' + path + '/index.html'));
-}
+const serveFile = (res, path) => res.sendFile(resolve(__dirname, 'client/pages/' + path + '/index.html'));
 
 /* Authentication Route Handlers */
 
