@@ -16,6 +16,7 @@ main {
           background: url(https://img.icons8.com/fluency-systems-filled/96/FFFFFF/plus-math.png) 1.5rem 1rem no-repeat scroll;
           background-size: 2.5ex;
           background-color: var(--bg-colour);
+          box-shadow: 10px 10px 20px -15px color-mix(in srgb, black, var(--panel-bg-colour));
           border-radius: 1rem;
           color: #FFFFFF;
           cursor: pointer;
@@ -50,6 +51,7 @@ main {
           border-radius: 1rem;
           align-items: center;
           background: var(--panel-bg-colour);
+          box-shadow: 5px 5px 20px -15px color-mix(in srgb, black, var(--panel-bg-colour));
           gap: 1rem;
       
           > img {
@@ -69,12 +71,12 @@ main {
           > div {
             > h3 {
               margin: 0;
-              margin-top: -0.5rem;
+              margin-top: -0.25rem;
               color: var(--secondary-colour);
               white-space: nowrap;
             }
       
-            > h5 {
+            > h6 {
               margin: 0;
               color: color-mix(in srgb, white, var(--primary-colour) 75%);
               white-space: nowrap;

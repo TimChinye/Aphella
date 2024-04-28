@@ -1,15 +1,19 @@
 (async () => {
-    let user = await fetch('/grab/user').then(res => res.json());
-    let job = await fetch('/grab/user/job').then(res => res.json());
-    let appointments = await fetch('/grab/user/appointments').then(res => res.json());
-    
-    hideLoadingOverlay();
+    showLoadingOverlay();
 
-    console.log(appointments);
+    const [user, userJob, userAppointments] = await Promise.all([
+        fetchJson('/grab/user'),
+        fetchJson('/grab/user/job'),
+        fetchJson('/grab/user/appointments')
+    ]);
+
+    console.log(userAppointments);
 
     document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
-    document.getElementById('role').textContent = job.title;
+    document.getElementById('role').textContent = userJob.title;
     document.getElementById('profile-pic').src = user.profilepicturepath.split('http://').join('https://');
+    
+    hideLoadingOverlay();
 })();
 
 let currentMonth, currentYear;

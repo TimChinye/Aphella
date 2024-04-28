@@ -10,9 +10,10 @@
 		<link rel="stylesheet" href="../../keyframes.css" />
 		<link rel="stylesheet" href="../../global.css" />
 		<link rel="stylesheet" href="./styles.css" />
+    
+    <script type="text/javascript" src="../../main.js"></script>
   </head>   
   <body>
-    <script type="text/javascript" src="../../main.js"></script>
     <aside>
         <div>
             <figure>
@@ -32,6 +33,7 @@
             <p>Designed & Developed by <a href="https://timchinye.com/">Tim Chinye</a>.<br>Icons by <a href="https://icons8.com/">Icons8</a></p>
         </footer>
     </aside>
+
     <main>
       <figure id="loadingOverlay" onanimationstart="updateLoadingStatus(event)" onanimationiteration="updateLoadingStatus(event)">
         <div>
@@ -70,21 +72,21 @@
               <article id="patients-today">
                   <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/guest-male.png" style="filter: brightness(0.95);"/>
                   <div>
-                      <h5>Patients Today</h5>
+                      <h6>Patients Today</h6>
                       <h3>#</h3>
                   </div>
               </article>
-              <article id="regular-patients-total">
+              <article id="main-patients-total">
                   <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/conference-call.png" style="filter: brightness(1.05);"/>
                   <div>
-                      <h5>Total Regular Patients</h5>
+                      <h6>Total Main Patients</h6>
                       <h3>#</h3>
                   </div>
               </article>
               <article id="incomplete-requests">
                   <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/ask-question.png" style="filter: brightness(1.00);"/>
                   <div>
-                      <h5>Requests</h5>
+                      <h6>Requests</h6>
                       <h3>#</h3>
                   </div>
               </article>
@@ -352,7 +354,6 @@
       });
     </script>
 
-    <!-- <script type="text/javascript" src="../../main.js"></script> -->
     <script type="text/javascript" src="./script.js"></script>
   </body>
 </html>

@@ -32,7 +32,7 @@
         </footer>
     </aside>
     <main>
-      <figure id="loadingOverlay">
+      <figure id="loadingOverlay" onanimationstart="updateLoadingStatus(event)" onanimationiteration="updateLoadingStatus(event)">
         <div>
           <div class="dot union"></div>
           <div class="dot"></div>

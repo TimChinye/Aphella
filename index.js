@@ -57,7 +57,7 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { resolve } = require("path");
-const { loginUser, getStaff, getPatient, getJob, getAppointmentsByStaffId, getPatientsByDoctor, getRequestsReceivedByStaffId, getLastXRequestsReceivedByStaffId } = require("./db.js");
+const { loginUser, getStaff, getPatient, getJob, getAppointmentsByUserId, getPatientsByDoctor, getRequestsReceivedByStaffId, getLastXRequestsReceivedByStaffId } = require("./db.js");
 
 const port = process.env.PORT || process.argv[3] || 3010;
 const app = express();
@@ -104,9 +104,8 @@ app.get("/grab/user/job", async (req, res) => {
 
 app.get("/grab/user/appointments", async (req, res) => {
   if (req.user) {
-    let appointments = req.user.type == 'patient' 
-    ? await getAppointmentsByPatientId(req.user.patientid) // not a thing
-    : await getAppointmentsByStaffId(req.user.staffid); // change to "UserId", handle id type in db.js
+    let appointments = getAppointmentsByUserId(req.user.type, req.user.patientid ?? req.user.staffid);
+		console.log(appointments);
     res.status(200).json(appointments);
   } else {
     res.redirect('/login');

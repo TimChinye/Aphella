@@ -1,24 +1,6 @@
-const fetchJson = async (url, options = {}) => {
-  // Check if the data is in the cache
-  const cachedData = localStorage.getItem(url);
-  if (cachedData !== null) {
-    // Parse and return the cached data
-    return JSON.parse(cachedData);
-  }
-
-  // If the data is not in the cache, fetch it
-  const response = await fetch(url, options);
-  const data = await response.json();
-
-  // Cache the data
-  localStorage.setItem(url, JSON.stringify(data));
-
-  // Return the fetched data
-  return data;
-};
-
 (async () => {
   showLoadingOverlay();
+  
   const [user, userJob, userAppointments, userPatients, userRequestsReceived] = await Promise.all([
     fetchJson('/grab/user'),
     fetchJson('/grab/user/job'),
@@ -38,7 +20,7 @@ const fetchJson = async (url, options = {}) => {
   const countRegularPatients = userPatients.filter((pat) => pat.maindoctor === user.staffid).length;
 
   document.querySelector('#patients-today h3').textContent = countAppointmentsToday;
-  document.querySelector('#regular-patients-total h3').textContent = countRegularPatients;
+  document.querySelector('#main-patients-total h3').textContent = countRegularPatients;
   document.querySelector('#incomplete-requests h3').textContent = userRequestsReceived.length;
 
   /* Last 3 Requests */

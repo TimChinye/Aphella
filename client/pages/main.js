@@ -1,4 +1,21 @@
-let showingLoadingOverlays = [];
+const fetchJson = async (url, options = {}) => {
+  // Check if the data is in the cache
+  const cachedData = localStorage.getItem(url);
+  if (cachedData !== null) {
+    // Parse and return the cached data
+    return JSON.parse(cachedData);
+  }
+
+  // If the data is not in the cache, fetch it
+  const response = await fetch(url, options);
+  const data = await response.json();
+
+  // Cache the data
+  localStorage.setItem(url, JSON.stringify(data));
+
+  // Return the fetched data
+  return data;
+};
 
 function updateLoadingStatus({ target: loadingOverlay, animationName }) {
   if (loadingOverlay.parentElement.id != 'loadingOverlay') return;

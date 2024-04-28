@@ -24,6 +24,7 @@ main > section > #wrapper {
     padding: 1rem 1.5rem;
     border-radius: 1rem;
     background-color: var(--panel-bg-colour);
+    box-shadow: 5px 5px 20px -15px color-mix(in srgb, black, var(--panel-bg-colour));
     border-radius: 1rem;
     font-weight: bold;
     color: inherit;
@@ -50,6 +51,7 @@ main > section > #wrapper {
     > button {
       color: inherit;
       background-color: var(--panel-bg-colour);
+      box-shadow: 3px 3px 10px 0px color-mix(in srgb, black 12.5%, var(--panel-bg-colour));
       border: none;
       cursor: pointer;
       padding: 0.5rem calc(0.5rem + 0.5ex);
@@ -66,6 +68,7 @@ main > section > #wrapper {
 
   > #calendar-time-period {
     display: inherit;
+    box-shadow: 5px 5px 20px -5px color-mix(in srgb, black 25%, var(--panel-bg-colour));
 
     > input[type="radio"] {
       display: none;
@@ -114,6 +117,7 @@ main > section > #wrapper {
   flex-direction: column;
   border-radius: 1rem;
   background: var(--panel-bg-colour);
+  box-shadow: 5px 5px 20px -15px color-mix(in srgb, black, var(--panel-bg-colour));
   padding: 2rem;
   height: fit-content;
 
@@ -123,7 +127,7 @@ main > section > #wrapper {
 
     > p {
       min-width: 12ex;
-      width: 10.75rem;
+      width: 10rem;
       text-align: center;
     }
   }
