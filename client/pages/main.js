@@ -41,17 +41,15 @@ function updateLoadingStatus({ target: loadingOverlay, animationName }) {
 function hideLoadingOverlay(loadingOverlay, force) {
   if (!loadingOverlay) loadingOverlay = document.querySelector('main #loadingOverlay');
 
-  if (loadingOverlay.classList.contains('animating')) {
-    if (force) {
-      loadingOverlay.removeAttribute('class');
-      loadingOverlay.classList.add('stop-animation');
-      loadingOverlay.firstElementChild.style.opacity = '0';
-      loadingOverlay.style.opacity = '0';
-      loadingOverlay.style.display = 'none';
-    } else {
-      loadingOverlay.removeAttribute('class');
-      loadingOverlay.classList.add('stop-animating');
-    }
+  if (force) {
+    loadingOverlay.removeAttribute('class');
+    loadingOverlay.classList.add('stop-animation');
+    loadingOverlay.firstElementChild.style.opacity = '0';
+    loadingOverlay.style.opacity = '0';
+    loadingOverlay.style.display = 'none';
+  } else if (loadingOverlay.classList.contains('animating')) {
+    loadingOverlay.removeAttribute('class');
+    loadingOverlay.classList.add('stop-animating');
   }
 }
 

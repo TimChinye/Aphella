@@ -33,9 +33,15 @@
     let rRow = requestRows[i];
     rRow.children[0].textContent = lastRequestsReceived[i].requestid;
     rRow.children[1].textContent = new Date(lastRequestsReceived[i].date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-    if (!staff[lastRequestsReceived[i].fromstaff]) {
-      staff[lastRequestsReceived[i].fromstaff] = await fetchJson('/grab/staff/' + lastRequestsReceived[i].fromstaff);
-    }
+    
+    let path = '/grab/staff/' + lastRequestsReceived[i].fromstaff;
+
+    if (!staff[lastRequestsReceived[i].fromstaff])
+      staff[lastRequestsReceived[i].fromstaff] = JSON.parse(localStorage.getItem(path));
+
+    if (!staff[lastRequestsReceived[i].fromstaff])
+      staff[lastRequestsReceived[i].fromstaff] = await fetchJson(path);
+
     rRow.children[2].textContent = `${staff[lastRequestsReceived[i].fromstaff].firstname} ${staff[lastRequestsReceived[i].fromstaff].lastname}`;
     rRow.children[3].innerHTML = lastRequestsReceived[i].details.replace(/\\n/g, '<br>');
   }
@@ -210,10 +216,16 @@
     
           let patient;
           try {
+            let path = '/grab/patients/' + appointment.patientid;
+
+            if (!patients[appointment.patientid]) patients[appointment.patientid] = JSON.parse(localStorage.getItem(path));
             if (!patients[appointment.patientid]) {
-              if (!(loadingOverlay.classList.contains('animating') || loadingOverlay.classList.contains('stop-animating'))) showLoadingOverlay(loadingOverlay, true, 'var(--panel-bg-colour)');
-              patients[appointment.patientid] = await fetchJson('/grab/patients/' + appointment.patientid, { signal: controller.signal });
+              if (!['animating', 'stop-animating'].some(status => loadingOverlay.classList.contains(status)))
+                showLoadingOverlay(loadingOverlay, true, 'var(--panel-bg-colour)');
+
+              patients[appointment.patientid] = await fetchJson(path, { signal: controller.signal });
             }
+            
             patient = patients[appointment.patientid];
           } catch (err) {
             if (err.name === 'AbortError') return hideLoadingOverlay(loadingOverlay, true);
@@ -237,6 +249,7 @@
         }
       }
 
+      if (loadingOverlay.className == '') hideLoadingOverlay(loadingOverlay, true);
       if (loadingOverlay.classList.contains('animating')) hideLoadingOverlay(loadingOverlay);
 
       if (document.querySelector('.selected-day')) {
