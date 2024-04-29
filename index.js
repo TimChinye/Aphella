@@ -51,6 +51,32 @@ Last Updated: 27/04/2024
 Due: 02/05/2024
 */
 
+/*
+
+To do list:
+- Patients page
+
+- Make an appointment
+- Make a request
+
+Then:
+- Patient account
+- Admin account
+
+Then:
+- Home page
+- Parnters
+- Contact Us
+
+Then:
+- Settings
+- Communicate / Chat page
+- Payments
+
+Last Updated: 29/04/2024
+Due: 02/05/2024
+*/
+
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
@@ -283,8 +309,16 @@ app.get("/dashboard", async (req, res) => {
 
 app.get("/appointments", async (req, res) => {
   if (req.user) {
+    serveFile(res, req.user.type + '/appointments');
+  } else {
+    res.redirect('/login');
+  }
+});
+
+app.get("/patients", async (req, res) => {
+  if (req.user) {
     if (req.user.type != 'patient') {
-      serveFile(res, req.user.type + '/appointments');
+      serveFile(res, req.user.type + '/patients');
     } else {
       // If the user came from another page on our site, send them back
       if (req.headers.referer && req.headers.referer.includes(req.headers.host)) {
@@ -298,9 +332,18 @@ app.get("/appointments", async (req, res) => {
   }
 });
 
-app.get("/payments", async (req, res) => {
+app.get("/staff", async (req, res) => {
   if (req.user) {
-    serveFile(res, req.user.type + '/payments');
+    if (req.user.type == 'admin') {
+      serveFile(res, req.user.type + '/staff');
+    } else {
+      // If the user came from another page on our site, send them back
+      if (req.headers.referer && req.headers.referer.includes(req.headers.host)) {
+        res.redirect(req.headers.referer);
+      } else {
+        res.redirect('/dashboard');
+      }
+    }
   } else {
     res.redirect('/login');
   }

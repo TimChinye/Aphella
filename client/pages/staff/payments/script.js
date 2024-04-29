@@ -1,1 +1,0 @@
-hideLoadingOverlay(document.querySelector('main'));

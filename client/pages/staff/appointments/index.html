@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Hello Express!</title>
+    <title>Aphella | Appointments</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="../../../assets/Aphella Logo.png" type="image/png">
 
 		<base href='/pages/staff/appointments/'>
 
@@ -17,15 +18,16 @@
     <aside>
         <div>
             <figure>
-				        <a href="/"><img src="../../../assets/Aphella Logo.png"></a>
+				        <a href="/"><img src="../../../assets/Aphella Logotype.png"></a>
                 <hr>
                 <ul>
-                    <li><a href="/dashboard">Dashboard<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/dashboard-layout.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/dashboard-layout.png"/></a></li>
-                    <li><a href="/chat">Chat<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/messaging-.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/messaging-.png"/></a></li>
-                    <li class="active"><a href="/appointments">Appointments<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/thursday.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/thursday.png"/></a></li>
-                    <li><a href="/payments">Payments<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/bank-card-front-side.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/bank-card-front-side.png"/></a></li>
-                    <li><a href="/settings">Settings<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/settings--v1.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/settings--v1.png"/></a></li>
-                    <li><a href="/logout">Log Out<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/exit--v1.png"/><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/exit--v1.png"/></a></li>
+                    <li><a href="/dashboard">Dashboard<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/dashboard-layout.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/dashboard-layout.png" /></a></li>
+                    <li><a href="/chat">Chat<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/messaging-.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/messaging-.png" /></a></li>
+                    <li class="active"><a href="/appointments">Appointments<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/thursday.png" onload="updateAppointmentsIcon()" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/thursday.png" onload="updateAppointmentsIcon()" /></a></li>
+                    <li><a href="/patients">Patients<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/triangular-bandage.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/triangular-bandage.png" /></a></li>
+                  <li><a href="/doctors">Doctors<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/doctor-male.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/doctor-male.png" /></a></li>
+                    <li><a href="/settings">Settings<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/settings--v1.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/settings--v1.png" /></a></li>
+                    <li><a href="/logout">Log Out<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/exit--v1.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/exit--v1.png" /></a></li>
                 </ul>
 			</figure>
         </div>
@@ -52,9 +54,9 @@
                 <input type="search" placeholder="Search..." />
             </search>
             <div id="account">
-                <img src="https://img.icons8.com/fluency-systems-filled/48/CCCCCC/appointment-reminders.png"/>
+                <img src="https://img.icons8.com/fluency-systems-filled/48/CCCCCC/appointment-reminders.png" />
                 <span></span>
-                <div><img id="profile-pic" src="https://wallpapers.com/images/hd/generic-male-avatar-profile-2fudx37oj7ug3d8l.jpg"/></div>
+                <div><img id="profile-pic" src="https://wallpapers.com/images/hd/generic-male-avatar-profile-2fudx37oj7ug3d8l.jpg" /></div>
                 <div>
                     <h4 id="name">Siri Mariann</h4>
                     <h6 id="role">Nurse</h6>
@@ -73,10 +75,10 @@
                 <button id="next-month">&gt;</button>
               </div>
               <div id="calendar-time-period">
-                <input type="radio" id="daily" name="time-period">
+                <input type="radio" id="daily" name="time-period" disabled>
                 <label for="daily">Daily</label>
 
-                <input type="radio" id="weekly" name="time-period">
+                <input type="radio" id="weekly" name="time-period" disabled>
                 <label for="weekly">Weekly</label>
 
                 <input type="radio" id="monthly" name="time-period" checked>

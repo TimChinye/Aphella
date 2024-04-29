@@ -63,35 +63,50 @@
             div.innerHTML = day;
         
             // Get appointments for this day
-            let appointmentsOnThisDay = userAppointments.filter(appointment => new Date(appointment.dateofvisit).toDateString() === currentDate.toDateString());
+            let thisDaysAppts = userAppointments.filter(appointment => new Date(appointment.dateofvisit).toDateString() === currentDate.toDateString());
         
-            if (appointmentsOnThisDay.length > 0) {
+            if (thisDaysAppts.length > 0) {
                 const appointmentContainer = document.createElement('div');
                 appointmentContainer.classList.add('apptTypeContainer');
                 div.appendChild(appointmentContainer);
         
-                const displayMax = 3;
-                let appointmentTypes = ["Special Referral", "Vaccination", "Surgery", "Follow-up", "Diagnostic", "Check-up", "Consulation", "Emergency"];
-                let shuffledTypes = appointmentTypes.sort(() => Math.random() - 0.5);
-        
-                for (let i = 0; i < appointmentsOnThisDay.length && i < displayMax; i++) {
-                    if (i == displayMax - 1 && appointmentsOnThisDay.length > displayMax) {
-                        appointmentContainer.innerHTML += `
-                            <div class="apptType">
-                                <div class="apptHighlight apptMore"></div>
-                                <p class="apptLabel">and ${appointmentsOnThisDay.length - i} more...</p>
-                            </div>
-                        `;
-                    } else {
-                        let apptType = shuffledTypes[i];
-                        appointmentContainer.innerHTML += `
-                            <div class="apptType">
-                                <div class="apptHighlight appt${apptType.split(' ').join('').split('-').join('')}"></div>
-                                <p class="apptLabel">${apptType}</p>
-                            </div>
-                        `;
+                let displayedCount = 0;
+                let appointmentTypes = ["Specialist Referral", "Vaccination", "Surgery", "Follow-up", "Diagnostic Testing", "Check-up", "Consultation", "Emergency"];
+                let thisDayUniqueTypes = new Set(thisDaysAppts.map((appt) => appt.type));
+                let htmlString = '';
+                
+                for (let type of appointmentTypes) {
+                    if (thisDayUniqueTypes.has(type) && displayedCount < 3) {
+                        displayedCount++;
+
+                        if (displayedCount == 3 && thisDaysAppts.length > 3) {
+                            htmlString += `
+                                <div class="apptType">
+                                    <div class="apptHighlight apptMore"></div>
+                                    <p class="apptLabel">and ${thisDaysAppts.length - displayedCount + 1} more...</p>
+                                </div>
+                            `;
+                        } else {
+                            htmlString += `
+                                <div class="apptType">
+                                    <div class="apptHighlight appt${type.split(' ').join('').split('-').join('')}"></div>
+                                    <p class="apptLabel">${type}</p>
+                                </div>
+                            `;
+                        }
                     }
                 }
+                
+                if (displayedCount < 3 && thisDaysAppts.length >= 3) {
+                    htmlString += `
+                        <div class="apptType">
+                            <div class="apptHighlight apptMore"></div>
+                            <p class="apptLabel">and ${thisDaysAppts.length - displayedCount} more...</p>
+                        </div>
+                    `;
+                }
+                
+                appointmentContainer.innerHTML = htmlString;                
             }
         
             if (additionalClass) div.classList = additionalClass;
@@ -99,9 +114,9 @@
         }
         
         // Add days for the previous month
-        for (let i = 0; i < firstDay; i++) {
-            const currentDate = new Date(currentYear, currentMonth, -i);
-            setDayElement(currentDate.getDate(), 'otherMonth', currentDate, i);
+        for (let i = 1; i <= firstDay; i++) {
+            const currentDate = new Date(currentYear, currentMonth, 1 - i);
+            setDayElement(currentDate.getDate(), 'otherMonth', currentDate, firstDay - i);
         }
     
         // Add days for the current month
@@ -120,41 +135,6 @@
         for (let i = firstDay + daysInMonth + 6 - lastDay; i < calendarElement.children.length; i++) {
             calendarElement.children[i].style.display = 'none';
         }
-    
-        // let allDays = Array.from(calendarElement.children);
-        // for (day of allDays) {
-        //     let appointmentsNum = randomSkewedNum(10, 0, 50, false);
-    
-        //     if (appointmentsNum > 0) {
-        //         const div = document.createElement('div');
-        //         div.classList.add('apptTypeContainer');
-        //         day.appendChild(div);
-    
-        //         const displayMax = 3;
-        //         let appointmentTypes = ["Special Referral", "Vaccination", "Surgery", "Follow-up", "Diagnostic", "Check-up", "Consulation", "Emergency"];
-    
-        //         let shuffledTypes = appointmentTypes.sort(() => Math.random() - 0.5);
-    
-        //         for (let i = 0; i < appointmentsNum && i < displayMax; i++) {
-        //             if (i == displayMax - 1 && appointmentsNum > displayMax) {
-        //                 div.innerHTML += `
-        //                 <div class="apptType">
-        //                     <div class="apptHighlight apptMore"></div>
-        //                     <p class="apptLabel">and ${appointmentsNum - i} more...</p>
-        //                 </div>
-        //             `;
-        //             } else {
-        //                 let apptType = shuffledTypes[i];
-        //                 div.innerHTML += `
-        //                 <div class="apptType">
-        //                     <div class="apptHighlight appt${apptType.split(' ').join('').split('-').join('')}"></div>
-        //                     <p class="apptLabel">${apptType}</p>
-        //                 </div>
-        //             `;
-        //             }
-        //         }
-        //     }
-        // }
     };
     
     hideLoadingOverlay();

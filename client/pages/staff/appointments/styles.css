@@ -73,6 +73,14 @@ main > section > #wrapper {
     > input[type="radio"] {
       display: none;
 
+      &:disabled + label {
+        cursor: not-allowed;
+
+        &:hover {
+          line-height: revert;
+        }
+      }
+
       &:checked + label {
         --outline-color: currentColor;
         --weight: 0.025ex;
@@ -176,41 +184,15 @@ main > section > #wrapper {
             width: 1ex;
             border-radius: 0.5em;
 
-            &.apptSpecialReferral {
-              background-color: #9080FF;
-            }
-
-            &.apptVaccination {
-              background-color: #90AAFF;
-            }
-
-            &.apptSurgery {
-              background-color: #B193FF;
-            }
-
-            &.apptFollowup {
-              background-color: #FF6099;
-            }
-
-            &.apptDiagnostic {
-              background-color: #FF7D7D;
-            }
-
-            &.apptCheckup {
-              background-color: #FF80EA;
-            }
-
-            &.apptConsulation {
-              background-color: #FF9F80;
-            }
-
-            &.apptEmergency {
-              background-color: #FFBF80;
-            }
-
-            &.apptMore {
-              background-color: #C8C8C8;
-            }
+            &.apptEmergency { background-color: #9080FF; }
+            &.apptConsultation { background-color: #90AAFF; }
+            &.apptCheckup { background-color: #B193FF; }
+            &.apptDiagnosticTesting { background-color: #FF6099; }
+            &.apptFollowup { background-color: #FF7D7D; }
+            &.apptSurgery { background-color: #FF80EA; }
+            &.apptVaccination { background-color: #FF9F80; }
+            &.apptSpecialistReferral { background-color: #FFBF80; }           
+            &.apptMore { background-color: #C8C8C8; }
           }
     
           .apptLabel {

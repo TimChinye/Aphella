@@ -1,3 +1,14 @@
+function updateAppointmentsIcon() {
+  // Get the current day of the week
+  let today = new Date().toLocaleDateString('en-GB', { weekday: 'long' }).toLowerCase();
+  let appointmentsItem = document.querySelector('a[href="/appointments"]');
+  appointmentsItem?.querySelectorAll('img')?.forEach(img => {
+      let src = img.getAttribute('src');
+      let updatedSrc = src.replace('thursday', today);
+      img.setAttribute('src', updatedSrc);
+  });
+}
+
 const fetchJson = async (url, options = {}) => {
   // Check if the data is in the cache
   const cachedData = localStorage.getItem(url);
