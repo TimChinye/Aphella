@@ -33,7 +33,7 @@ main > section > #wrapper {
     font-size: 0.875rem;
 
     &:hover {
-      background-color: color-mix(in srgb, white, var(--primary-colour) 10%);
+      background-color: color-mix(in srgb, white, var(--primary-colour) 5%);
     }
   }
 
@@ -61,7 +61,7 @@ main > section > #wrapper {
       border-radius: 0.5rem;
 
       &:hover {
-        background-color: color-mix(in srgb, white, var(--primary-colour) 10%);
+        background-color: color-mix(in srgb, white, var(--primary-colour) 5%);
       }
     }
   }
@@ -161,7 +161,7 @@ main > section > #wrapper {
       border-radius: 0.5rem;
       transition: height 10s, width 10s;
 
-      &.currentDay {
+      &.currentDay * {
         color: color-mix(in srgb, black, var(--primary-colour) 87.5%);
       }
 

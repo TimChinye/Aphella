@@ -6,14 +6,12 @@
         fetchJson('/grab/user/job'),
         fetchJson('/grab/user/appointments')
     ]);
-    let currentMonth, currentYear;
-
-    console.log(userAppointments);
 
     document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
     document.getElementById('role').textContent = userJob.title;
     document.getElementById('profile-pic').src = user.profilepicturepath.split('http://').join('https://');
     
+    let currentMonth, currentYear;
     updateCalendar();
 
     document.getElementById("prev-month").addEventListener("click", () => {
@@ -40,18 +38,15 @@
         currentDate.setMonth(currentDate.getMonth() + 1);
         currentDate.setDate(0);
     
-        const lastDay = (currentDate.getDay() + 6) % 7;
+        const lastDay = ((8 - currentDate.getDay()) % 7 || 7) - 1;
         const daysInMonth = currentDate.getDate();
     
         const displayMonthElement = document.querySelector('#display-month h2');
         displayMonthElement.innerHTML = currentDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
       
-        let dayCount = 1;
-        let nextMonthDayCount = 1;
-      
-        function setDayElement(day, additionalClass, currentDate, index) {
+        function setDayElement(currentDate, additionalClass, index) {
             if (currentDate.getTime() === new Date().setHours(0, 0, 0, 0)) {
-                additionalClass = 'currentDay';
+                additionalClass += ' currentDay';
             }
         
             let div = calendarElement.children[index + 1];
@@ -64,77 +59,76 @@
                 div = calendarElement.children[index + 1];
             }
         
-            div.querySelector('.day').innerHTML = day;
+            div.style.display = 'grid';
+            div.querySelector('.day').innerHTML = currentDate.getDate();
         
             // Get appointments for this day
             let thisDaysAppts = userAppointments.filter(appointment => new Date(appointment.dateofvisit).toDateString() === currentDate.toDateString());
         
-            if (thisDaysAppts.length > 0) {
-                let apptTypeContainer = div.querySelector('.apptTypeContainer');
+            let apptTypeContainer = div.querySelector('.apptTypeContainer');
 
-                let displayedCount = 0;
-                let appointmentTypes = ["Specialist Referral", "Vaccination", "Surgery", "Follow-up", "Diagnostic Testing", "Check-up", "Consultation", "Emergency"];
-                let thisDayUniqueTypes = new Set(thisDaysAppts.map((appt) => appt.type));
-                let htmlString = '';
-                
-                for (let type of appointmentTypes) {
-                    if (thisDayUniqueTypes.has(type) && displayedCount < 3) {
-                        displayedCount++;
+            let displayedCount = 0;
+            let appointmentTypes = ["Specialist Referral", "Vaccination", "Surgery", "Follow-up", "Diagnostic Testing", "Check-up", "Consultation", "Emergency"];
+            let thisDayUniqueTypes = new Set(thisDaysAppts.map((appt) => appt.type));
+            let htmlString = '';
+            
+            for (let type of appointmentTypes) {
+                if (thisDayUniqueTypes.has(type) && displayedCount < 3) {
+                    displayedCount++;
 
-                        if (displayedCount == 3 && thisDaysAppts.length > 3) {
-                            htmlString += `
-                                <div class="apptType">
-                                    <div class="apptHighlight apptMore"></div>
-                                    <p class="apptLabel">and ${thisDaysAppts.length - displayedCount + 1} more...</p>
-                                </div>
-                            `;
-                        } else {
-                            htmlString += `
-                                <div class="apptType">
-                                    <div class="apptHighlight appt${type.split(' ').join('').split('-').join('')}"></div>
-                                    <p class="apptLabel">${type}</p>
-                                </div>
-                            `;
-                        }
+                    if (displayedCount == 3 && thisDaysAppts.length > 3) {
+                        htmlString += `
+                            <div class="apptType">
+                                <div class="apptHighlight apptMore"></div>
+                                <p class="apptLabel">and ${thisDaysAppts.length - displayedCount + 1} more...</p>
+                            </div>
+                        `;
+                    } else {
+                        htmlString += `
+                            <div class="apptType">
+                                <div class="apptHighlight appt${type.split(' ').join('').split('-').join('')}"></div>
+                                <p class="apptLabel">${type}</p>
+                            </div>
+                        `;
                     }
                 }
-                
-                if (displayedCount < 3 && thisDaysAppts.length >= 3) {
-                    htmlString += `
-                        <div class="apptType">
-                            <div class="apptHighlight apptMore"></div>
-                            <p class="apptLabel">and ${thisDaysAppts.length - displayedCount} more...</p>
-                        </div>
-                    `;
-                }
-                
-                apptTypeContainer.innerHTML = htmlString;            
             }
+            
+            if (displayedCount < 3 && thisDaysAppts.length >= 3) {
+                htmlString += `
+                    <div class="apptType">
+                        <div class="apptHighlight apptMore"></div>
+                        <p class="apptLabel">and ${thisDaysAppts.length - displayedCount} more...</p>
+                    </div>
+                `;
+            }
+            
+            apptTypeContainer.innerHTML = htmlString;
         
-            if (additionalClass) div.classList = additionalClass;
+            if (additionalClass) div.classList = additionalClass.trim();
             else div.removeAttribute("class");
         }
         
         // Add days for the previous month
-        for (let i = 1; i <= firstDay; i++) {
+        for (let i = firstDay; i >= 1; i--) {
             const currentDate = new Date(currentYear, currentMonth, 1 - i);
-            setDayElement(currentDate.getDate(), 'otherMonth', currentDate, firstDay - i);
+            setDayElement(currentDate, 'otherMonth', firstDay - i);
         }
     
         // Add days for the current month
         for (let i = 0; i < daysInMonth; i++) {
             const currentDate = new Date(currentYear, currentMonth, i + 1);
-            setDayElement(dayCount++, '', currentDate, firstDay + i);
+            setDayElement(currentDate, '', firstDay + i);
         }
     
         // Add days for the next month
-        for (let i = lastDay; i < 6; i++) {
-            const currentDate = new Date(currentYear, currentMonth + 1, i + 1);
-            setDayElement(nextMonthDayCount++, 'otherMonth', currentDate, firstDay + daysInMonth + i - lastDay);
+        for (let i = 1; i <= lastDay; i++) {
+            const currentDate = new Date(currentYear, currentMonth + 1, i);
+            setDayElement(currentDate, 'otherMonth', firstDay + daysInMonth + i - 1);
         }
         
         // Hide unused day elements
-        for (let i = firstDay + daysInMonth + 6 - lastDay; i < calendarElement.children.length - 1; i++) {
+        for (let i = firstDay + daysInMonth + lastDay + 1; i < calendarElement.children.length; i++) {
             calendarElement.children[i].style.display = 'none';
         }
     };

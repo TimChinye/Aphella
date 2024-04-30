@@ -101,6 +101,7 @@ aside {
 
       li {
         &.active a {
+          pointer-events: none;
           background-image: linear-gradient(var(--primary-colour), var(--trinary-colour));
           color: #FFF;
         }
@@ -168,6 +169,17 @@ main {
 
       > img {
         height: calc(100% - 2 * (0.125rem + 0.125rem));
+        cursor: pointer;
+      
+        &:hover {
+          animation: wobble-hor-top 1.2s both;
+          animation-iteration-count: infinite;
+          animation-delay: 0.6;
+        }
+      
+        &:not(:hover) {
+          animation-play-state: paused;
+        }
       }
 
       span {
@@ -176,37 +188,43 @@ main {
       }
 
       div {
-        &:first-of-type {
+        &:has(img) {
           height: 100%;
           width: 100%;
           border-radius: 50%;
           border: 0.125rem solid var(--primary-colour);
           padding: 0.125rem;
+          cursor: pointer;
+          transition: 0.5s;
+
+          img {
+            aspect-ratio: 1 / 1;
+            height: inherit;
+            border-radius: inherit;
+          }
+
+          &:hover {
+            padding: 0.25rem;
+          }
         }
 
-        &:last-of-type {
+        &:has(#name) {
           display: flex;
           flex-direction: column;
           justify-content: center;
           position: relative;
-        }
 
-        img {
-          aspect-ratio: 1 / 1;
-          height: inherit;
-          border-radius: inherit;
-        }
-
-        > h4 {
-          margin: 0;
-          white-space: nowrap;
-        }
-
-        > h6 {
-          margin: 0;
-          margin-top: -0.25rem;
-          color: var(--primary-colour);
-          white-space: nowrap;
+          > h4 {
+            margin: 0;
+            white-space: nowrap;
+          }
+  
+          > h6 {
+            margin: 0;
+            margin-top: -0.25rem;
+            color: var(--primary-colour);
+            white-space: nowrap;
+          }
         }
       }
     }

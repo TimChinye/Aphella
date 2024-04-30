@@ -40,10 +40,13 @@
       staff[lastRequestsReceived[i].fromstaff] = JSON.parse(localStorage.getItem(path));
 
     if (!staff[lastRequestsReceived[i].fromstaff])
+      staff[lastRequestsReceived[i].fromstaff] = JSON.parse(localStorage.getItem('/grab/staff'))?.find((s) => s.staffid == lastRequestsReceived[i].fromstaff);
+
+    if (!staff[lastRequestsReceived[i].fromstaff])
       staff[lastRequestsReceived[i].fromstaff] = await fetchJson(path);
 
     rRow.children[2].textContent = `${staff[lastRequestsReceived[i].fromstaff].firstname} ${staff[lastRequestsReceived[i].fromstaff].lastname}`;
-    rRow.children[3].innerHTML = lastRequestsReceived[i].details.replace(/\\n/g, '<br>');
+    rRow.children[3].innerHTML = lastRequestsReceived[i].details;
   }
 
   /* Appointment Statistics */
@@ -219,6 +222,7 @@
             let path = '/grab/patients/' + appointment.patientid;
 
             if (!patients[appointment.patientid]) patients[appointment.patientid] = JSON.parse(localStorage.getItem(path));
+            if (!patients[appointment.patientid]) patients[appointment.patientid] = JSON.parse(localStorage.getItem('/grab/patients'))?.find((p) => p.patientid == appointment.patientid);
             if (!patients[appointment.patientid]) {
               if (!['animating', 'stop-animating'].some(status => loadingOverlay.classList.contains(status)))
                 showLoadingOverlay(loadingOverlay, true, 'var(--panel-bg-colour)');
@@ -435,24 +439,6 @@ function getPeriodOfAppointments(currentPeriodStart, allAppointments) {
   }
 
   return periodTimestamps.map((timestamp) => allAppointments.find(([apptTimestamp]) => apptTimestamp == timestamp) || [Number(timestamp), [formatDate(new Date(Number(timestamp))), 0]]); // Append appointments to each period
-}
-
-function getRelativeDate(givenDate) {
-  const currentDate = new Date();
-  const diffTime = givenDate.getTime() - currentDate.getTime();
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-  if (diffDays === 0) {
-    return "Today";
-  } else if (diffDays === 1) {
-    return "Tomorrow";
-  } else if (diffDays === -1) {
-    return "Yesterday";
-  } else if (diffDays > 1) {
-    return `In ${diffDays} days`;
-  } else {
-    return `${Math.abs(diffDays)} days ago`;
-  }
 }
 
 function waitForClass(element, className) {

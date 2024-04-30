@@ -1,4 +1,4 @@
-if (new URLSearchParams(window.location.search).has('dev')) forceLogin('lurleen.yearne@aphella.com');
+if (new URLSearchParams(window.location.search).has('dev')) forceLogin('lurleen.yearne@aphella.com'), localStorage.clear();
 else window.location.href = window.location.href + "?dev";
 
 let firstname = null, generatedCode = null;
@@ -170,7 +170,8 @@ function verifyCode() {
   .then((response) => response.json())
   .then((data) => {
     if (data.isVerified) {
-      window.location.href = "/dashboard";  
+      window.location.href = "/dashboard";
+      localStorage.clear();
     }
     else document.getElementById("feedback").innerHTML = "Invalid code";
   })

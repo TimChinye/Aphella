@@ -83,7 +83,7 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { resolve } = require("path");
-const { loginUser, getStaff, getPatient, getJob, getAppointmentsByUserId, getPatientsByDoctor, getRequestsReceivedByStaffId, getLastXRequestsReceivedByStaffId } = require("./db.js");
+const { loginUser, getStaff, getPatient, getJob, getAppointmentsByUserId, getPatientsByDoctor, getRequestsReceivedByStaffId, getLastXRequestsReceivedByStaffId, getPatients } = require("./db.js");
 
 const port = process.env.PORT || process.argv[3] || 3010;
 const app = express();
@@ -181,10 +181,30 @@ app.get("/grab/staff/:id", async (req, res) => {
   }
 });
 
+app.get("/grab/patients/:id/appointments", async (req, res) => {
+  if (req.user) {
+    let appointments = await getAppointmentsByUserId('patient', req.params.id);
+    res.status(200).json(appointments);
+  } else {
+    res.redirect('/login');
+  }
+});
+
 app.get("/grab/patients/:id", async (req, res) => {
   if (req.user) {
     if (req.user.staffid) {
       let patients = await getPatient(req.params.id);
+      res.status(200).json(patients);
+    } else res.status(404).json({ message: 'User is not a staff member.' });
+  } else {
+    res.redirect('/login');
+  }
+});
+
+app.get("/grab/patients", async (req, res) => {
+  if (req.user) {
+    if (req.user.staffid) {
+      let patients = await getPatients();
       res.status(200).json(patients);
     } else res.status(404).json({ message: 'User is not a staff member.' });
   } else {
@@ -316,8 +336,25 @@ app.get("/appointments", async (req, res) => {
 
 app.get("/patients", async (req, res) => {
   if (req.user) {
-    if (req.user.type != 'patient') {
+    if (req.user.staffid) {
       serveFile(res, req.user.type + '/patients');
+    } else {
+      // If the user came from another page on our site, send them back
+      if (req.headers.referer && req.headers.referer.includes(req.headers.host)) {
+        res.redirect(req.headers.referer);
+      } else {
+        res.redirect('/dashboard');
+      }
+    }
+  } else {
+    res.redirect('/login');
+  }
+});
+
+app.get("/doctors", async (req, res) => {
+  if (req.user) {
+    if (req.user.staffid) {
+      serveFile(res, req.user.type + '/doctors');
     } else {
       // If the user came from another page on our site, send them back
       if (req.headers.referer && req.headers.referer.includes(req.headers.host)) {

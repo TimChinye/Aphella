@@ -37,7 +37,7 @@ function updateCache(cacheKey, id, items) {
 let getPrescriptionsByAppointmentId = async (id) => {
 	let prescriptions = await sql`SELECT * FROM prescription WHERE appointmentid = ${id};`;
 	
-	if (prescriptions) updateCache('prescriptions', 'prescriptionid', prescriptions);
+	if (prescriptions[0]) updateCache('prescriptions', 'prescriptionid', prescriptions);
 
 	return prescriptions;
 };
@@ -102,8 +102,11 @@ module.exports = {
 		if (!patient) patient = (await sql`SELECT * FROM patient WHERE patientid = ${id}`)[0];
 
 		if (patient) {
-			if (!patient.phonenumber) patient.phonenumber = patient.phonenumber.trim();
+			patient.phonenumber = patient.phonenumber.trim();
 			if (!patient.type) patient.type = 'patient';
+
+			if (!patient.medicalHistory) patient.medicalHistory = await getMedicalHistory(patient.patientid);
+			if (!patient.vitals) patient.vitals = await getVitals(patient.patientid);
 
 			updateCache('patients', 'patientid', patient);
 		}
@@ -129,32 +132,40 @@ module.exports = {
 			appointments = await sql`SELECT * FROM appointment AS appt JOIN appointmentstafflink AS link ON appt.appointmentid = link.appointmentid WHERE link.staffid = ${id};`;
 		}
 
-		appointments = await Promise.all(appointments?.map(async (appointment) => {
-			appointment.prescriptions = await getPrescriptionsByAppointmentId(appointment.appointmentid);
-			return appointment;
-		}));
-
-		if (appointments) updateCache('appointments', 'appointmentid', appointments);
+		if (appointments[0]) {
+			appointments = await Promise.all(appointments?.map(async (appointment) => {
+				appointment.prescriptions = await getPrescriptionsByAppointmentId(appointment.appointmentid);
+				return appointment;
+			}));
+	
+			updateCache('appointments', 'appointmentid', appointments);
+		}
 
 		return appointments;
 	},
 	getPatientsByDoctor: async function (id) {
 		let patients = await sql`SELECT * FROM patient WHERE maindoctor = ${id};`;
 
-		patients = await Promise.all(patients?.map(async (patient) => {
-			patient.medicalHistory = await getMedicalHistory(patient.patientid);
-			patient.vitals = await getVitals(patient.patientid);
-			return patient;
-		}));
+		if (patients[0]) {
+			patients = await Promise.all(patients.map(async (patient) => {
+				patient.phonenumber = patient.phonenumber.trim();
+				patient.type = 'patient';
+	
+				patient.medicalHistory = await getMedicalHistory(patient.patientid);
+				patient.vitals = await getVitals(patient.patientid);
+				
+				return patient;
+			}));
 
-		if (patients) updateCache('patients', 'patientid', patients);
+			updateCache('patients', 'patientid', patients);
+		}
 
 		return patients;
 	},
 	getRequestsReceivedByStaffId: async (id) => {
 		let requests = await sql`SELECT * FROM request WHERE request.tostaff = ${id};`;
 
-		if (requests) {
+		if (requests[0]) {
 			updateCache('requests', 'requestid', requests);
 		}
 
@@ -163,9 +174,28 @@ module.exports = {
 	getLastXRequestsReceivedByStaffId: async (id, amount) => {
 		let requests = await sql`SELECT * FROM request WHERE date <= CURRENT_DATE AND request.tostaff = ${id} ORDER BY date DESC LIMIT ${amount};`;
 
-		if (requests) updateCache('requests', 'requestid', requests);
+		if (requests[0]) updateCache('requests', 'requestid', requests);
 
 		return requests;
+	},
+	getPatients: async () => {
+		let patients = await sql`SELECT * FROM patient`;
+
+		if (patients[0]) {
+			patients = await Promise.all(patients.map(async (patient) => {
+				patient.phonenumber = patient.phonenumber.trim();
+				patient.type = 'patient';
+	
+				patient.medicalHistory = await getMedicalHistory(patient.patientid);
+				patient.vitals = await getVitals(patient.patientid);
+
+				return patient;
+			}));
+
+			updateCache('patients', 'patientid', patients);
+		}
+
+		return patients;
 	},
 	getPrescriptionsByAppointmentId,
 	getMedicalHistory,

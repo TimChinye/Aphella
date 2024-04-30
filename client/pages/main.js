@@ -86,3 +86,20 @@ function showLoadingOverlay(loadingOverlay, relativeHeight, backgroundColor) {
     loadingOverlay.classList.add('animating');
   }
 }
+
+function getRelativeDate(givenDate) {
+  const diffTime = givenDate.setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) {
+    return "Today";
+  } else if (diffDays === 1) {
+    return "Tomorrow";
+  } else if (diffDays === -1) {
+    return "Yesterday";
+  } else if (diffDays > 1) {
+    return `In ${diffDays} days`;
+  } else {
+    return `${Math.abs(diffDays)} days ago`;
+  }
+}
