@@ -54,22 +54,24 @@
                 additionalClass = 'currentDay';
             }
         
-            let div = calendarElement.children[index];
+            let div = calendarElement.children[index + 1];
             if (!div) {
-                div = document.createElement('div');
+                let template = calendarElement.firstElementChild;
+
+                div = template.content.cloneNode(true);
                 calendarElement.appendChild(div);
-            } else if (div.style.display == 'none') div.style.display = 'grid';
+
+                div = calendarElement.children[index + 1];
+            }
         
-            div.innerHTML = day;
+            div.querySelector('.day').innerHTML = day;
         
             // Get appointments for this day
             let thisDaysAppts = userAppointments.filter(appointment => new Date(appointment.dateofvisit).toDateString() === currentDate.toDateString());
         
             if (thisDaysAppts.length > 0) {
-                const appointmentContainer = document.createElement('div');
-                appointmentContainer.classList.add('apptTypeContainer');
-                div.appendChild(appointmentContainer);
-        
+                let apptTypeContainer = div.querySelector('.apptTypeContainer');
+
                 let displayedCount = 0;
                 let appointmentTypes = ["Specialist Referral", "Vaccination", "Surgery", "Follow-up", "Diagnostic Testing", "Check-up", "Consultation", "Emergency"];
                 let thisDayUniqueTypes = new Set(thisDaysAppts.map((appt) => appt.type));
@@ -106,7 +108,7 @@
                     `;
                 }
                 
-                appointmentContainer.innerHTML = htmlString;                
+                apptTypeContainer.innerHTML = htmlString;            
             }
         
             if (additionalClass) div.classList = additionalClass;
@@ -132,7 +134,7 @@
         }
         
         // Hide unused day elements
-        for (let i = firstDay + daysInMonth + 6 - lastDay; i < calendarElement.children.length; i++) {
+        for (let i = firstDay + daysInMonth + 6 - lastDay; i < calendarElement.children.length - 1; i++) {
             calendarElement.children[i].style.display = 'none';
         }
     };

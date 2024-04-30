@@ -1,3 +1,5 @@
+if (new URLSearchParams(window.location.search).has('clear')) localStorage.clear();
+
 function updateAppointmentsIcon() {
   // Get the current day of the week
   let today = new Date().toLocaleDateString('en-GB', { weekday: 'long' }).toLowerCase();

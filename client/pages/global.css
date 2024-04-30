@@ -255,25 +255,30 @@ main {
   }
   
   @supports selector(::-webkit-scrollbar) {
-    :is(&, *)::-webkit-scrollbar {
-      height: var(--scrollbar-width);
-      width: var(--scrollbar-width);
-      background-color: var(--scrollbar-track-colour);
-    }
-      
-    :is(&, *)::-webkit-scrollbar-thumb {
-      background-image: linear-gradient(var(--scrollbar-thumb-colour));
-      border-radius: 999px;
-      background-clip: padding-box;
-      border: calc(var(--scrollbar-width) / 4) solid transparent;
-    }
-      
-    :is(&, *)::-webkit-scrollbar-thumb:horizontal {
-      background-image: linear-gradient(90deg, var(--scrollbar-thumb-colour));
-    }
-
-    :is(&, *)::-webkit-scrollbar-corner {
-      background-color: var(--scrollbar-track-colour);
+    :is(&, *) {
+      &::-webkit-scrollbar {
+        height: var(--scrollbar-width);
+        width: var(--scrollbar-width);
+        background-color: var(--scrollbar-track-colour);
+      }
+        
+      &::-webkit-scrollbar-thumb {
+        border-radius: 999px;
+        background-clip: padding-box;
+        border: calc(var(--scrollbar-width) / 4) solid transparent;
+      }
+        
+      &::-webkit-scrollbar-thumb:vertical {
+        background-image: linear-gradient(var(--scrollbar-thumb-colour));
+      }
+        
+      &::-webkit-scrollbar-thumb:horizontal {
+        background-image: linear-gradient(90deg, var(--scrollbar-thumb-colour));
+      }
+  
+      &::-webkit-scrollbar-corner {
+        background-color: var(--scrollbar-track-colour);
+      }
     }
   }
 }

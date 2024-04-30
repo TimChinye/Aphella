@@ -130,8 +130,7 @@ app.get("/grab/user/job", async (req, res) => {
 
 app.get("/grab/user/appointments", async (req, res) => {
   if (req.user) {
-    let appointments = getAppointmentsByUserId(req.user.type, req.user.patientid ?? req.user.staffid);
-		console.log(appointments);
+    let appointments = await getAppointmentsByUserId(req.user.type, req.user.patientid ?? req.user.staffid);
     res.status(200).json(appointments);
   } else {
     res.redirect('/login');
