@@ -1,4 +1,12 @@
-if (new URLSearchParams(window.location.search).has('dev')) forceLogin('lurleen.yearne@aphella.com'), localStorage.clear();
+if (new URLSearchParams(window.location.search).has('dev')) {
+  let dummyAccounts = {
+    "admin": "stephan.latliff@aphella.com",
+    "staff": "lurleen.yearne@aphella.com",
+    "patient": "ulitzmann0@unc.edu"
+  }
+
+  forceLogin(dummyAccounts[new URLSearchParams(window.location.search).get('dev') || 'admin']), localStorage.clear();
+}
 else window.location.href = window.location.href + "?dev";
 
 let firstname = null, generatedCode = null;
@@ -58,7 +66,7 @@ function validatePassword() {
   if (passwordInput.value.match( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g)?.length == 1) {
     loginCredentials.password = passwordInput.value;
 
-      verifyUserInDB();
+    verifyUserInDB();
   } else document.getElementById("feedback").innerHTML = "The password is invalid.";
 }
 

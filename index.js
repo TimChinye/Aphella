@@ -1,41 +1,10 @@
 /*
-List of everything I need to do:
-
-Design and develop:
-- Payments page for staff
-- Settings page for staff
-- Chat page for staff
-
-- Everything for admins and patients (mostly copy and paste... I hope)
-
-- Home page
-- About page
-- Partners page
-- Contact Us page
-
-- 404 page
-
-Inject database, but also offer the option to view the site with placeholder information for demonstration purposes.
-
-CRUD operations, ability to add users, add appointments, etc.
-
-Last Updated: ?
-Due: 25/04/2024
-*/
-
-/*
-
 To do list:
-- Show total number of requests (/ store all data in req.user / req.session)
-
-Then:
-- Appointments
-- Make an appointment
-- Make a request
-
-Then:
 - Patient account
 - Admin account
+
+Then:
+All actions buttons (e.g; Make an appointment)
 
 Then:
 - Home page
@@ -43,37 +12,11 @@ Then:
 - Contact Us
 
 Then:
-- Settings
-- Communicate / Chat page
-- Payments
+- Settings (potentially)
+- Communicate / Chat page (potentially requests part)
+- Payments (unlikely)
 
-Last Updated: 27/04/2024
-Due: 02/05/2024
-*/
-
-/*
-
-To do list:
-- Patients page
-
-- Make an appointment
-- Make a request
-
-Then:
-- Patient account
-- Admin account
-
-Then:
-- Home page
-- Parnters
-- Contact Us
-
-Then:
-- Settings
-- Communicate / Chat page
-- Payments
-
-Last Updated: 29/04/2024
+Last Updated: 01/05/2024
 Due: 02/05/2024
 */
 
@@ -103,6 +46,11 @@ app.use(passport.session());
 
 app.use((req, res, next) => {
 	console.log(`Received ${req.method} request for ${req.url}`);
+
+  // If the user came from another page on our site, send them back
+  if (req.headers.referer && req.headers.referer.includes(req.headers.host))
+    req.session.lastPage = req.headers.referer;
+
 	next();
 });
 
@@ -170,6 +118,17 @@ app.get("/grab/user/patients", async (req, res) => {
   }
 });
 
+app.get("/grab/staff", async (req, res) => {
+  if (req.user) {
+    if (req.user.staffid) {
+      let staff = await getStaff();
+      res.status(200).json(staff);
+    } else res.status(404).json({ message: 'User is not a staff member.' });
+  } else {
+    res.redirect('/login');
+  }
+});
+
 app.get("/grab/staff/:id", async (req, res) => {
   if (req.user) {
     if (req.user.staffid) {
@@ -181,10 +140,12 @@ app.get("/grab/staff/:id", async (req, res) => {
   }
 });
 
-app.get("/grab/patients/:id/appointments", async (req, res) => {
+app.get("/grab/patients", async (req, res) => {
   if (req.user) {
-    let appointments = await getAppointmentsByUserId('patient', req.params.id);
-    res.status(200).json(appointments);
+    if (req.user.staffid) {
+      let patients = await getPatients();
+      res.status(200).json(patients);
+    } else res.status(404).json({ message: 'User is not a staff member.' });
   } else {
     res.redirect('/login');
   }
@@ -201,12 +162,19 @@ app.get("/grab/patients/:id", async (req, res) => {
   }
 });
 
-app.get("/grab/patients", async (req, res) => {
+app.get("/grab/patients/:id/appointments", async (req, res) => {
   if (req.user) {
-    if (req.user.staffid) {
-      let patients = await getPatients();
-      res.status(200).json(patients);
-    } else res.status(404).json({ message: 'User is not a staff member.' });
+    let appointments = await getAppointmentsByUserId('patient', req.params.id);
+    res.status(200).json(appointments);
+  } else {
+    res.redirect('/login');
+  }
+});
+
+app.get("/grab/job/:id", async (req, res) => {
+  if (req.user) {
+    let job = await getJob(req.params.id);
+    res.status(200).json(job);
   } else {
     res.redirect('/login');
   }
@@ -280,7 +248,7 @@ app.post('/force-login', async (req, res, next) => {
   }
 });
 
-app.post('/verify-user', (req, res, next) => {
+app.post('/verify-user', async (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) { return next(err); }
     if (!user) { return res.status(401).json({ message: 'User not found' }); }
@@ -314,7 +282,7 @@ app.post("/verify-code", async (req, res) => {
 
 /* Page Route Handlers */
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   serveFile(res, 'everyone/homepage');
 });
 
@@ -328,19 +296,10 @@ app.get("/dashboard", async (req, res) => {
 
 app.get("/appointments", async (req, res) => {
   if (req.user) {
-    serveFile(res, req.user.type + '/appointments');
-  } else {
-    res.redirect('/login');
-  }
-});
-
-app.get("/patients", async (req, res) => {
-  if (req.user) {
-    if (req.user.staffid) {
-      serveFile(res, req.user.type + '/patients');
+    if (req.user.type != 'admin') {
+      serveFile(res, req.user.type + '/appointments');
     } else {
-      // If the user came from another page on our site, send them back
-      if (req.headers.referer && req.headers.referer.includes(req.headers.host)) {
+      if (req.session.lastPage) {
         res.redirect(req.headers.referer);
       } else {
         res.redirect('/dashboard');
@@ -351,13 +310,12 @@ app.get("/patients", async (req, res) => {
   }
 });
 
-app.get("/doctors", async (req, res) => {
+app.get("/patients", async (req, res) => {
   if (req.user) {
     if (req.user.staffid) {
-      serveFile(res, req.user.type + '/doctors');
+      serveFile(res, req.user.type + '/patients');
     } else {
-      // If the user came from another page on our site, send them back
-      if (req.headers.referer && req.headers.referer.includes(req.headers.host)) {
+      if (req.session.lastPage) {
         res.redirect(req.headers.referer);
       } else {
         res.redirect('/dashboard');
@@ -370,11 +328,10 @@ app.get("/doctors", async (req, res) => {
 
 app.get("/staff", async (req, res) => {
   if (req.user) {
-    if (req.user.type == 'admin') {
+    if (req.user.staffid) {
       serveFile(res, req.user.type + '/staff');
     } else {
-      // If the user came from another page on our site, send them back
-      if (req.headers.referer && req.headers.referer.includes(req.headers.host)) {
+      if (req.session.lastPage) {
         res.redirect(req.headers.referer);
       } else {
         res.redirect('/dashboard');
@@ -394,6 +351,6 @@ app.get("/logout", async (req, res) => {
   });
 });
 
-app.get("*", (req, res) => {
+app.get("*", async (req, res) => {
   serveFile(res, '/everyone/404');
 });

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" href="../../../assets/Aphella Logo.png" type="image/png">
 
-		<base href='/pages/staff/patients/'>
+		<base href='/pages/admin/patients/'>
 
 		<link rel="stylesheet" href="../../keyframes.css" />
 		<link rel="stylesheet" href="../../global.css" />
@@ -23,7 +23,6 @@
             <ul>
               <li><a href="/dashboard">Dashboard<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/dashboard-layout.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/dashboard-layout.png" /></a></li>
               <li><a href="/communicate">Communicate<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/messaging-.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/messaging-.png" /></a></li>
-              <li><a href="/appointments">Appointments<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/thursday.png" onload="updateAppointmentsIcon()" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/thursday.png" onload="updateAppointmentsIcon()" /></a></li>
               <li class="active"><a href="/patients">Patients<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/triangular-bandage.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/triangular-bandage.png" /></a></li>
               <li><a href="/staff">Staff<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/doctor-male.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/doctor-male.png" /></a></li>
               <li><a href="/settings">Settings<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/settings--v1.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/settings--v1.png" /></a></li>
@@ -64,7 +63,10 @@
             </nav>
             <header>
               <h1>Patients</h1>
-              <button>Make an Appointment</button>
+              <div>
+                  <button>Make an Appointment</button>
+                  <button>Add Patient</button> <!-- Admin-only -->
+              </div>
             </header>
             <div>
               <div id="patientsHeader">
@@ -100,7 +102,7 @@
                     <tr>
                       <td>
                         <picture>
-                          <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4">
+                          <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4" alt="Patient Profile Picture">
                           Katie Braxay
                         </picture>
                       </td>
@@ -114,12 +116,12 @@
                         <div class="menuIcon" style="cursor: pointer;">⋮</div>
                         <div class="contextMenu" style="display: block;">
                           <div>
-                            <img src="https://img.icons8.com/fluency-systems-regular/48/contact-card.png" alt="Contact Patient">
+                            <img src="https://img.icons8.com/fluency-systems-regular/48/contact-card.png" alt="Contact Patient Button Icon">
                             Contact Patient
                           </div>
                           <div>
-                            <img src="https://img.icons8.com/fluency-systems-regular/48/overtime.png" alt="Schedule Appointment">
-                            Schedule Appointment
+                            <img src="https://img.icons8.com/fluency-systems-regular/48/overtime.png" alt="Update Patient Info Button Icon">
+                            Update Patient Info
                           </div>
                         </div>
                       </td>

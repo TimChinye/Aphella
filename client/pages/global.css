@@ -239,6 +239,37 @@ main {
     h1 {
       font-size: 2rem;
     }
+
+    :has(> button) {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    button {
+      border: none;
+      padding: 1rem 1.5rem;
+      padding-left: calc(1.5rem + 2.5ex + 1ch);
+      background: url(https://img.icons8.com/fluency-systems-filled/96/FFFFFF/plus-math.png) 1.5rem 1rem no-repeat scroll;
+      background-size: 2.5ex;
+      background-color: var(--bg-colour);
+      box-shadow: 10px 10px 20px -15px color-mix(in srgb, black, var(--panel-bg-colour));
+      border-radius: 1rem;
+      color: #FFFFFF;
+      cursor: pointer;
+      line-height: 130%;
+      transition: 0.25s;
+      font-size: 0.875rem;
+      white-space: nowrap;
+      --bg-colour: var(--primary-colour);
+  
+      &:first-child {
+        --bg-colour: var(--secondary-colour);
+      }
+
+      &:hover {
+        background-color: color-mix(in srgb, black, var(--bg-colour) 66%);
+      }
+    }
   }
 
   > section {
@@ -305,7 +336,7 @@ main {
   position: relative;
 
   #loadingOverlay {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     background: var(--background-colour);

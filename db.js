@@ -81,18 +81,39 @@ module.exports = {
 		return { user, userInDatabase: !!user };
 	},
 	getStaff: async (id) => {
-		let staff = cache.get('staff')?.find((staff) => staff.staffid == id);
-		if (!staff) staff = (await sql`SELECT * FROM staff WHERE staffid = ${id}`)[0];
+		let staff;
 
-		if (staff) {
-			if (!staff.phonenumber) staff.phonenumber = staff.phonenumber.trim();
+		if (!id) {
+			staff = await sql`SELECT * FROM staff`;
 
-			if (!staff.type) {
-				if (staff.jobid == 8) staff.type = 'admin';
-				else staff.type = 'staff';
+			if (staff[0]) {
+				staff = await Promise.all(staff.map(async (staff) => {
+					staff.phonenumber = staff.phonenumber.trim();
+	
+					if (!staff.type) {
+						if (staff.jobid == 8) staff.type = 'admin';
+						else staff.type = 'staff';
+					}
+
+					return staff;
+				}));
+
+				updateCache('staff', 'staffid', staff);
 			}
-
-			updateCache('staff', 'staffid', staff);
+		} else {
+			staff = cache.get('staff')?.find((staff) => staff.staffid == id);
+			if (!staff) staff = (await sql`SELECT * FROM staff WHERE staffid = ${id}`)[0];
+	
+			if (staff) {
+				staff.phonenumber = staff.phonenumber.trim();
+	
+				if (!staff.type) {
+					if (staff.jobid == 8) staff.type = 'admin';
+					else staff.type = 'staff';
+				}
+	
+				updateCache('staff', 'staffid', staff);
+			}
 		}
 
 		return staff;

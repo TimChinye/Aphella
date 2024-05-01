@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Aphella | Patients</title>
+    <title>Aphella | Staff</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" href="../../../assets/Aphella Logo.png" type="image/png">
 
-		<base href='/pages/staff/doctors/'>
+		<base href='/pages/admin/staff/'>
 
 		<link rel="stylesheet" href="../../keyframes.css" />
 		<link rel="stylesheet" href="../../global.css" />
@@ -22,10 +22,9 @@
             <hr>
             <ul>
               <li><a href="/dashboard">Dashboard<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/dashboard-layout.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/dashboard-layout.png" /></a></li>
-              <li><a href="/chat">Chat<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/messaging-.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/messaging-.png" /></a></li>
-              <li><a href="/appointments">Appointments<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/thursday.png" onload="updateAppointmentsIcon()" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/thursday.png" onload="updateAppointmentsIcon()" /></a></li>
+              <li><a href="/communicate">Communicate<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/messaging-.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/messaging-.png" /></a></li>
               <li><a href="/patients">Patients<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/triangular-bandage.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/triangular-bandage.png" /></a></li>
-              <li class="active"><a href="/doctors">Doctors<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/doctor-male.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/doctor-male.png" /></a></li>
+              <li class="active"><a href="/staff">Staff<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/doctor-male.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/doctor-male.png" /></a></li>
               <li><a href="/settings">Settings<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/settings--v1.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/settings--v1.png" /></a></li>
               <li><a href="/logout">Log Out<img src="https://img.icons8.com/fluency-systems-regular/48/FF005D/exit--v1.png" /><img src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/exit--v1.png" /></a></li>
             </ul>
@@ -63,68 +62,60 @@
                 </div>
             </nav>
             <header>
-                <h1>Patients</h1>
-                <div style="display: flex; gap: 1rem;">
-                    <button>Make an Appointment</button>
-                    <button>Add Patient</button> <!-- Admin-only -->
-                </div>
+              <h1>Staff</h1>
+              <button>Add Staff</button> <!-- Admin-only -->
             </header>
             <div>
-              <div id="patientsHeader">
-                <h3>364 patients total</h3>
+              <div id="staffHeader">
                 <div>
                   <label>Sort by:</label>
-                  <select id="patientsSelect">
+                  <select id="staffSelect">
                     <option value="firstNameAsc">First Name A-Z</option>
                     <option value="firstNameDesc">First Name Z-A</option>
-                    <option value="lastNameAsc">Last Name A-Z</option>
+                    <option value="lastNameAsc" selected>Last Name A-Z</option>
                     <option value="lastNameDesc">Last Name Z-A</option>
-                    <option value="age">Age</option>
-                    <option value="lastAppointment" selected>Last Appointment</option>
-                    <option value="nextAppointment">Next Appointment</option>                  
+                    <option value="title">Title</option>
+                    <option value="gender">Gender</option>
                   </select>
                 </div>
+                <div>
+                  <span>
+                    <input type="checkbox" id="mGender" checked />
+                    <label for="mGender">Men</label>
+                  </span>
+                  <span>
+                    <input type="checkbox" id="fGender" checked />
+                    <label for="fGender">Women</label>
+                  </span>
+                  <span>
+                    <input type="checkbox" id="iGender" checked />
+                    <label for="iGender">Indetermined</label>
+                  </span>
+                  <span>
+                    <input type="checkbox" id="uGender" checked />
+                    <label for="uGender">Unknown</label>
+                  </span>
+                </div>
+                <search>
+                  <input type="search" placeholder="Search staff..." />
+                </search>
               </div>
-              <table id="patientsTable">
-                <thead>
-                  <tr>
-                    <th>Patient Name</th>
-                    <th>1st Language</th>
-                    <th>Age</th>
-                    <th>Last Appointment</th>
-                    <th>Next Appointment</th>
-                    <th>Allergies</th>
-                    <th>Chronic Condition</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <template>
-                    <tr>
-                      <td>Katie Braxay</td>
-                      <td>Assamese</td>
-                      <td>61</td>
-                      <td>07 Apr 2024 (2 weeks ago)</td>
-                      <td>23 May 2024 (in 3 days)</td>
-                      <td>Shellfish</td>
-                      <td>Hypertension</td>
-                      <td>
-                        <div class="menuIcon" style="cursor: pointer;">⋮</div>
-                        <div class="contextMenu" style="display: block;">
-                          <div>
-                            <img src="https://img.icons8.com/fluency-systems-regular/48/contact-card.png" alt="Contact Patient">
-                            Contact Patient
-                          </div>
-                          <div>
-                            <img src="https://img.icons8.com/fluency-systems-regular/48/overtime.png" alt="Schedule Appointment">
-                            Schedule Appointment
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </template>
-                </tbody>
-              </table>
+              <div id="staffGrid">
+                <template>
+                  <figure>
+                    <picture><img src="https://i.pravatar.cc/150?u=8ddf878039b70767c5a5bcf4f0c4f65e" /></picture>
+                    <div>
+                      <h5>Dr John Doe</h5>
+                      <h6>Surgeon</h6>
+                    </div>
+                    <div>
+                      <button>Refer Patient</button>
+                      <button>Make Request</button>
+                      <button>More Info</button>
+                    </div>
+                  </figure>
+                </template>
+              </div>
             </div>
           </div>
         </section>

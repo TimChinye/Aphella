@@ -8,11 +8,18 @@
     ]);
     
     const patientIds = Array.from(new Set(userAppointments.map(a => a.patientid)));
-    let patients = await Promise.all(patientIds.map(id => fetchJson('/grab/patients/' + id)));
+
+    if (!JSON.parse(localStorage.getItem('/grab/patients'))) await fetchJson('/grab/patients');  // Shortcut, but decreases security
+    let patients = await Promise.all(patientIds.map(async (id) => {
+        let patient = JSON.parse(localStorage.getItem('/grab/patients'))?.find((p) => p.patientid == id);
+        if (!patient) patient = await fetchJson('/grab/patients/' + id);
+        return patient;
+    }));
 
     document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
     document.getElementById('role').textContent = userJob.title;
     document.getElementById('profile-pic').src = user.profilepicturepath.split('http://').join('https://');
+    document.querySelector('#patientsHeader > h3').textContent = `${patients.length} direct patients`;
 
     patients = await Promise.all(patients.map(async (patient) => {
         let path = '/grab/patients/' + patient.patientid + '/appointments';
@@ -47,17 +54,17 @@
 
         return patient;
     }));
+
     patients = patients.sort((a, b) => b.lastAppointment - a.lastAppointment);
-    console.log(patients[0]);
 
     let openContextMenu = null;
 
+    const patientsTable = document.getElementById('patientsTable');
     for (let patient of patients) {
         const patientRow = patientsTable.tBodies[0].insertRow(-1);
-        const { firstname, lastname, preferredlanguage, dateofbirth, lastAppointment, nextAppointment, maindoctor, medicalHistory: { allergies, chronicconditions } } = patient;
+        const { profilepicturepath, firstname, lastname, preferredlanguage, dateofbirth, lastAppointment, nextAppointment, maindoctor, medicalHistory: { allergies, chronicconditions } } = patient;
 
         const patientDetails = [
-            `${firstname}\r\n${lastname}`,
             preferredlanguage,
             new Date().getFullYear() - new Date(dateofbirth).getFullYear(),
             formatApptDate(lastAppointment),
@@ -66,9 +73,17 @@
             chronicconditions
         ];
 
-        patient.age = patientDetails[2];
-
+        patient.age = patientDetails[1];
         patientRow.patient = patient;
+
+        let cell = patientRow.insertCell(-1);
+        let textNode = document.createTextNode(`${firstname} ${lastname}`);
+        let picture = document.createElement('picture');
+        let img = document.createElement('img');
+        img.src = profilepicturepath;
+        picture.appendChild(img);
+        picture.appendChild(textNode);
+        cell.appendChild(picture);
     
         for (let detail of patientDetails) {
             let textContent = document.createTextNode(detail);
@@ -78,13 +93,13 @@
         // Define the actions and corresponding icons
         const actions = {
             "Contact Patient": "https://img.icons8.com/fluency-systems-regular/48/contact-card.png",
-            "Schedule Appointment": "https://img.icons8.com/fluency-systems-regular/48/overtime.png",
+            "Update Patient Info": "https://img.icons8.com/fluency-systems-regular/48/overtime.png",
             "Prescribe Medication": "https://img.icons8.com/fluency-systems-regular/48/pill.png",
             "Update Note": "https://img.icons8.com/fluency-systems-regular/48/inscription.png"
         };
 
         // Determine the available actions based on the patient's main doctor
-        const availableActions = maindoctor == user.staffid ? Object.keys(actions) : ["Contact Patient", "Schedule Appointment"];
+        const availableActions = maindoctor == user.staffid ? Object.keys(actions) : ["Contact Patient", "Update Patient Info"];
 
         // Create a cell for the actions
         let actionCell = patientRow.insertCell(-1);
@@ -141,7 +156,7 @@
     });
     
     document.getElementById('patientsSelect').addEventListener('change', (e) => {
-        let rows = Array.from(patientsTable.rows).slice(1); // Assuming the first row is the header
+        let rows = Array.from(patientsTable.rows).slice(1); // the first row is the header
         let selectedOption = e.target.value;
       
         rows.sort((a, b) => {
@@ -150,8 +165,10 @@
                     return a.patient.firstname.localeCompare(b.patient.firstname);
                 case "firstNameDesc":
                     return b.patient.firstname.localeCompare(a.patient.firstname);
-                case "lastNameAsc":
-                    return a.patient.lastname.localeCompare(b.patient.lastname);
+                // case "lastNameAsc":
+                //     return a.patient.lastname.localeCompare(b.patient.lastname);
+                //
+                // It's the default anyways
                 case "lastNameDesc":
                     return b.patient.lastname.localeCompare(a.patient.lastname);
                 case "age":

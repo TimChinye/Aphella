@@ -73,6 +73,19 @@ main > section > #wrapper {
     > input[type="radio"] {
       display: none;
 
+      & + label {
+        padding: 10px;
+        background-color: var(--panel-bg-colour);
+        box-shadow: inset 0px 0px 5px 0px #e3e3e3;
+        cursor: pointer;
+        transition: 0.5s;
+        line-height: 1.5rem;
+        
+        &:hover {
+          line-height: 1rem;
+        }
+      }
+
       &:disabled + label {
         cursor: not-allowed;
 
@@ -100,19 +113,6 @@ main > section > #wrapper {
 
       &:first-of-type:checked + label {
         box-shadow: inset 2px 2px 5px 0px color-mix(in srgb, white, var(--text-colour) 50%);
-      }
-    }
-
-    label {
-      padding: 10px;
-      background-color: var(--panel-bg-colour);
-      box-shadow: inset 0px 0px 5px 0px #e3e3e3;
-      cursor: pointer;
-      transition: 0.5s;
-      line-height: 1.5rem;
-      
-      &:hover {
-        line-height: 1rem;
       }
     }
   }

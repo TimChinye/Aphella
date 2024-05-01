@@ -152,7 +152,7 @@ main {
     > a {
       width: min(100%, 19rem);
       display: inherit;
-      margin-right: -2.5rem;
+      margin-right: -5rem;
       justify-content: flex-end;
 
       > img {
