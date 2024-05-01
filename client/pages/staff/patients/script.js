@@ -6,19 +6,20 @@
         fetchJson('/grab/user/job'),
         fetchJson('/grab/user/appointments')
     ]);
-    
-    const patientIds = Array.from(new Set(userAppointments.map(a => a.patientid)));
 
-    if (!JSON.parse(localStorage.getItem('/grab/patients'))) await fetchJson('/grab/patients');  // Shortcut, but decreases security
+    document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
+    document.getElementById('role').textContent = userJob.title ?? 'Patient';
+    document.getElementById('profile-pic').src = user.profilepicturepath.split('http://').join('https://');
+    
+    const patientIds = Array.from(new Set(userAppointments.map((a) => a.patientid)));
+
+    if (!JSON.parse(localStorage.getItem('/grab/patients'))) await fetchJson('/grab/patients');
     let patients = await Promise.all(patientIds.map(async (id) => {
         let patient = JSON.parse(localStorage.getItem('/grab/patients'))?.find((p) => p.patientid == id);
         if (!patient) patient = await fetchJson('/grab/patients/' + id);
         return patient;
     }));
-
-    document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
-    document.getElementById('role').textContent = userJob.title;
-    document.getElementById('profile-pic').src = user.profilepicturepath.split('http://').join('https://');
+    
     document.querySelector('#patientsHeader > h3').textContent = `${patients.length} direct patients`;
 
     patients = await Promise.all(patients.map(async (patient) => {
@@ -92,6 +93,7 @@
     
         // Define the actions and corresponding icons
         const actions = {
+            "View Patient Info": "https://img.icons8.com/fluency-systems-regular/48/about-us-female.png",
             "Contact Patient": "https://img.icons8.com/fluency-systems-regular/48/contact-card.png",
             "Schedule Appointment": "https://img.icons8.com/fluency-systems-regular/48/overtime.png",
             "Prescribe Medication": "https://img.icons8.com/fluency-systems-regular/48/pill.png",
@@ -99,7 +101,7 @@
         };
 
         // Determine the available actions based on the patient's main doctor
-        const availableActions = maindoctor == user.staffid ? Object.keys(actions) : ["Contact Patient", "Schedule Appointment"];
+        const availableActions = maindoctor == user.staffid ? Object.keys(actions) : ["View Patient Info", "Contact Patient", "Schedule Appointment"];
 
         // Create a cell for the actions
         let actionCell = patientRow.insertCell(-1);

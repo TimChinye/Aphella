@@ -8,7 +8,7 @@
     ]);
 
     document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
-    document.getElementById('role').textContent = userJob.title;
+    document.getElementById('role').textContent = userJob.title ?? 'Patient';
     document.getElementById('profile-pic').src = user.profilepicturepath.split('http://').join('https://');
 
     let allStaff = [];

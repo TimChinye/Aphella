@@ -218,6 +218,14 @@ module.exports = {
 
 		return patients;
 	},
+	getAppointmentStaff: async (id) => {
+		let staff = cache.get('appointmentstafflink')?.find((link) => link.appointmentid == id);
+		if (!staff) staff = await sql`SELECT staffid FROM appointmentstafflink WHERE appointmentid = ${id}`;
+
+		if (staff) updateCache('appointmentstafflink', 'appointmentid', staff);
+
+		return staff;
+	},
 	getPrescriptionsByAppointmentId,
 	getMedicalHistory,
 	getVitals

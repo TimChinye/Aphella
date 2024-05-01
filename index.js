@@ -1,9 +1,5 @@
 /*
 To do list:
-- Patient account
-- Admin account
-
-Then:
 All actions buttons (e.g; Make an appointment)
 
 Then:
@@ -12,9 +8,13 @@ Then:
 - Contact Us
 
 Then:
-- Settings (potentially)
-- Communicate / Chat page (potentially requests part)
-- Payments (unlikely)
+- Settings Page
+- Communicate page? at lease request part
+
+Then: Documentation, video recording (might need to go home for that -> mic), etc.
+
+Don't do:
+- Payments page
 
 Last Updated: 01/05/2024
 Due: 02/05/2024
@@ -26,7 +26,7 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { resolve } = require("path");
-const { loginUser, getStaff, getPatient, getJob, getAppointmentsByUserId, getPatientsByDoctor, getRequestsReceivedByStaffId, getLastXRequestsReceivedByStaffId, getPatients } = require("./db.js");
+const { loginUser, getStaff, getPatient, getJob, getAppointmentsByUserId, getPatientsByDoctor, getRequestsReceivedByStaffId, getLastXRequestsReceivedByStaffId, getPatients, getAppointmentStaff } = require("./db.js");
 
 const port = process.env.PORT || process.argv[3] || 3010;
 const app = express();
@@ -131,10 +131,8 @@ app.get("/grab/staff", async (req, res) => {
 
 app.get("/grab/staff/:id", async (req, res) => {
   if (req.user) {
-    if (req.user.staffid) {
-      let staff = await getStaff(req.params.id);
-      res.status(200).json(staff);
-    } else res.status(404).json({ message: 'User is not a staff member.' });
+    let staff = await getStaff(req.params.id);
+    res.status(200).json(staff);
   } else {
     res.redirect('/login');
   }
@@ -175,6 +173,15 @@ app.get("/grab/job/:id", async (req, res) => {
   if (req.user) {
     let job = await getJob(req.params.id);
     res.status(200).json(job);
+  } else {
+    res.redirect('/login');
+  }
+});
+
+app.get("/grab/appointments/:id/staff", async (req, res) => {
+  if (req.user) {
+    let staff = await getAppointmentStaff(req.params.id);
+    res.status(200).json(staff);
   } else {
     res.redirect('/login');
   }
@@ -296,15 +303,7 @@ app.get("/dashboard", async (req, res) => {
 
 app.get("/appointments", async (req, res) => {
   if (req.user) {
-    if (req.user.type != 'admin') {
-      serveFile(res, req.user.type + '/appointments');
-    } else {
-      if (req.session.lastPage) {
-        res.redirect(req.headers.referer);
-      } else {
-        res.redirect('/dashboard');
-      }
-    }
+    serveFile(res, req.user.type + '/appointments');
   } else {
     res.redirect('/login');
   }
@@ -328,15 +327,7 @@ app.get("/patients", async (req, res) => {
 
 app.get("/staff", async (req, res) => {
   if (req.user) {
-    if (req.user.staffid) {
-      serveFile(res, req.user.type + '/staff');
-    } else {
-      if (req.session.lastPage) {
-        res.redirect(req.headers.referer);
-      } else {
-        res.redirect('/dashboard');
-      }
-    }
+    serveFile(res, req.user.type + '/staff');
   } else {
     res.redirect('/login');
   }

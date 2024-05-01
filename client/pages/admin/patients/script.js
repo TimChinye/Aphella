@@ -1,27 +1,18 @@
 (async () => {
     showLoadingOverlay();
 
-    const [user, userJob, userAppointments] = await Promise.all([
+    const [user, userJob, patients] = await Promise.all([
         fetchJson('/grab/user'),
         fetchJson('/grab/user/job'),
-        fetchJson('/grab/user/appointments')
+        fetchJson('/grab/patients')
     ]);
-    
-    const patientIds = Array.from(new Set(userAppointments.map(a => a.patientid)));
-
-    if (!JSON.parse(localStorage.getItem('/grab/patients'))) await fetchJson('/grab/patients');  // Shortcut, but decreases security
-    let patients = await Promise.all(patientIds.map(async (id) => {
-        let patient = JSON.parse(localStorage.getItem('/grab/patients'))?.find((p) => p.patientid == id);
-        if (!patient) patient = await fetchJson('/grab/patients/' + id);
-        return patient;
-    }));
 
     document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
-    document.getElementById('role').textContent = userJob.title;
+    document.getElementById('role').textContent = userJob.title ?? 'Patient';
     document.getElementById('profile-pic').src = user.profilepicturepath.split('http://').join('https://');
-    document.querySelector('#patientsHeader > h3').textContent = `${patients.length} direct patients`;
+    document.querySelector('#patientsHeader > h3').textContent = `${patients.length} total patients`;
 
-    patients = await Promise.all(patients.map(async (patient) => {
+    allPatients = await Promise.all(patients.map(async (patient) => {
         let path = '/grab/patients/' + patient.patientid + '/appointments';
 
         let patientAppointments = JSON.parse(localStorage.getItem(path));
@@ -55,12 +46,12 @@
         return patient;
     }));
 
-    patients = patients.sort((a, b) => b.lastAppointment - a.lastAppointment);
+    allPatients = allPatients.sort((a, b) => b.lastAppointment - a.lastAppointment);
 
     let openContextMenu = null;
 
     const patientsTable = document.getElementById('patientsTable');
-    for (let patient of patients) {
+    for (let patient of allPatients) {
         const patientRow = patientsTable.tBodies[0].insertRow(-1);
         const { profilepicturepath, firstname, lastname, preferredlanguage, dateofbirth, lastAppointment, nextAppointment, maindoctor, medicalHistory: { allergies, chronicconditions } } = patient;
 

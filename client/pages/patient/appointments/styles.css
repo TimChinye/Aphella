@@ -1,0 +1,219 @@
+main > section > #wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  > div:has(#calendar-body) {
+    flex: 1;
+    gap: 0.83em;
+    display: inherit;
+    flex-direction: column;
+  }
+}
+
+#calendar-header {
+  display: flex;
+  flex: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2ex;
+  
+  > button {
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    background-color: var(--panel-bg-colour);
+    box-shadow: 5px 5px 20px -15px color-mix(in srgb, black, var(--panel-bg-colour));
+    border-radius: 1rem;
+    font-weight: bold;
+    color: inherit;
+    cursor: pointer;
+    transition: 0.25s;
+    font-size: 0.875rem;
+
+    &:hover {
+      background-color: color-mix(in srgb, white, var(--primary-colour) 5%);
+    }
+  }
+
+  > #display-month {
+    display: inherit;
+    flex-direction: row;
+    align-items: center;
+    gap: 2.5ex;
+
+    > h2 {
+      width: 16ex;
+      text-align: center;
+    }
+
+    > button {
+      color: inherit;
+      background-color: var(--panel-bg-colour);
+      box-shadow: 3px 3px 10px 0px color-mix(in srgb, black 12.5%, var(--panel-bg-colour));
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem calc(0.5rem + 0.5ex);
+      line-height: 100%;
+      font-weight: 700;
+      transition: 0.25s;
+      border-radius: 0.5rem;
+
+      &:hover {
+        background-color: color-mix(in srgb, white, var(--primary-colour) 5%);
+      }
+    }
+  }
+
+  > #calendar-time-period {
+    display: inherit;
+    box-shadow: 5px 5px 20px -5px color-mix(in srgb, black 25%, var(--panel-bg-colour));
+
+    > input[type="radio"] {
+      display: none;
+
+      & + label {
+        padding: 10px;
+        background-color: var(--panel-bg-colour);
+        box-shadow: inset 0px 0px 5px 0px #e3e3e3;
+        cursor: pointer;
+        transition: 0.5s;
+        line-height: 1.5rem;
+        
+        &:hover {
+          line-height: 1rem;
+        }
+      }
+
+      &:disabled + label {
+        cursor: not-allowed;
+
+        &:hover {
+          line-height: revert;
+        }
+      }
+
+      &:checked + label {
+        --outline-color: currentColor;
+        --weight: 0.025ex;
+
+        color: inherit;
+        background: color-mix(in srgb, white, var(--primary-colour) 10%);
+        text-shadow: calc(-1 * var(--weight)) 0 var(--outline-color), 0 var(--weight) var(--outline-color), var(--weight) 0 var(--outline-color), 0 calc(-1 * var(--weight)) var(--outline-color), calc(-1 * var(--weight)) calc(-1 * var(--weight)) var(--outline-color), var(--weight) var(--weight) var(--outline-color), calc(-1 * var(--weight)) var(--weight) var(--outline-color), var(--weight) calc(-1 * var(--weight)) var(--outline-color);
+      }
+
+      &:last-of-type:checked + label {
+        box-shadow: inset -2px 2px 5px 0px color-mix(in srgb, white, var(--text-colour) 50%);
+      }
+
+      &:checked + label { /* Middle of Type */
+        box-shadow: inset 0px 3px 5px 0px color-mix(in srgb, white, var(--text-colour) 50%);
+      }
+
+      &:first-of-type:checked + label {
+        box-shadow: inset 2px 2px 5px 0px color-mix(in srgb, white, var(--text-colour) 50%);
+      }
+    }
+  }
+}
+
+#calendar-body {
+  height: 100%;
+  display: inherit;
+  flex: 1;
+  flex-direction: column;
+  border-radius: 1rem;
+  background: var(--panel-bg-colour);
+  box-shadow: 5px 5px 20px -15px color-mix(in srgb, black, var(--panel-bg-colour));
+  padding: 2rem;
+  height: fit-content;
+
+  > #calendar-dotw {
+    display: flex;
+    justify-content: space-around;
+
+    > p {
+      min-width: 12ex;
+      width: 10rem;
+      text-align: center;
+    }
+  }
+
+  > #calendar-dotm {
+    flex: 1;
+    display: grid;
+    max-height: 1200px;
+    grid-template-columns: repeat(7, auto);
+    grid-gap: 0.5rem;
+    color: color-mix(in srgb, currentcolor, var(--primary-colour) 25%);
+
+    > div {
+      display: grid;
+      grid-row: span 1;
+      grid-column: span 1;
+      font-size: 1.25rem;
+      line-height: 100%;
+      font-weight: bold;
+      text-align: right;
+      padding: 0.5rem;
+      background: color-mix(in srgb, white, var(--primary-colour) 5%);
+      border-radius: 0.5rem;
+      transition: height 10s, width 10s;
+
+      &.currentDay * {
+        color: color-mix(in srgb, black, var(--primary-colour) 87.5%);
+      }
+
+      &.otherMonth {
+        color: color-mix(in srgb, black, currentcolor 50%);
+        background: color-mix(in srgb, white, var(--primary-colour) 10%);
+      }
+
+      .apptTypeContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        font-size: 0.5em;
+        line-height: 100%;
+
+        .apptType {
+          display: flex;
+
+          .apptHighlight {
+            width: 1ex;
+            border-radius: 0.5em;
+
+            &.apptEmergency { background-color: #9080FF; }
+            &.apptConsultation { background-color: #90AAFF; }
+            &.apptCheckup { background-color: #B193FF; }
+            &.apptDiagnosticTesting { background-color: #FF6099; }
+            &.apptFollowup { background-color: #FF7D7D; }
+            &.apptSurgery { background-color: #FF80EA; }
+            &.apptVaccination { background-color: #FF9F80; }
+            &.apptSpecialistReferral { background-color: #FFBF80; }           
+            &.apptMore { background-color: #C8C8C8; }
+          }
+    
+          .apptLabel {
+            margin: 0;
+            flex: 1;
+            text-align: left;
+            background: #FFFFFF;
+            padding: 0.25em 1ex;
+          }
+
+          &:first-child .apptLabel {
+            border-top-left-radius: 0.5em;
+            border-top-right-radius: 0.5em;
+          }
+
+          &:last-child .apptLabel {
+            border-bottom-left-radius: 0.5em;
+            border-bottom-right-radius: 0.5em;
+          }
+        }
+      }
+    }
+  }
+}

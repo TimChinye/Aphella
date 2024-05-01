@@ -1,18 +1,37 @@
 (async () => {
     showLoadingOverlay();
 
-    const [user, userJob, staff] = await Promise.all([
+    const [user, userJob, userAppointments] = await Promise.all([
         fetchJson('/grab/user'),
         fetchJson('/grab/user/job'),
-        fetchJson('/grab/staff')
+        fetchJson('/grab/user/appointments')
     ]);
 
     document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
-    document.getElementById('role').textContent = userJob.title;
+    document.getElementById('role').textContent = userJob.title ?? 'Patient';
     document.getElementById('profile-pic').src = user.profilepicturepath.split('http://').join('https://');
+    
+    // only show staff that the patient has had an appointment with
+    
+    const staffIds = Array.from(new Set((await Promise.all(userAppointments.map(async (appt) => {
+        let path = '/grab/appointments/' + appt.appointmentid + '/staff';
+
+        let staff = JSON.parse(localStorage.getItem(path));
+        if (!staff) staff = await fetchJson(path);
+
+        return staff.map((s) => s.staffid);
+    }))).flat().concat(user.maindoctor)));
+
+    let staff = await Promise.all(staffIds.map(async (id) => {
+
+        let path = '/grab/staff/' + id;
+
+        let staff = JSON.parse(localStorage.getItem(path));
+        if (!staff) staff = await fetchJson(path);
+        return staff;
+    }));
 
     let allStaff = [];
-
     for (curStaff of staff) {
         let path = '/grab/job/' + curStaff.jobid;
 

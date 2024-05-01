@@ -13,7 +13,7 @@
   /* Fill the basic info */
 
   document.getElementById('name').textContent = user.firstname + ' ' + user.lastname;
-  document.getElementById('role').textContent = userJob.title;
+  document.getElementById('role').textContent = userJob.title ?? 'Patient';
   document.getElementById('profile-pic').src = user.profilepicturepath;
 
   const countAppointmentsToday = userAppointments.filter((appt) => new Date(appt.dateofvisit).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)).length;
