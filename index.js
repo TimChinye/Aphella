@@ -1,6 +1,9 @@
 /*
 To do list:
-All actions buttons (e.g; Make an appointment)
+Admin and Patient Dashboards
+
+Then:
+- All actions buttons (e.g; Make an appointment)
 
 Then:
 - Home page
@@ -9,7 +12,7 @@ Then:
 
 Then:
 - Settings Page
-- Communicate page? at lease request part
+- Communicate page? at least   request part
 
 Then: Documentation, video recording (might need to go home for that -> mic), etc.
 

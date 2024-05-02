@@ -67,14 +67,14 @@
         
             > td {
                 padding: 1.5rem;
-                white-space: pre-line;
                 position: relative;
-                box-sizing: content-box;
-                max-width: 12.5ch;
+                max-width: 20ch;
+                text-align: center;
     
                 &:first-child {
                     border-top-left-radius: var(--border-radius);
                     border-bottom-left-radius: var(--border-radius);
+                    text-align: left;
 
                     picture {
                         display: flex;

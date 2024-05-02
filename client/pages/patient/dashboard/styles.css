@@ -3,354 +3,292 @@ html, body {
   overflow: hidden;
 }
 
-main > section > #wrapper > #layout-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(min-content,1fr));
-  grid-template-rows: 8rem repeat(2, minmax(8rem,auto));
-  --gap: 2rem;
-  grid-gap: var(--gap);
-  margin: 0 auto;
-
-  article {
-    display: flex;
-    padding: 2rem;
-    min-height: 8rem;
-    border-radius: 1rem;
-    align-items: center;
-    background: var(--panel-bg-colour);
-    box-shadow: 5px 5px 20px -15px color-mix(in srgb, black, var(--panel-bg-colour));
-    gap: 1rem;
-
-    > img {
-      height: 75%;
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      background: color-mix(in srgb,white,var(--primary-colour) 10%);
-    }
-    
-    &:nth-child(-n+3) > div {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
-    }
-
-    > div {
-      > h3 {
-        margin: 0;
-        margin-top: -0.25rem;
-        color: var(--secondary-colour);
-        white-space: nowrap;
-      }
-
-      > h6 {
-        margin: 0;
-        color: color-mix(in srgb, white, var(--primary-colour) 75%);
-        white-space: nowrap;
-      }
-    }
-  }
-
-  article#appointments-info {
-    grid-column: span 2;
-    grid-row: span 3;
+main > section > #wrapper {
+  > header {
+    align-items: start;
     flex-direction: column;
+    margin: 1rem 0;
 
-    > #calendar {
-      display: inherit;
-      flex-direction: column;
-      width: 100%;
-      gap: 1rem;
-
-      #calendar-header {
-        display: inherit;
-        flex-direction: row;
-        justify-content: space-between;
-  
-        > h1 {
-          margin: 0;
-        }
-  
-        > #calendar-navigation {
-          button {
-            color: inherit;
-            background: color-mix(in srgb,white,var(--primary-colour) 10%);
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem calc(0.5rem + 0.5ex);
-            line-height: 100%;
-            font-weight: 700;
-            border-radius: 0.5rem;
-            
-            &:hover {
-              background: color-mix(in srgb,white,var(--primary-colour) 15%);
-            }
-          }
-        }
-      }
-  
-      #calendar-days {
-        display: inherit;
-        flex-direction: row;
-        gap: 1ex;
-  
-        > div {
-          flex: 1;
-          padding: 1rem 1ex;
-          border-radius: 0.5rem;
-          display: inherit;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          cursor: pointer;
-          transition: 0.25s;
-          border: 0.25rem solid transparent;
-  
-          &:hover {
-            color: unset;
-            background: color-mix(in srgb, white, var(--primary-colour) 5%);
-          }
-        }
-  
-        > .selected-day {
-          color: white;
-          background: color-mix(in srgb, black, var(--primary-colour) 75%);
-  
-          &:hover {
-            color: unset;
-            background: color-mix(in srgb, white, var(--primary-colour) 5%);
-            border-color: color-mix(in srgb, black, var(--primary-colour) 75%);
-          }
-        }
-  
-        p {
-          font-size: 0.75rem;
-          margin: 0;
-        }
-  
-        strong {
-          width: 2ch;
-          text-align: center;
-        }
-      }
-    }
-
-    > #appointments {
-      display: inherit;
-      height: 100%;
-      width: 100%;
-      transform: translateZ(0);
-
-      #appointments-content {
-        display: inherit;
-        flex-direction: column;
-        width: 100%;
-        gap: 1rem;
-        overflow-y: auto;
-        height: 100%;
-        contain: strict;
-        padding-right: 1rem;
-        scroll-behavior: smooth;
-      
-        h4 {
-          margin: 0;
-        }
-  
-        .day-group {
-          display: inherit;
-          flex-direction: column;
-          gap: 1rem;
-  
-          > h6 {
-            margin: 1rem 0;
-            font-size: 1rem;
-            color: color-mix(in srgb, white, var(--text-colour) 75%);
-          }
-  
-          > .appointment {
-            display: flex;
-            height: 5rem;
-            align-items: center;
-            gap: 1rem;
-    
-            > span {
-              white-space: nowrap;
-            }
-    
-            > div {
-              width: 100%;
-              height: 100%;
-              display: inherit;
-              gap: 0.5rem;
-              padding: 1rem;
-              background: color-mix(in srgb, white, var(--primary-colour) 10%);
-              border-radius: 1rem;
-              cursor: pointer;
-    
-              &:hover {
-                background: color-mix(in srgb, white, var(--primary-colour) 15%);
-              }
-            }
-    
-            img {
-              height: 100%;
-              border-radius: 1rem;
-    
-              + div {
-                display: inherit;
-                flex-direction: column;
-                justify-content: center;
-              }
-            }
-    
-            :is(h6, p) {
-              margin: 0;
-            }
-          }
-        }
-  
-        &::after {
-          content: "";
-          display: block;
-          padding-bottom: calc((7 * 10rem) - 2rem);
-        }
-      }
-    }
-  }
-
-  article#appointments-stats {
-    grid-column: span 3;
-    grid-row: span 1;
-    align-items: flex-start;
-    flex-direction: column;
-
-    > h1 {
+    * {
       margin: 0;
-      font-size: 1.5rem;
+    }
+  }
+
+  > #layout-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    --gap: 2rem;
+    grid-gap: var(--gap);
+    margin: 0 auto;
+  
+    article {
+      display: flex;
+      padding: 2rem;
+      min-height: 8rem;
+      border-radius: 1rem;
+      align-items: center;
+      flex-direction: column;
+      background: var(--panel-bg-colour);
+      box-shadow: 5px 5px 20px -15px color-mix(in srgb, black, var(--panel-bg-colour));
+      gap: 1rem;
+  
+      > h1 {
+        margin-top: 0;
+        align-self: flex-start;
+      }
+    }
+    
+    article:is(#heart-and-glucose, #blood-data, #health-index, #reports) {
+      grid-column: span 1;
+      grid-row: span 1;
     }
 
-    > #appts-stats-filter {
-      height: 3.2rem;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+    article:is(#heart-and-glucose, #blood-data) {
+      align-items: flex-start;
+
+      hr {
+        width: 75%;
+      }
 
       > div {
-        display: inherit;
-        gap: 1rem;
+        display: flex;
+        gap: 2ch;
         align-items: center;
 
-      }
-      
-      div:has(> button) {
-        display: inherit;
-        gap: 0.5rem;
-      }
+        > img {
+          height: 4rem;
+          width: auto;
+        }
 
-      h4 {
+        > div {
+          display: inherit;
+          flex-direction: column;
+
+          * {
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    article#health-index {
+      align-items: flex-start;
+      gap: 0;
+
+      h3, h2 {
         margin: 0;
-        width: 12.5ch;
-        text-align: center;
       }
 
-      button {
-        color: inherit;
-        background: color-mix(in srgb, white, var(--primary-colour) 10%);
-        border: none;
-        cursor: pointer;
-        padding: 0.5rem calc(0.5rem + 0.5ex);
-        line-height: 100%;
-        font-weight: 700;
-        border-radius: 0.5rem;
-
-        &:hover {
-          background: color-mix(in srgb, white, var(--primary-colour) 15%);
-        }
-      }
-
-      select {
-        color: inherit;
-        background: color-mix(in srgb, white, var(--primary-colour) 10%);
-        outline: none;
-        border: none;
-        cursor: pointer;
-        padding: 0.5rem;
-        border-right: 0.5rem solid transparent;
-        font-weight: 600;
-        border-radius: 0.5rem;
-
-        &:hover {
-          background: color-mix(in srgb, white, var(--primary-colour) 15%);
-        }
-      }
-
-      &:focus {
-        box-shadow: 0px 0px 7.5px gray;
+      h2 {
+        color: var(--primary-colour);
       }
     }
+    
+    article#medicines {
+      grid-column: span 2;
+      grid-row: span 1;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-direction: row;
+      gap: 0;
 
-    > figure {
-      height: 100%;
-      width: 100%;
-      margin: 0;
-
-      > canvas {
-        width: 100% !important;
+      h1 {
+        margin: 0;
       }
-    }
-  }
 
-  article#latest-patient-info {
-    grid-column: span 3;
-    grid-row: span 1;
-    display: table;
-    padding-bottom: 1rem;
+      > div {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
 
-    table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0 1rem;
+        > div {
+          padding: 1rem 2rem;
 
-      tr {
-        &:has(td) {
-          cursor: pointer;
-          background: color-mix(in srgb,transparent,var(--primary-colour) 5%);
-          --border-radius: 13px;
-  
-          &:hover {
-            background: color-mix(in srgb,white,var(--primary-colour) 10%);
-          }
-        }
-        
-        > th {
-          padding: 0 1.5rem;
-          text-align: left;
-          text-wrap: nowrap;
-        }
-  
-        > td {
-          padding: 1.5rem;
-          white-space: pre-line; 
-  
           &:first-child {
-            border-top-left-radius: var(--border-radius);
-            border-bottom-left-radius: var(--border-radius);
+            border-bottom: 1px solid lightgray;
           }
-  
+
           &:last-child {
-            border-top-right-radius: var(--border-radius);
-            border-bottom-right-radius: var(--border-radius);
+            height: 100%;
+            border-top: 1px solid lightgray;
+          }
+        }
+
+        &:first-child {
+          border-right: 1px solid lightgray;
+          flex: 1;
+        }
+
+        &:last-child {
+          border-left: 1px solid lightgray;
+            text-align: center;
+          flex: 0;
+        }
+      }
+    }
+    
+article#reports {
+      & > div {
+        width: 100%;
+        display: flex;
+        padding: 0.5rem;
+        border: 0.1rem solid lightgray;
+        border-radius: 0.5rem;
+        cursor: pointer;
+
+        img {
+          height: 3rem;
+          width: auto;
+        }
+
+        & > div {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          & > * {
+            margin: 0;
           }
         }
       }
     }
-  }
 
-  &:after {
-    content: "";
-    display: block;
-    height: calc(var(--main-padding) - var(--gap));
-    width: 100%;
+    article#doctors {
+      grid-column: span 3;
+      grid-row: span 1;
+      
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 1rem;
+    
+        tr {
+            transition: 0.25s;
+
+            button {
+              cursor: pointer;
+              background: none;
+              border-radius: 999px;
+              padding: 0.75rem 3rem;
+            }
+
+            &:has(td) {
+                cursor: pointer;
+                background: color-mix(in srgb,transparent,var(--primary-colour) 5%);
+                --border-radius: 13px;
+        
+                &:hover {
+                    background: color-mix(in srgb,white,var(--primary-colour) 10%);
+                }
+            }
+            
+            > th {
+                padding: 0 1.5rem;
+                text-align: left;
+                text-wrap: nowrap;
+
+                button {
+                  border: 0.25rem solid linear-gradent(in srgb, var(--trinary-colour), var(--primary-colour));
+                }
+            }
+        
+            > td {
+                padding: 1.5rem;
+                position: relative;
+                text-align: center;
+    
+                &:first-child {
+                    border-top-left-radius: var(--border-radius);
+                    border-bottom-left-radius: var(--border-radius);
+                    text-align: left;
+
+                    picture {
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
+    
+                        img {
+                            width: 3rem;
+                            height: 100%;
+                            border-radius: 50%;
+                        }
+                    }
+                }
+        
+                &:last-child {
+                    border-top-right-radius: var(--border-radius);
+                    border-bottom-right-radius: var(--border-radius);
+                }
+
+                button {
+                  border: 0.25rem solid var(--trinary-colour);
+                }
+            }
+        }
+      }
+    }
+  
+    article#appointments {
+      grid-column: span 1;
+      grid-row: span 3;
+    }
+
+    #appointments {
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+    
+    #appointments h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    #appointments img {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+    }
+    
+    #appointments div > div {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    #appointments div > div > div {
+      display: flex;
+      align-items: center;
+    }
+    
+    #appointments div > div > div > div {
+      margin-left: 10px;
+    }
+    
+    #appointments div > div > div > div h4 {
+      margin: 0;
+      font-size: 18px;
+    }
+    
+    #appointments div > div > div > div p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    #appointments hr {
+      margin: 20px 0;
+      border: none;
+      border-top: 1px solid #eee;
+    }
+    
+  
+    &:after {
+      content: "";
+      display: block;
+      height: calc(var(--main-padding) - var(--gap));
+      width: 100%;
+    }
   }
 }

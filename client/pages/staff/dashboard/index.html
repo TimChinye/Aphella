@@ -71,152 +71,151 @@
               </div>
           </header>
           <div id="layout-grid">
-              <article id="patients-today">
-                  <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/guest-male.png" style="filter: brightness(0.95);" />
-                  <div>
-                      <h6>Patients Today</h6>
-                      <h3>#</h3>
-                  </div>
-              </article>
-              <article id="main-patients-total">
-                  <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/conference-call.png" style="filter: brightness(1.05);" />
-                  <div>
-                      <h6>Total Main Patients</h6>
-                      <h3>#</h3>
-                  </div>
-              </article>
-              <article id="incomplete-requests">
-                  <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/ask-question.png" style="filter: brightness(1.00);" />
-                  <div>
-                      <h6>Requests</h6>
-                      <h3>#</h3>
-                  </div>
-              </article>
-              <article id="appointments-info">
-                <div id="calendar">
-                  <div id="calendar-header">
-                    <h1>{MMM} {YYYY}</h1>
-                    <div id="calendar-navigation">
-                      <button>&lt;</button>
-                      <button>&gt;</button>
-                    </div>
-                  </div>
-                  <div id="calendar-days">
-                    <div class="selected-day">
-                      <p>Mon</p>
-                      <strong>##</strong>
-                    </div>
-                    <div>
-                      <p>Tue</p>
-                      <strong>##</strong>
-                    </div>
-                    <div>
-                      <p>Wed</p>
-                      <strong>##</strong>
-                    </div>
-                    <div>
-                      <p>Thu</p>
-                      <strong>##</strong>
-                    </div>
-                    <div>
-                      <p>Fri</p>
-                      <strong>##</strong>
-                    </div>
-                    <div>
-                      <p>Sat</p>
-                      <strong>##</strong>
-                    </div>
-                    <div>
-                      <p>Sun</p>
-                      <strong>##</strong>
-                    </div>
+            <article id="patients-today">
+                <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/guest-male.png" style="filter: brightness(0.95);" />
+                <div>
+                    <h6>Patients Today</h6>
+                    <h3>#</h3>
+                </div>
+            </article>
+            <article id="main-patients-total">
+                <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/conference-call.png" style="filter: brightness(1.05);" />
+                <div>
+                    <h6>Total Main Patients</h6>
+                    <h3>#</h3>
+                </div>
+            </article>
+            <article id="incomplete-requests">
+                <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/ask-question.png" style="filter: brightness(1.00);" />
+                <div>
+                    <h6>Requests</h6>
+                    <h3>#</h3>
+                </div>
+            </article>
+            <article id="appointments-info">
+              <div id="calendar">
+                <div id="calendar-header">
+                  <h1>{MMM} {YYYY}</h1>
+                  <div id="calendar-navigation">
+                    <button>&lt;</button>
+                    <button>&gt;</button>
                   </div>
                 </div>
-                <div id="appointments">
-                  <figure id="loadingOverlay" onanimationstart="updateLoadingStatus(event)" onanimationiteration="updateLoadingStatus(event)">
-                    <div>
-                      <div class="dot union"></div>
-                      <div class="dot"></div>
-                      <div class="dot"></div>
-                      <div class="dot"></div>
-                      <div class="dot"></div>
-                    </div>
-                  </figure>
-                  <div id="appointments-content">
-                    <h4>Appointments</h4>
-                    <template id="day-group-template">
-                      <div class="day-group">
-                        <h6>{Relative}, {DD} {MMM}</h6>
-                        <template id="appointment-template">
-                          <div class="appointment">
-                            <span>{hh}:{mm}</span>
+                <div id="calendar-days">
+                  <div class="selected-day">
+                    <p>Mon</p>
+                    <strong>##</strong>
+                  </div>
+                  <div>
+                    <p>Tue</p>
+                    <strong>##</strong>
+                  </div>
+                  <div>
+                    <p>Wed</p>
+                    <strong>##</strong>
+                  </div>
+                  <div>
+                    <p>Thu</p>
+                    <strong>##</strong>
+                  </div>
+                  <div>
+                    <p>Fri</p>
+                    <strong>##</strong>
+                  </div>
+                  <div>
+                    <p>Sat</p>
+                    <strong>##</strong>
+                  </div>
+                  <div>
+                    <p>Sun</p>
+                    <strong>##</strong>
+                  </div>
+                </div>
+              </div>
+              <div id="appointments">
+                <figure id="loadingOverlay" onanimationstart="updateLoadingStatus(event)" onanimationiteration="updateLoadingStatus(event)">
+                  <div>
+                    <div class="dot union"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                  </div>
+                </figure>
+                <div id="appointments-content">
+                  <h4>Appointments</h4>
+                  <template id="day-group-template">
+                    <div class="day-group">
+                      <h6>{Relative}, {DD} {MMM}</h6>
+                      <template id="appointment-template">
+                        <div class="appointment">
+                          <span>{hh}:{mm}</span>
+                          <div>
+                            <img src="https://wallpapers.com/images/hd/generic-male-avatar-profile-2fudx37oj7ug3d8l.jpg">
                             <div>
-                              <img src="https://wallpapers.com/images/hd/generic-male-avatar-profile-2fudx37oj7ug3d8l.jpg">
-                              <div>
-                                <h6>{FName} {LName}</h6>
-                                <p>{Appointment Type}</p>
-                              </div>
+                              <h6>{FName} {LName}</h6>
+                              <p>{Appointment Type}</p>
                             </div>
                           </div>
-                        </template>
-                      </div>
-                    </template>
-                  </div>
-                </div>
-              </article>
-              <article id="appointments-stats">
-                <h1>Appointments Statistics</h1>
-                <div id="appts-stats-filter">
-                  <div>
-                    <h4>{MMMM} {YYYY}</h4>
-                    <div>
-                      <button>&lt;</button>
-                      <button>&gt;</button>
+                        </div>
+                      </template>
                     </div>
-                  </div>
-                  <select name="frequency">
-                    <option value="hourly">Hourly</option>
-                    <option value="daily" selected>Daily</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
-                  </select>
+                  </template>
                 </div>
-                <figure><canvas></canvas></figure>
-              </article>
-              <article id="latest-patient-info">
-                <h1>Latest Requests</h1>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Date</th>
-                      <th>From</th>
-                      <th>Details</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Use <template> -->
-                    <tr>
-                      <td>###</td>
-                      <td>{DD MMMM YYYY}</td>
-                      <td>{FName} {LName}</td>
-                      <td>{Details}</td>
-                    </tr>
-                    <tr>
-                      <td>###</td>
-                      <td>{DD MMMM YYYY}</td>
-                      <td>{FName} {LName}</td>
-                      <td>{Details}</td>
-                    </tr>
-                    <tr>
-                      <td>###</td>
-                      <td>{DD MMMM YYYY}</td>
-                      <td>{FName} {LName}</td>
-                      <td>{Details}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </article>
+              </div>
+            </article>
+            <article id="appointments-stats">
+              <h1>Appointments Statistics</h1>
+              <div id="appts-stats-filter">
+                <div>
+                  <h4>{MMMM} {YYYY}</h4>
+                  <div>
+                    <button>&lt;</button>
+                    <button>&gt;</button>
+                  </div>
+                </div>
+                <select name="frequency">
+                  <option value="hourly">Hourly</option>
+                  <option value="daily" selected>Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                </select>
+              </div>
+              <figure><canvas></canvas></figure>
+            </article>
+            <article id="latest-patient-info">
+              <h1>Latest Requests</h1>
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>From</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>###</td>
+                    <td>{DD MMMM YYYY}</td>
+                    <td>{FName} {LName}</td>
+                    <td>{Details}</td>
+                  </tr>
+                  <tr>
+                    <td>###</td>
+                    <td>{DD MMMM YYYY}</td>
+                    <td>{FName} {LName}</td>
+                    <td>{Details}</td>
+                  </tr>
+                  <tr>
+                    <td>###</td>
+                    <td>{DD MMMM YYYY}</td>
+                    <td>{FName} {LName}</td>
+                    <td>{Details}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </article>
           </div>
         </div>
       </section>

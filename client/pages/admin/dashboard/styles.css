@@ -5,8 +5,8 @@ html, body {
 
 main > section > #wrapper > #layout-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(min-content,1fr));
-  grid-template-rows: 8rem repeat(2, minmax(8rem,auto));
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: auto;
   --gap: 2rem;
   grid-gap: var(--gap);
   margin: 0 auto;
@@ -17,279 +17,39 @@ main > section > #wrapper > #layout-grid {
     min-height: 8rem;
     border-radius: 1rem;
     align-items: center;
+    flex-direction: column;
     background: var(--panel-bg-colour);
     box-shadow: 5px 5px 20px -15px color-mix(in srgb, black, var(--panel-bg-colour));
     gap: 1rem;
 
-    > img {
-      height: 75%;
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      background: color-mix(in srgb,white,var(--primary-colour) 10%);
-    }
-    
-    &:nth-child(-n+3) > div {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
-    }
-
-    > div {
-      > h3 {
-        margin: 0;
-        margin-top: -0.25rem;
-        color: var(--secondary-colour);
-        white-space: nowrap;
-      }
-
-      > h6 {
-        margin: 0;
-        color: color-mix(in srgb, white, var(--primary-colour) 75%);
-        white-space: nowrap;
-      }
-    }
-  }
-
-  article#appointments-info {
-    grid-column: span 2;
-    grid-row: span 3;
-    flex-direction: column;
-
-    > #calendar {
-      display: inherit;
-      flex-direction: column;
-      width: 100%;
-      gap: 1rem;
-
-      #calendar-header {
-        display: inherit;
-        flex-direction: row;
-        justify-content: space-between;
-  
-        > h1 {
-          margin: 0;
-        }
-  
-        > #calendar-navigation {
-          button {
-            color: inherit;
-            background: color-mix(in srgb,white,var(--primary-colour) 10%);
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem calc(0.5rem + 0.5ex);
-            line-height: 100%;
-            font-weight: 700;
-            border-radius: 0.5rem;
-            
-            &:hover {
-              background: color-mix(in srgb,white,var(--primary-colour) 15%);
-            }
-          }
-        }
-      }
-  
-      #calendar-days {
-        display: inherit;
-        flex-direction: row;
-        gap: 1ex;
-  
-        > div {
-          flex: 1;
-          padding: 1rem 1ex;
-          border-radius: 0.5rem;
-          display: inherit;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          cursor: pointer;
-          transition: 0.25s;
-          border: 0.25rem solid transparent;
-  
-          &:hover {
-            color: unset;
-            background: color-mix(in srgb, white, var(--primary-colour) 5%);
-          }
-        }
-  
-        > .selected-day {
-          color: white;
-          background: color-mix(in srgb, black, var(--primary-colour) 75%);
-  
-          &:hover {
-            color: unset;
-            background: color-mix(in srgb, white, var(--primary-colour) 5%);
-            border-color: color-mix(in srgb, black, var(--primary-colour) 75%);
-          }
-        }
-  
-        p {
-          font-size: 0.75rem;
-          margin: 0;
-        }
-  
-        strong {
-          width: 2ch;
-          text-align: center;
-        }
-      }
-    }
-
-    > #appointments {
-      display: inherit;
-      height: 100%;
-      width: 100%;
-      transform: translateZ(0);
-
-      #appointments-content {
-        display: inherit;
-        flex-direction: column;
-        width: 100%;
-        gap: 1rem;
-        overflow-y: auto;
-        height: 100%;
-        contain: strict;
-        padding-right: 1rem;
-        scroll-behavior: smooth;
-      
-        h4 {
-          margin: 0;
-        }
-  
-        .day-group {
-          display: inherit;
-          flex-direction: column;
-          gap: 1rem;
-  
-          > h6 {
-            margin: 1rem 0;
-            font-size: 1rem;
-            color: color-mix(in srgb, white, var(--text-colour) 75%);
-          }
-  
-          > .appointment {
-            display: flex;
-            height: 5rem;
-            align-items: center;
-            gap: 1rem;
-    
-            > span {
-              white-space: nowrap;
-            }
-    
-            > div {
-              width: 100%;
-              height: 100%;
-              display: inherit;
-              gap: 0.5rem;
-              padding: 1rem;
-              background: color-mix(in srgb, white, var(--primary-colour) 10%);
-              border-radius: 1rem;
-              cursor: pointer;
-    
-              &:hover {
-                background: color-mix(in srgb, white, var(--primary-colour) 15%);
-              }
-            }
-    
-            img {
-              height: 100%;
-              border-radius: 1rem;
-    
-              + div {
-                display: inherit;
-                flex-direction: column;
-                justify-content: center;
-              }
-            }
-    
-            :is(h6, p) {
-              margin: 0;
-            }
-          }
-        }
-  
-        &::after {
-          content: "";
-          display: block;
-          padding-bottom: calc((7 * 10rem) - 2rem);
-        }
-      }
-    }
-  }
-
-  article#appointments-stats {
-    grid-column: span 3;
-    grid-row: span 1;
-    align-items: flex-start;
-    flex-direction: column;
-
     > h1 {
+      margin-top: 0;
+      align-self: flex-start;
+    }
+  }
+  
+  article:is(#admitted-patients, #appointments-today, #staff-number, #staff-on-duty) {
+    grid-column: span 2;
+    gap: 0.25rem;
+
+    h4 {
+      font-weight: normal;
+      font-size: 1rem;
       margin: 0;
-      font-size: 1.5rem;
     }
 
-    > #appts-stats-filter {
-      height: 3.2rem;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-
-      > div {
-        display: inherit;
-        gap: 1rem;
-        align-items: center;
-
-      }
-      
-      div:has(> button) {
-        display: inherit;
-        gap: 0.5rem;
-      }
-
-      h4 {
-        margin: 0;
-        width: 12.5ch;
-        text-align: center;
-      }
-
-      button {
-        color: inherit;
-        background: color-mix(in srgb, white, var(--primary-colour) 10%);
-        border: none;
-        cursor: pointer;
-        padding: 0.5rem calc(0.5rem + 0.5ex);
-        line-height: 100%;
-        font-weight: 700;
-        border-radius: 0.5rem;
-
-        &:hover {
-          background: color-mix(in srgb, white, var(--primary-colour) 15%);
-        }
-      }
-
-      select {
-        color: inherit;
-        background: color-mix(in srgb, white, var(--primary-colour) 10%);
-        outline: none;
-        border: none;
-        cursor: pointer;
-        padding: 0.5rem;
-        border-right: 0.5rem solid transparent;
-        font-weight: 600;
-        border-radius: 0.5rem;
-
-        &:hover {
-          background: color-mix(in srgb, white, var(--primary-colour) 15%);
-        }
-      }
-
-      &:focus {
-        box-shadow: 0px 0px 7.5px gray;
-      }
+    p {
+      font-weight: bold;
+      font-size: 2.5rem;
+      line-height: 100%;
+      margin: 0;
     }
-
+  }
+  
+  article:is(#location-popularity, #diagnosis-statistics) {
+    grid-column: span 5;
+    align-self: flex-start;
+    
     > figure {
       height: 100%;
       width: 100%;
@@ -301,46 +61,108 @@ main > section > #wrapper > #layout-grid {
     }
   }
 
-  article#latest-patient-info {
-    grid-column: span 3;
-    grid-row: span 1;
-    display: table;
-    padding-bottom: 1rem;
+  article#location-popularity {
+    grid-column: span 5;
+  }
 
+  article#latest-patients {
+    grid-column: span 5;
+    
     table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0 1rem;
-
+  
       tr {
-        &:has(td) {
+          transition: 0.25s;
+
+          &:has(td) {
+              cursor: pointer;
+              background: color-mix(in srgb,transparent,var(--primary-colour) 5%);
+              --border-radius: 13px;
+      
+              &:hover {
+                  background: color-mix(in srgb,white,var(--primary-colour) 10%);
+              }
+          }
+          
+          > th {
+              padding: 0 1.5rem;
+              text-align: left;
+              text-wrap: nowrap;
+          }
+      
+          > td {
+              padding: 1.5rem;
+              position: relative;
+              text-align: center;
+  
+              &:first-child {
+                  border-top-left-radius: var(--border-radius);
+                  border-bottom-left-radius: var(--border-radius);
+                  text-align: left;
+
+                  picture {
+                      display: flex;
+                      align-items: center;
+                      gap: 1rem;
+  
+                      img {
+                          width: 3rem;
+                          height: 100%;
+                          border-radius: 50%;
+                      }
+                  }
+              }
+      
+              &:last-child {
+                  border-top-right-radius: var(--border-radius);
+                  border-bottom-right-radius: var(--border-radius);
+              }
+          }
+      }
+    }
+  }
+  
+  article#diagnosis-statistics {
+    grid-column: span 3;
+  }
+
+  article#scheduled-appointments {
+    grid-column: span 3;
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      width: 100%;
+
+      .info > :is(h4, h6) {
+        line-height: 100%;
+        margin: 0;
+      }
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
+        button {
+          background: none;
+          border: none;
           cursor: pointer;
-          background: color-mix(in srgb,transparent,var(--primary-colour) 5%);
-          --border-radius: 13px;
-  
+          padding: 0;
+          display: flex;
+          gap: 1ch;
+          transition: 0.25s;
+
+          img {
+            height: 2.5ch;
+            width: auto;
+          }
+
           &:hover {
-            background: color-mix(in srgb,white,var(--primary-colour) 10%);
-          }
-        }
-        
-        > th {
-          padding: 0 1.5rem;
-          text-align: left;
-          text-wrap: nowrap;
-        }
-  
-        > td {
-          padding: 1.5rem;
-          white-space: pre-line; 
-  
-          &:first-child {
-            border-top-left-radius: var(--border-radius);
-            border-bottom-left-radius: var(--border-radius);
-          }
-  
-          &:last-child {
-            border-top-right-radius: var(--border-radius);
-            border-bottom-right-radius: var(--border-radius);
+            color: var(--trinary-colour);
           }
         }
       }

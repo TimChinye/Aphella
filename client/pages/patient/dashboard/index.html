@@ -63,298 +63,265 @@
               </div>
           </nav>
           <header>
-              <h1>Dashboard</h1>
-              <div>
-                  <button>Make an Appointment</button>
-                  <button>Make a Request</button>
-              </div>
+              <h1>Good Morning, John</h1>
+              <p>How are you today?</p>
           </header>
           <div id="layout-grid">
-              <article id="patients-today">
-                  <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/guest-male.png" style="filter: brightness(0.95);" />
-                  <div>
-                      <h6>Patients Today</h6>
-                      <h3>#</h3>
-                  </div>
-              </article>
-              <article id="main-patients-total">
-                  <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/conference-call.png" style="filter: brightness(1.05);" />
-                  <div>
-                      <h6>Total Main Patients</h6>
-                      <h3>#</h3>
-                  </div>
-              </article>
-              <article id="incomplete-requests">
-                  <img src="https://img.icons8.com/fluency-systems-filled/48/C40148/ask-question.png" style="filter: brightness(1.00);" />
-                  <div>
-                      <h6>Requests</h6>
-                      <h3>#</h3>
-                  </div>
-              </article>
-              <article id="appointments-info">
-                <div id="calendar">
-                  <div id="calendar-header">
-                    <h1>{MMM} {YYYY}</h1>
-                    <div id="calendar-navigation">
-                      <button>&lt;</button>
-                      <button>&gt;</button>
-                    </div>
-                  </div>
-                  <div id="calendar-days">
-                    <div class="selected-day">
-                      <p>Mon</p>
-                      <strong>##</strong>
-                    </div>
-                    <div>
-                      <p>Tue</p>
-                      <strong>##</strong>
-                    </div>
-                    <div>
-                      <p>Wed</p>
-                      <strong>##</strong>
-                    </div>
-                    <div>
-                      <p>Thu</p>
-                      <strong>##</strong>
-                    </div>
-                    <div>
-                      <p>Fri</p>
-                      <strong>##</strong>
-                    </div>
-                    <div>
-                      <p>Sat</p>
-                      <strong>##</strong>
-                    </div>
-                    <div>
-                      <p>Sun</p>
-                      <strong>##</strong>
-                    </div>
-                  </div>
+            <article id="heart-and-glucose">
+              <div>
+                <img src="https://i.imgur.com/wdCMTTD.png">
+                <div>
+                  <h3>Heart Rate</h3>
+                  <h4>75 beats/min</h4>
                 </div>
-                <div id="appointments">
-                  <figure id="loadingOverlay" onanimationstart="updateLoadingStatus(event)" onanimationiteration="updateLoadingStatus(event)">
-                    <div>
-                      <div class="dot union"></div>
-                      <div class="dot"></div>
-                      <div class="dot"></div>
-                      <div class="dot"></div>
-                      <div class="dot"></div>
-                    </div>
-                  </figure>
-                  <div id="appointments-content">
-                    <h4>Appointments</h4>
-                    <template id="day-group-template">
-                      <div class="day-group">
-                        <h6>{Relative}, {DD} {MMM}</h6>
-                        <template id="appointment-template">
-                          <div class="appointment">
-                            <span>{hh}:{mm}</span>
-                            <div>
-                              <img src="https://wallpapers.com/images/hd/generic-male-avatar-profile-2fudx37oj7ug3d8l.jpg">
-                              <div>
-                                <h6>{FName} {LName}</h6>
-                                <p>{Appointment Type}</p>
-                              </div>
-                            </div>
-                          </div>
-                        </template>
-                      </div>
-                    </template>
-                  </div>
+              </div>
+              <hr />
+              <div>
+                <img src="https://i.imgur.com/WgVIW7k.png">
+                <div>
+                  <h3>Glucose Level</h3>
+                  <h4>110 mg/dL</h4>
                 </div>
-              </article>
-              <article id="appointments-stats">
-                <h1>Appointments Statistics</h1>
-                <div id="appts-stats-filter">
-                  <div>
-                    <h4>{MMMM} {YYYY}</h4>
-                    <div>
-                      <button>&lt;</button>
-                      <button>&gt;</button>
-                    </div>
-                  </div>
-                  <select name="frequency">
-                    <option value="hourly">Hourly</option>
-                    <option value="daily" selected>Daily</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
-                  </select>
+              </div>
+            </article>
+            <article id="blood-data">
+              <div>
+                <img src="https://i.imgur.com/rd3hKVM.png">
+                <div>
+                  <h3>Blood Count (Red)</h3>
+                  <h4>4,800,000 cells/mcL</h4>
                 </div>
+              </div>
+              <hr />
+              <div>
+                <img src="https://i.imgur.com/iBzU76q.png">
+                <div>
+                  <h3>Blood Pressure</h3>
+                  <h4>120/80 mmHg</h4>
+                </div>
+              </div>
+            </article>
+            <article id="health-index">
+              <h3>Health Index</h3>
+              <h2>75%</h2>
+            </article>
+            <article id="appointments">
+              <div>
+                <h1>Appointments</h1>
                 <figure><canvas></canvas></figure>
-              </article>
-              <article id="latest-patient-info">
-                <h1>Latest Requests</h1>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Date</th>
-                      <th>From</th>
-                      <th>Details</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Use <template> -->
-                    <tr>
-                      <td>###</td>
-                      <td>{DD MMMM YYYY}</td>
-                      <td>{FName} {LName}</td>
-                      <td>{Details}</td>
-                    </tr>
-                    <tr>
-                      <td>###</td>
-                      <td>{DD MMMM YYYY}</td>
-                      <td>{FName} {LName}</td>
-                      <td>{Details}</td>
-                    </tr>
-                    <tr>
-                      <td>###</td>
-                      <td>{DD MMMM YYYY}</td>
-                      <td>{FName} {LName}</td>
-                      <td>{Details}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </article>
-          </div>
+              </div>
+              <hr />
+              <div>
+                <h1>Upcoming Appointments</h1>
+                <div>
+                  <div>
+                    <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4">
+                    <div>
+                      <h4>Dr. John Doe</h4>
+                      <p>Check-up</p>
+                    </div>
+                  </div>
+                  <div>
+                    Saturday, 2nd of March
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4">
+                    <div>
+                      <h4>Dr. John Doe</h4>
+                      <p>Check-up</p>
+                    </div>
+                  </div>
+                  <div>
+                    Saturday, 2nd of March
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4">
+                    <div>
+                      <h4>Dr. John Doe</h4>
+                      <p>Check-up</p>
+                    </div>
+                  </div>
+                  <div>
+                    Saturday, 2nd of March
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4">
+                    <div>
+                      <h4>Dr. John Doe</h4>
+                      <p>Check-up</p>
+                    </div>
+                  </div>
+                  <div>
+                    Saturday, 2nd of March
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h1>Previous Appointments</h1>
+                <div>
+                  <div>
+                    <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4">
+                    <div>
+                      <h4>Dr. John Doe</h4>
+                      <p>Check-up</p>
+                    </div>
+                  </div>
+                  <div>
+                    Saturday, 2nd of March
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4">
+                    <div>
+                      <h4>Dr. John Doe</h4>
+                      <p>Check-up</p>
+                    </div>
+                  </div>
+                  <div>
+                    Saturday, 2nd of March
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4">
+                    <div>
+                      <h4>Dr. John Doe</h4>
+                      <p>Check-up</p>
+                    </div>
+                  </div>
+                  <div>
+                    Saturday, 2nd of March
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4">
+                    <div>
+                      <h4>Dr. John Doe</h4>
+                      <p>Check-up</p>
+                    </div>
+                  </div>
+                  <div>
+                    Saturday, 2nd of March
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article id="medicines">
+              <div>
+                <div>
+                  <h1>Medicines</h1>
+                </div>
+                <div>
+                  <p>Paracetamol</p>
+                  <p>Aspirin</p>
+                  <p>Omeprazole</p>
+                  <p>Amoxicillin</p>
+                  <p>Levothyroxine</p>
+                  <p>Ibuprofen</p>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <h1>Doses</h1>
+                </div>
+                <div>
+                  <p>1-1-1</p>
+                  <p>1 Daily</p>
+                  <p>1-0-0</p>
+                  <p>1-1-1</p>
+                  <p>1 Daily</p>
+                  <p>1-0-1</p>
+                </div>
+              </div>
+            </article>
+            <article id="reports">
+              <h1>Reports</h1>
+              <div>
+                <img src="https://img.icons8.com/fluency-systems-regular/48/EEC9B5/doc.png">
+                <div>
+                  <h5>Dr. John Doe</h5>
+                  <p>Clerk</p>
+                </div>
+              </div>
+              <div>
+                <img src="https://img.icons8.com/fluency-systems-regular/48/F0A0A0/pdf-2.png">
+                <div>
+                  <h5>Dr. John Doe</h5>
+                  <p>Clerk</p>
+                </div>
+              </div>
+              <div>
+                <img src="https://img.icons8.com/fluency-systems-regular/48/C291BA/csv.png">
+                <div>
+                  <h5>Dr. John Doe</h5>
+                  <p>Clerk</p>
+                </div>
+              </div>
+            </article>
+            <article id="doctors">
+              <h1>Last 3 Staff</h1>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Booked Appointments</th>
+                    <th>On Duty</th>
+                    <th><button>Go to Doctors</button></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <picture>
+                        <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4">
+                        Katie Braxay
+                      </picture>
+                    </td>
+                    <td>Cardiologist</td>
+                    <td>20</td>
+                    <td>Yes</td>
+                    <td><button>Book</button></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <picture>
+                        <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4">
+                        Katie Braxay
+                      </picture>
+                    </td>
+                    <td>Cardiologist</td>
+                    <td>20</td>
+                    <td>Yes</td>
+                    <td><button>Book</button></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <picture>
+                        <img src="https://i.pravatar.cc/150?u=4baaa9fa7ac0435059f7e984f496a7a4">
+                        Katie Braxay
+                      </picture>
+                    </td>
+                    <td>Cardiologist</td>
+                    <td>20</td>
+                    <td>Yes</td>
+                    <td><button>Book</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </article>
+          </div>          
         </div>
       </section>
     </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-    <script type="text/javascript">
-      const appointmentStatsElem = document.getElementById('appointments-stats').getElementsByTagName('canvas')[0];
-      let chart = new Chart(appointmentStatsElem, {
-        type: 'line',
-        data: {
-          labels: ["Thu 1", "Fri 2", "Sat 3", "Sun 4", "Mon 5", "Tue 6", "Wed 7"],
-          datasets: [{
-            data: [10, 10, 10, 10, 10, 10, 10],
-            
-            borderCapStyle: 'round',
-            borderColor: '#C40148',
-            
-            pointBackgroundColor: 'transparent',
-            pointBorderColor: '#FFFFFF',
-            pointBorderWidth: 0,
-            pointRadius: 5,
-            
-            pointHoverBackgroundColor: '#FF005D',
-            pointHoverBorderColor: '#FFFFFF',
-            pointHoverBorderWidth: 3,
-            
-            lineTension: 0.3,
-            fill: false
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          interaction: {
-            mode: 'nearest',
-            axis: 'x',
-            intersect: false
-          },
-          scales: {
-            x: {
-              border: {
-                display: false
-              },
-              grid: {
-                display: false
-              }
-            },
-            y: {
-              ticks: {
-                stepSize: 5
-              },
-              border: {
-                display: false
-              },
-              grid: {
-                display: false
-              }
-            }
-          },
-          plugins: {
-            legend: {
-              display: false
-            },
-            tooltip: {
-              enabled: false,
-              external: (context) => {
-                const { chart, tooltip } = context;
-                let tooltipEl = chart.canvas.parentNode.children[1];
-
-                // Create tooltip element if it doesn't exist
-                if (!tooltipEl) {
-                    tooltipEl = document.createElement('div');
-                    tooltipEl.id = "tooltip-wrapper";
-                    tooltipEl.style.cssText = `
-                        height: 100%;
-                        opacity: 0;
-                        color: var(--trinary-colour);
-                        font-weight: bold;
-                        position: absolute;
-                        translate: -50%;
-                        transition: all 0.25s ease;
-                        white-space: nowrap;
-                        pointer-events: none;
-                        padding-top: 0.5rem;
-                        padding-bottom: 2.5rem;
-                    `;
-                    tooltipEl.appendChild(document.createTextNode(""));
-
-                    // Create and style divider element
-                    const divider = document.createElement('div');
-                    divider.style.cssText = `
-                        height: 100%;
-                        width: 1px;
-                        border: 1px dashed color-mix(in srgb, transparent, var(--trinary-colour) 25%);
-                        margin: 0 auto;
-                        transition: all 0.25s ease;
-                        position: relative;
-                    `;
-                    tooltipEl.appendChild(divider);
-
-                    // Append tooltip element to parent node
-                    chart.canvas.style.position = "relative";
-                    chart.canvas.style.zIndex = "1";
-                    chart.canvas.parentNode.style.position = "relative";
-                    chart.canvas.parentNode.appendChild(tooltipEl);
-                }
-
-                // Calculate tooltip position
-                const { offsetLeft, offsetTop, offsetWidth } = chart.canvas;
-                const leftPointPos = offsetLeft + tooltip.caretX;
-                tooltipEl.style.left = leftPointPos + 'px';
-                tooltipEl.style.top = `calc(${offsetTop}px - 1.5rem)`;
-                tooltipEl.style.opacity = tooltip.opacity;
-
-                // Update tooltip content
-                tooltipEl.replaceChild(document.createTextNode(`${tooltip.dataPoints[0].formattedValue} Appointments`), tooltipEl.childNodes[0]);
-
-                // Adjust divider position based on tooltip position
-                const correction = tooltipEl.offsetWidth / 2;
-                let dividerLeft = '0', dividerTranslateX = '-50%';
-
-                if (leftPointPos <= correction) {
-                    dividerLeft = `-${correction}px`;
-                    dividerTranslateX = `calc(-50% + ${correction}px)`;
-                } else if (leftPointPos >= offsetWidth - correction) {
-                    dividerLeft = `${correction}px`;
-                    dividerTranslateX = `calc(-50% - ${correction}px)`;
-                }
-
-                tooltipEl.children[0].style.left = dividerLeft;
-                tooltipEl.style.translate = dividerTranslateX;
-
-              }
-            }
-          }
-        }
-      });
-    </script>
 
     <script type="text/javascript" src="./script.js"></script>
   </body>
