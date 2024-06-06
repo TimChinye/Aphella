@@ -5,9 +5,8 @@ if (new URLSearchParams(window.location.search).has('dev')) {
     "patient": "ulitzmann0@unc.edu"
   }
 
-  forceLogin(dummyAccounts[new URLSearchParams(window.location.search).get('dev') || 'admin']), localStorage.clear();
-}
-else window.location.href = window.location.href + "?dev";
+  forceLogin(dummyAccounts[new URLSearchParams(window.location.search).get('dev') || 'staff']), localStorage.clear();
+};
 
 let firstname = null, generatedCode = null;
 

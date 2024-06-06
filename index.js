@@ -293,7 +293,7 @@ app.post("/verify-code", async (req, res) => {
 /* Page Route Handlers */
 
 app.get("/", async (req, res) => {
-  serveFile(res, 'everyone/homepage');
+  serveFile(res, 'everyone/login');
 });
 
 app.get("/dashboard", async (req, res) => {
