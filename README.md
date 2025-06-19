@@ -20,8 +20,8 @@ Our system targets to resolve challenges that are being faced by the healthcare 
 
 ## License
 
-Aphella is licensed under the terms of the MIT license. For more details, see the `LICENSE` file.
+Aphella is not licensed.
 
 ## Contact
 
-If you have any questions, issues, or feedback, please contact us at support@aphella.com
+If you have any questions, issues, or feedback, feel free to let me know via and issue or timchinye123@gmail.com.
