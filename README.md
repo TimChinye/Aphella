@@ -8,6 +8,31 @@ Aphella is a full-stack web application developed as a prototype for the "Softwa
 
 This project was a significant learning experience in scoping, planning, and executing a full-stack application from the ground up. While the initial vision included a wide array of features (e.g., billing, full pharmacy management), the final deliverable concentrates on the core functionalities: providing distinct, data-driven dashboard experiences for different user roles within a hospital environment.
 
+## Demo Credentials & Access
+
+To explore the prototype, you may use the following dummy accounts to simulate different user roles.
+
+### 1. Dummy Accounts
+*   **Admin:** `stephan.latliff@aphella.com`
+*   **Staff:** `lurleen.yearne@aphella.com`
+*   **Patient:** `ulitzmann0@unc.edu`
+
+### 2. Password Requirements
+For these accounts, the password does not need to match a specific database hash as long as it meets the following complexity validation requirements:
+*   At least eight characters
+*   One uppercase letter
+*   One lowercase letter
+*   One number
+*   One special character
+
+**Example:** `2Apples!` works successfully.
+
+### 3. Developer Shortcuts (Auto-Login)
+For quick testing, you can bypass the login screen by appending the following query parameters to the URL:
+*   `?dev=admin`
+*   `?dev=staff`
+*   `?dev=patient`
+
 ## Implemented Features
 
 The prototype successfully implements the following key features:
